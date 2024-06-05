@@ -12,6 +12,7 @@ import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
+import ErrorMessageComponent from "../components/ErrorMessageComponent";
 
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
@@ -65,16 +66,22 @@ export default function UserSignUpScreen() {
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Pressable>
       </View>
-      <CustomText style={{ fontSize: 30 }} variant="semiBold">Sou Cliente</CustomText>
+      <CustomText style={{ fontSize: 30 }} variant="semiBold">
+        Sou Cliente
+      </CustomText>
       <View>
         <CustomInput control={control} name="name" placeholder="Nome" />
-        {errors.name && <CustomText style={styles.errorText}>Campo obrigatório</CustomText>}
+        {errors.name && (
+          <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
+        )}
         <CustomInput control={control} name="email" placeholder="E-mail" />
         {errors.email && (
-          <CustomText style={styles.errorText}>Campo obrigatório</CustomText>
+          <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
         <CustomInput control={control} name="cpf" placeholder="CPF" />
-        {errors.cpf && <CustomText style={styles.errorText}>Campo obrigatório</CustomText>}
+        {errors.cpf && (
+          <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
+        )}
         <CustomPasswordInput
           control={control}
           name="password"
@@ -92,7 +99,9 @@ export default function UserSignUpScreen() {
           }}
         />
         {errors.password && (
-          <CustomText style={styles.errorText}>{errors.password.message || 'Campo obrigatorio'}</CustomText>
+          <ErrorMessageComponent>
+            {errors.password.message || "Campo Obrigatório"}
+          </ErrorMessageComponent>
         )}
         <CustomPasswordInput
           control={control}
@@ -107,7 +116,9 @@ export default function UserSignUpScreen() {
           }}
         />
         {errors.confirmPassword && (
-          <CustomText style={styles.errorText}>{errors.confirmPassword.message}</CustomText>
+          <ErrorMessageComponent>
+            {errors.confirmPassword.message}
+          </ErrorMessageComponent>
         )}
         <View style={styles.checkBoxContainer}>
           <Checkbox
@@ -115,12 +126,16 @@ export default function UserSignUpScreen() {
             onValueChange={setChecked}
             color={isChecked ? "#4630EB" : undefined}
           />
-          <CustomText style={{ fontSize: 16, color: "gray" }}>Concordo com os</CustomText>
+          <CustomText style={{ fontSize: 16, color: "gray" }}>
+            Concordo com os
+          </CustomText>
           <CustomText style={{ fontSize: 16, textDecorationLine: "underline" }}>
             Termos e Condições
           </CustomText>
         </View>
-        {errors.name && <CustomText style={styles.errorText}>Campo obrigatório</CustomText>}
+        {errors.name && (
+          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+        )}
       </View>
       <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
@@ -137,9 +152,14 @@ export default function UserSignUpScreen() {
         />
       )}
       {isError && (
-        <CustomText style={styles.errorText}>
-          {error?.response?.data || "Erro inesperado"}
-        </CustomText>
+        <ConfirmationModal
+          onPress={() => router.back()}
+          iconClose={() => router.back()}
+          text={
+            error?.response?.data ||
+            "Nao foi possivel realizar o cadastro no momento, tente novamente!"
+          }
+        />
       )}
     </View>
   );

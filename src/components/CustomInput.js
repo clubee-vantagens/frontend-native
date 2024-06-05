@@ -5,7 +5,7 @@ export default function CustomInput({ control, name, placeholder, type }) {
   return (
     <Controller
       control={control}
-      rules={{ required: true }}
+      rules={{ required: "Campo Obrigatório" }}
       render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
           value={value}
