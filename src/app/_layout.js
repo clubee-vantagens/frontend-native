@@ -1,8 +1,8 @@
 import { Stack } from "expo-router";
 import { Query, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { ActivityIndicator } from "react-native";
 
@@ -10,9 +10,9 @@ const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    'PoppinsReg': require('../../assets/fonts/Poppins-Regular.ttf'),
-    'PoppinsBold': require('../../assets/fonts/Poppins-Bold.ttf'),
-    'PoppinsSemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+    PoppinsReg: require("../../assets/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsSemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {

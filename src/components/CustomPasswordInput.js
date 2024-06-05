@@ -8,7 +8,7 @@ export default function CustomPasswordInput({
   name,
   placeholder,
   type,
-  rules
+  rules,
 }) {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const handleShowPassword = () => {
