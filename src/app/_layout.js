@@ -1,15 +1,37 @@
 import { Stack } from "expo-router";
-import {Query, QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import { Query, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from "react";
+import { ActivityIndicator } from "react-native";
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    'PoppinsReg': require('../../assets/fonts/Poppins-Regular.ttf'),
+    'PoppinsBold': require('../../assets/fonts/Poppins-Bold.ttf'),
+    'PoppinsSemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
   return (
-  <QueryClientProvider client={queryClient}>
-    <Stack> 
-      <Stack.Screen name="index" />
-      <Stack.Screen options={{headerShown: false}} name="signupUser" />
-    </Stack>
-  </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen options={{ headerShown: false }} name="index" />
+          <Stack.Screen options={{ headerShown: false }} name="signupUser" />
+        </Stack>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
