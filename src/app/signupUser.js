@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import Constants from "expo-constants";
 import { Link, router } from "expo-router";
 import Checkbox from "expo-checkbox";
@@ -13,12 +13,13 @@ import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
   const date = new Date();
-  const { mutate, isError, error, isSuccess } = useMutateUsers();
+  const { mutate, isError, error, isSuccess, status } = useMutateUsers();
   const {
     control,
     handleSubmit,
@@ -59,6 +60,9 @@ export default function UserSignUpScreen() {
     mutate(dataToPost);
   };
 
+  if(status === 'pending') {
+    return <LoadingScreen />
+  }
   return (
     <View style={styles.container}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
