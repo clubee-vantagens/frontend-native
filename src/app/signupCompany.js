@@ -1,12 +1,11 @@
-import { View, StyleSheet, Pressable } from "react-native";
-import Constants from "expo-constants";
+import { View, StyleSheet, Pressable, Vibration } from "react-native";
 import { Link, router } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import CustomPicker from "../components/CustomOption";
+import Select from "../components/CustomOption";
 import { useEffect, useState } from "react";
 import { maskCnpj } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
@@ -17,11 +16,13 @@ import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
 import { useNavigation } from "expo-router";
 
-export default function UserSignUSignUpScreen() {
+export default function CompanySignUpScreen({ options }) {
   const navigation = useNavigation();
 
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
   const date = new Date();
   const { mutate, isError, error, isSuccess, status } = useMutateUsers();
   const {
@@ -38,13 +39,15 @@ export default function UserSignUSignUpScreen() {
       email: "",
       password: "",
       cnpj: "",
-      type: "",
+      segment: "",
       termsOfUse: false,
       confirmPassword: "",
     },
   });
+
   const cnpjValue = watch("cnpj");
   const passwordValue = watch("password");
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -54,6 +57,7 @@ export default function UserSignUSignUpScreen() {
       setIsConfirmationModal(true);
     }
   }, [isSuccess]);
+
   useEffect(() => {
     setValue("cnpj", maskCnpj(cnpjValue));
   }, [cnpjValue]);
@@ -69,9 +73,14 @@ export default function UserSignUSignUpScreen() {
     mutate(dataToPost);
   };
 
+  const onInvalid = () => {
+    Vibration.vibrate(500);
+  };
+
   if (status === "pending") {
     return <LoadingScreen />;
   }
+
   return (
     <View style={styles.container}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
@@ -79,9 +88,11 @@ export default function UserSignUSignUpScreen() {
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Pressable>
       </View>
+
       <CustomText style={{ fontSize: 30 }} variant="semiBold">
         Cadastro
       </CustomText>
+
       <View>
         <CustomInput
           control={control}
@@ -111,18 +122,21 @@ export default function UserSignUSignUpScreen() {
         {errors.cnpj && (
           <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
         )}
-        <CustomPicker
+
+        <Select
+          name="segment"
           control={control}
-          name="userType"
-          placeholder="Segmento"
           options={[
             { label: "Alimentos", value: "alimentos" },
             { label: "Bebidas", value: "bebidas" },
+            { label: "Roupas", value: "roupas" },
           ]}
+          onChangeSelect={(itemValue) => setValue("segment", itemValue)}
         />
-        {errors.userType && (
+
+        {errors.segment && (
           <ErrorMessageComponent>
-            {errors.userType.message}
+            {errors.segment.message}
           </ErrorMessageComponent>
         )}
         <CustomPasswordInput
@@ -180,7 +194,11 @@ export default function UserSignUSignUpScreen() {
           <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
         )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
+
+      <CustomButton onPress={handleSubmit(onSubmit, onInvalid)}>
+        Cadastrar-se
+      </CustomButton>
+
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
         <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
@@ -217,6 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
+
   checkBoxContainer: {
     flexDirection: "row",
     justifyContent: "start",
