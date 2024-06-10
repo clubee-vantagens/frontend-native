@@ -6,16 +6,20 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import CustomPicker from "../components/CustomOption";
 import { useEffect, useState } from "react";
-import { maskCpf } from "../utils/utils";
+import { maskCnpj } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
+import { useNavigation } from "expo-router";
 
-export default function UserSignUpScreen() {
+export default function UserSignUSignUpScreen() {
+  const navigation = useNavigation();
+
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
   const date = new Date();
@@ -29,25 +33,30 @@ export default function UserSignUpScreen() {
     setValue,
   } = useForm({
     defaultValues: {
-      name: "",
+      razaoSocial: "",
+      nomeFantasia: "",
       email: "",
       password: "",
-      cpf: "",
+      cnpj: "",
+      type: "",
       termsOfUse: false,
       confirmPassword: "",
     },
   });
-  const cpfValue = watch("cpf");
+  const cnpjValue = watch("cnpj");
   const passwordValue = watch("password");
   useEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
     }
   }, [isSuccess]);
   useEffect(() => {
-    setValue("cpf", maskCpf(cpfValue));
-  }, [cpfValue]);
+    setValue("cnpj", maskCnpj(cnpjValue));
+  }, [cnpjValue]);
 
   const onSubmit = (data) => {
     const dataToPost = {
@@ -71,20 +80,50 @@ export default function UserSignUpScreen() {
         </Pressable>
       </View>
       <CustomText style={{ fontSize: 30 }} variant="semiBold">
-        Sou Cliente
+        Cadastro
       </CustomText>
       <View>
-        <CustomInput control={control} name="name" placeholder="Nome" />
-        {errors.name && (
-          <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
+        <CustomInput
+          control={control}
+          name="razaoSocial"
+          placeholder="Razão Social"
+        />
+        {errors.razaoSocial && (
+          <ErrorMessageComponent>
+            {errors.razaoSocial.message}
+          </ErrorMessageComponent>
+        )}
+        <CustomInput
+          control={control}
+          name="nomeFantasia"
+          placeholder="Nome fantasia"
+        />
+        {errors.nomeFantasia && (
+          <ErrorMessageComponent>
+            {errors.nomeFantasia.message}
+          </ErrorMessageComponent>
         )}
         <CustomInput control={control} name="email" placeholder="E-mail" />
         {errors.email && (
           <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
-        <CustomInput control={control} name="cpf" placeholder="CPF" />
-        {errors.cpf && (
-          <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
+        <CustomInput control={control} name="cnpj" placeholder="CNPJ" />
+        {errors.cnpj && (
+          <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
+        )}
+        <CustomPicker
+          control={control}
+          name="userType"
+          placeholder="Segmento"
+          options={[
+            { label: "Alimentos", value: "alimentos" },
+            { label: "Bebidas", value: "bebidas" },
+          ]}
+        />
+        {errors.userType && (
+          <ErrorMessageComponent>
+            {errors.userType.message}
+          </ErrorMessageComponent>
         )}
         <CustomPasswordInput
           control={control}
@@ -172,11 +211,11 @@ export default function UserSignUpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    paddingTop: 20,
     backgroundColor: "#FFFAEB",
     flexDirection: "column",
-    justifyContent: "space-around",
     alignItems: "center",
+    justifyContent: "space-evenly",
   },
   checkBoxContainer: {
     flexDirection: "row",
