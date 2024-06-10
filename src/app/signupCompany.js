@@ -55,6 +55,7 @@ export default function CompanySignUpScreen({ options }) {
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
+      navigation.navigate("Login");
     }
   }, [isSuccess]);
 
@@ -74,7 +75,7 @@ export default function CompanySignUpScreen({ options }) {
   };
 
   const onInvalid = () => {
-    Vibration.vibrate(500);
+    Vibration.vibrate(300);
   };
 
   if (status === "pending") {
