@@ -29,8 +29,8 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <Stack>
           <Stack.Screen options={{ headerShown: false }} name="index" />
-          <Stack.Screen options={{ headerShown: false }} name="home" />
           <Stack.Screen options={{ headerShown: false }} name="signupUser" />
+          <Stack.Screen options={{ headerShown: false }} name="Home" />
         </Stack>
       </QueryClientProvider>
     </GestureHandlerRootView>

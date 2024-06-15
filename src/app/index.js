@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,46 +7,47 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
 import { Image } from "expo-image";
-import { Link, router } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import { useForm } from "react-hook-form";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
-// import { Home } from "../pages/Home/Home";
+import CustomPasswordInput from "../components/CustomPasswordInput";
 
 export default function Login() {
   const { control, handleSubmit } = useForm();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ email: "", password: "" });
 
-  // Simular usuário do backend
+  // Usuários válidos simulados do backend
   const validUsers = [
-    {
-      email: "wilkson@gmail.com",
-      password: "senha1",
-    },
+    { email: "wilkson@gmail.com", password: "senha1" },
     { email: "wilkson2@gmail.com", password: "senha2" },
   ];
 
   const handleLogin = () => {
     setError({ email: "", password: "" });
 
+    console.log("Tentativa de login com:", email, password);
+
     if (!isValidEmail(email)) {
       setError((prevError) => ({
         ...prevError,
         email: "Por favor, insira um email válido.",
       }));
+      console.log("Email inválido:", email);
       return;
     }
 
     if (!isValidPassword(password)) {
       setError((prevError) => ({
         ...prevError,
-        password: "Por favor, insira sua senha.",
+        password: "Senha incorreta",
       }));
+      console.log("Senha inválida:", password);
       return;
     }
 
@@ -56,11 +58,16 @@ export default function Login() {
         ...prevError,
         email: "Este email não está registrado.",
       }));
+      console.log("Email não registrado:", email);
       return;
     }
 
     if (user.password !== password) {
-      setError((prevError) => ({ ...prevError, password: "Senha incorreta." }));
+      setError((prevError) => ({
+        ...prevError,
+        password: "Senha incorreta.",
+      }));
+      console.log("Senha incorreta para o email:", email);
       return;
     }
 
@@ -69,7 +76,6 @@ export default function Login() {
     setTimeout(() => {
       setIsLoading(false);
       console.log("Login bem-sucedido para:", email);
-      // Navegar para próxima tela que é a principal após o login
       navigation.navigate("Home");
     }, 2000);
   };
@@ -99,10 +105,11 @@ export default function Login() {
         {error.email && (
           <ErrorMessageComponent>{error.email}</ErrorMessageComponent>
         )}
+
         <TextInput
           style={styles.input}
           placeholder="Senha"
-          secureTextEntry
+          secureTextEntry={true}
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
@@ -172,7 +179,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: "underline",
     color: "#757575",
-    fontWeight: 400,
   },
   btnEntrar: {
     width: 215,
@@ -186,7 +192,7 @@ const styles = StyleSheet.create({
   textEntrar: {
     fontWeight: "bold",
     fontSize: 18,
-    color: "#fff",
+    color: "#000",
   },
   containerFooter: {
     marginTop: 20,
