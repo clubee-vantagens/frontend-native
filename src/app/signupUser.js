@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { useEffect, useState } from "react";
-import { maskCpf } from "../utils/utils";
+import { maskCpf, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -74,15 +74,42 @@ export default function UserSignUpScreen() {
         Sou Cliente
       </CustomText>
       <View>
-        <CustomInput control={control} name="name" placeholder="Nome" />
+        <CustomInput
+          control={control}
+          name="name"
+          placeholder="Nome"
+          rules={{
+            required: "Campo Obrigatório",
+          }}
+        />
         {errors.name && (
           <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
         )}
-        <CustomInput control={control} name="email" placeholder="E-mail" />
+        <CustomInput
+          control={control}
+          name="email"
+          placeholder="E-mail"
+          rules={{
+            required: "Campo Obrigatório",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "O e-mail inserido é inválido",
+            },
+          }}
+        />
         {errors.email && (
           <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
-        <CustomInput control={control} name="cpf" placeholder="CPF" />
+        <CustomInput
+          control={control}
+          name="cpf"
+          placeholder="CPF"
+          rules={{
+            required: "Campo Obrigatório",
+            minLength: { value: 14, message: "CPF invalido" },
+            validate: cpfValue => validateCpf(cpfValue) || "CPF invalido"
+          }}
+        />
         {errors.cpf && (
           <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
         )}
@@ -114,9 +141,9 @@ export default function UserSignUpScreen() {
           secureTextEntry={true}
           type="password"
           rules={{
-            required: "Campo Obrigatorio",
+            required: "Campo Obrigatório",
             validate: (value) =>
-              value === passwordValue || "As senhas nao coincidem",
+              value === passwordValue || "As senhas não coincidem",
           }}
         />
         {errors.confirmPassword && (
