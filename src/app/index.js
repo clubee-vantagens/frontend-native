@@ -6,23 +6,21 @@ import {
   StyleSheet,
   Pressable,
   ActivityIndicator,
+  Vibration,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Image } from "expo-image";
 import { Link, useNavigation } from "expo-router";
-import { useForm } from "react-hook-form";
-import CustomText from "../components/CustomText";
-import ErrorMessageComponent from "../components/ErrorMessageComponent";
-import CustomPasswordInput from "../components/CustomPasswordInput";
 
 export default function Login() {
-  const { control, handleSubmit } = useForm();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ email: "", password: "" });
 
-  // Usuários válidos simulados do backend
   const validUsers = [
     { email: "wilkson@gmail.com", password: "senha1" },
     { email: "wilkson2@gmail.com", password: "senha2" },
@@ -38,6 +36,7 @@ export default function Login() {
         ...prevError,
         email: "Por favor, insira um email válido.",
       }));
+      Vibration.vibrate(300);
       console.log("Email inválido:", email);
       return;
     }
@@ -47,6 +46,7 @@ export default function Login() {
         ...prevError,
         password: "Senha incorreta",
       }));
+      Vibration.vibrate(300);
       console.log("Senha inválida:", password);
       return;
     }
@@ -89,60 +89,66 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/Clubee_logo-2.png")}
-        style={styles.image}
-      />
-
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Image
+          source={require("@/assets/images/Clubee_logo-2.png")}
+          style={styles.image}
         />
-        {error.email && (
-          <ErrorMessageComponent>{error.email}</ErrorMessageComponent>
-        )}
 
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        {error.password && (
-          <ErrorMessageComponent>{error.password}</ErrorMessageComponent>
-        )}
-      </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            maxLength={50}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          {error.email ? (
+            <Text style={styles.errorText}>{error.email}</Text>
+          ) : null}
 
-      <View style={styles.lembrarSenha}>
-        <Link href="/recuperar">
-          <Text style={styles.lembrarSenhaText}>Esqueceu a senha?</Text>
-        </Link>
-      </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          {error.password ? (
+            <Text style={styles.errorText}>{error.password}</Text>
+          ) : null}
+        </View>
 
-      <Pressable style={styles.btnEntrar} onPress={handleLogin}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={styles.textEntrar}>Entrar</Text>
-        )}
-      </Pressable>
-
-      <View style={styles.containerFooter}>
-        <CustomText style={{ fontSize: 20, color: "gray" }}>
-          Não tem cadastro?{" "}
-          <Link href="/signup">
-            <Text style={{ fontWeight: "bold", color: "black" }}>
-              Se cadastre agora!
-            </Text>
+        <View style={styles.lembrarSenha}>
+          <Link href="/recuperar">
+            <Text style={styles.lembrarSenhaText}>Esqueceu a senha?</Text>
           </Link>
-        </CustomText>
-      </View>
-    </View>
+        </View>
+
+        <Pressable style={styles.btnEntrar} onPress={handleLogin}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.textEntrar}>Entrar</Text>
+          )}
+        </Pressable>
+
+        <View style={styles.containerFooter}>
+          <Text style={{ fontSize: 20, color: "gray" }}>
+            Não tem cadastro?{" "}
+            <Link href="/signup">
+              <Text style={{ fontWeight: "bold", color: "black" }}>
+                Se cadastre agora!
+              </Text>
+            </Link>
+          </Text>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -156,6 +162,8 @@ const styles = StyleSheet.create({
   image: {
     width: 297,
     height: 225,
+    marginTop: 50,
+    resizeMode: "contain",
   },
   input: {
     width: 350,
@@ -195,6 +203,12 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   containerFooter: {
-    marginTop: 20,
+    marginTop: 130,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 10,
+    marginLeft: 10,
+    maxWidth: "60%",
   },
 });
