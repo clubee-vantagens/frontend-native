@@ -119,8 +119,9 @@ export default function CompanySignUpScreen({ options }) {
                 message: "O nome fantasia não pode exceder 256 caracteres",
               },
               pattern: {
-                value: /^[a-zA-Z]+$/,
-                message: "Nome deve conter somente letras",
+                value: /^[a-zA-Z\sÀ-ÖØ-öø-ÿ´`~]+$/,
+                message:
+                  "Nome deve conter somente letras, espaços e caracteres especiais permitidos",
               },
             }}
           />
@@ -153,8 +154,7 @@ export default function CompanySignUpScreen({ options }) {
             rules={{
               required: "Campo Obrigatório",
               minLength: { value: 18, message: "cnpj invalido" },
-              validate: (cnpjValue) =>
-                validateCpnj(cnpjValue) || "CNPJ Invalido",
+              validate: (cnpjValue) => validaCNPJ(cnpjValue) || "CNPJ Invalido",
             }}
           />
           {errors.cnpj && (
@@ -265,14 +265,14 @@ export default function CompanySignUpScreen({ options }) {
 
         <CustomText style={{ fontSize: 20, color: "gray" }}>
           Já tem uma conta?{" "}
-          <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
+          <Link style={{ fontWeight: "bold", color: "black" }} href="/">
             Acessar!
           </Link>
         </CustomText>
         {isConfirmationModal && (
           <ConfirmationModal
             text="Cadastro realizado com sucesso!"
-            onPress={() => router.navigate("/home")}
+            onPress={() => router.navigate("/")}
             iconClose={() => setIsConfirmationModal(false)}
           />
         )}
