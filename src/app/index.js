@@ -17,7 +17,7 @@ export default function Index() {
       </Pressable>
       <Pressable
         style={styles.indexBtn}
-        onPress={() => router.navigate("/signupUser")}
+        onPress={() => router.navigate("/signupCompany")}
       >
         <Text style={styles.btnText}>Sou empresa!</Text>
       </Pressable>

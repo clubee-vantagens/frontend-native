@@ -60,8 +60,8 @@ export default function UserSignUpScreen() {
     mutate(dataToPost);
   };
 
-  if(status === 'pending') {
-    return <LoadingScreen />
+  if (status === "pending") {
+    return <LoadingScreen />;
   }
   return (
     <View style={styles.container}>

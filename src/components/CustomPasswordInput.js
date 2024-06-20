@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",
@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    textAlign: 'center'
+    textAlign: "center",
   },
   icon: {
     padding: 5,
-    position: 'absolute',
-    right: 0
+    position: "absolute",
+    right: 0,
   },
 });
