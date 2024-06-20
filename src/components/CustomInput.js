@@ -1,11 +1,11 @@
 import { TextInput, StyleSheet } from "react-native";
 import { Controller } from "react-hook-form";
 
-export default function CustomInput({ control, name, placeholder, type }) {
+export default function CustomInput({ control, name, placeholder, type, rules }) {
   return (
     <Controller
       control={control}
-      rules={{ required: "Campo Obrigatório" }}
+      rules={rules}
       render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
           value={value}
