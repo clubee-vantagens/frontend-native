@@ -171,7 +171,7 @@ export default function UserSignUpScreen() {
       <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
+        <Link style={{ fontWeight: "bold", color: "black" }} href="/index">
           Acessar!
         </Link>
       </CustomText>
