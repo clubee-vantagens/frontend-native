@@ -54,8 +54,7 @@ export default function CompanySignUpScreen({ options }) {
   });
   const cnpjValue = watch("cnpj");
   const passwordValue = watch("password");
-  const termsOfUse = watch("termsOfUse", false); 
-
+  const termsOfUse = watch("termsOfUse", false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -69,13 +68,11 @@ export default function CompanySignUpScreen({ options }) {
   }, [isSuccess]);
 
   useEffect(() => {
-   
-      setValue("cnpj", maskCnpj(cnpjValue));
-    
+    setValue("cnpj", maskCnpj(cnpjValue));
   }, [cnpjValue]);
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log(data);
     const dataToPost = {
       ...data,
       termsOfUse: data.termsOfUse,
@@ -156,9 +153,8 @@ export default function CompanySignUpScreen({ options }) {
             rules={{
               required: "Campo Obrigatório",
               minLength: { value: 18, message: "cnpj invalido" },
-              validate: (cnpjValue) => validateCpnj(cnpjValue) || "CNPJ Invalido"
-              }
-            }
+              validate: (cnpjValue) => validaCNPJ(cnpjValue) || "CNPJ Invalido",
+            }}
           />
           {errors.cnpj && (
             <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
