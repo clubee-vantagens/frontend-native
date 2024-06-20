@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { Link, useNavigation } from "expo-router";
+import axios from "axios";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -21,12 +22,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ email: "", password: "" });
 
-  const validUsers = [
-    { email: "wilkson@gmail.com", password: "senha1" },
-    { email: "wilkson2@gmail.com", password: "senha2" },
-  ];
-
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError({ email: "", password: "" });
 
     console.log("Tentativa de login com:", email, password);
@@ -51,33 +47,43 @@ export default function Login() {
       return;
     }
 
-    const user = validUsers.find((user) => user.email === email);
-
-    if (!user) {
-      setError((prevError) => ({
-        ...prevError,
-        email: "Este email não está registrado.",
-      }));
-      console.log("Email não registrado:", email);
-      return;
-    }
-
-    if (user.password !== password) {
-      setError((prevError) => ({
-        ...prevError,
-        password: "Senha incorreta.",
-      }));
-      console.log("Senha incorreta para o email:", email);
-      return;
-    }
-
     setIsLoading(true);
-    console.log("Realizando login...");
-    setTimeout(() => {
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+
       setIsLoading(false);
       console.log("Login bem-sucedido para:", email);
       navigation.navigate("Home");
-    }, 2000);
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Erro ao realizar login:", error.message);
+
+      if (error.response) {
+        if (error.response.status === 400) {
+          setError({
+            email: "Credenciais inválidas. Verifique seu email e senha.",
+            password: "Credenciais inválidas. Verifique seu email e senha.",
+          });
+        } else {
+          setError({
+            email: "Erro ao realizar login.",
+            password: "Erro ao realizar login.",
+          });
+        }
+      } else {
+        setError({
+          email: "Erro ao realizar login.",
+          password: "Erro ao realizar login.",
+        });
+      }
+    }
   };
 
   const isValidEmail = (email) => {
