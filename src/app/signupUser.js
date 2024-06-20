@@ -3,7 +3,7 @@ import Constants from "expo-constants";
 import { Link, router } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { useEffect, useState } from "react";
@@ -39,6 +39,7 @@ export default function UserSignUpScreen() {
   });
   const cpfValue = watch("cpf");
   const passwordValue = watch("password");
+  const termsOfUse = watch("termsOfUse", false);
   useEffect(() => {
     if (isSuccess) {
       reset();
@@ -52,7 +53,7 @@ export default function UserSignUpScreen() {
   const onSubmit = (data) => {
     const dataToPost = {
       ...data,
-      termsOfUse: isChecked,
+      termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
       cnpj: null,
       roles: [],
@@ -80,6 +81,14 @@ export default function UserSignUpScreen() {
           placeholder="Nome"
           rules={{
             required: "Campo Obrigatório",
+            maxLength: {
+              value: 256,
+              message: "O nome fantasia não pode exceder 256 caracteres",
+            },
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Nome deve conter somente letras",
+            },
           }}
         />
         {errors.name && (
@@ -123,9 +132,9 @@ export default function UserSignUpScreen() {
             required: true,
             pattern: {
               value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
               message:
-                "A senha deve ter pelo menos 8 caracteres, incluir pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial",
+                "Sua senha precisa conter 8 a 20 caracteres incluindo números, letras maiúsculas e minúsculas e caracteres especiais.",
             },
           }}
         />
@@ -151,27 +160,39 @@ export default function UserSignUpScreen() {
             {errors.confirmPassword.message}
           </ErrorMessageComponent>
         )}
-        <View style={styles.checkBoxContainer}>
-          <Checkbox
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#4630EB" : undefined}
+        <Controller
+            control={control}
+            rules={{ required: "Deve aceitar termos e condicoes" }}
+            name="termsOfUse"
+            render={({ field: { onChange, value } }) => (
+              <View style={styles.checkBoxContainer}>
+                <Checkbox
+                  value={value}
+                  onValueChange={(newValue) => {
+                    setChecked(newValue);
+                    onChange(newValue);
+                  }}
+                  color={isChecked ? "#4630EB" : undefined}
+                />
+                <CustomText style={{ fontSize: 16, color: "gray" }}>
+                  Concordo com os
+                </CustomText>
+                <CustomText
+                  style={{ fontSize: 16, textDecorationLine: "underline" }}
+                >
+                  Termos e Condições
+                </CustomText>
+              </View>
+            )}
           />
-          <CustomText style={{ fontSize: 16, color: "gray" }}>
-            Concordo com os
-          </CustomText>
-          <CustomText style={{ fontSize: 16, textDecorationLine: "underline" }}>
-            Termos e Condições
-          </CustomText>
-        </View>
-        {errors.name && (
-          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
-        )}
+          {errors.termsOfUse && (
+            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+          )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
+      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>Cadastrar-se</CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/index">
+        <Link style={{ fontWeight: "bold", color: "black" }} href="/">
           Acessar!
         </Link>
       </CustomText>
