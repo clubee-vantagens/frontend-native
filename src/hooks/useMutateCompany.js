@@ -2,14 +2,14 @@ import {useMutation} from '@tanstack/react-query'
 import axios from 'axios'
 import {api_url} from '../constants/constants'
 
-const mutateUsers = async (userData) => {
-        const res = await axios.post(`${api_url}/users/client/register`, userData)
+const mutateCompany = async (userData) => {
+        const res = await axios.post(`${api_url}/users/company/register`, userData)
         return res.data
     
 }
-export function useMutateUsers() {
-    const {mutate, isError, error, isSuccess,  status} = useMutation({
-        mutationFn: mutateUsers,
+export function useMutateCompany() {
+    const {mutate, isError, error, isSuccess, isLoading, status} = useMutation({
+        mutationFn: mutateCompany,
         onError: (error) => {
             console.error(error.response.data) 
         },
@@ -18,5 +18,5 @@ export function useMutateUsers() {
             if(error) console.error('Mutation failed:', error.response.data)
         }
     })
-    return {mutate, isError, error, isSuccess,  status}
+    return {mutate, isError, error, isSuccess, isLoading, status}
 }

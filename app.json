@@ -26,10 +26,7 @@
       "output": "static",
       "favicon": "./assets/images/Clubee_logo-2.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ],
+    "plugins": ["expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true
     }
