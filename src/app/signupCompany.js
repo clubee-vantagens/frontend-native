@@ -1,20 +1,28 @@
-import { View, StyleSheet, Pressable, Vibration } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Vibration,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
 import { Link, router } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Select from "../components/CustomOption";
 import { useEffect, useState } from "react";
-import { maskCnpj } from "../utils/utils";
+import { maskCnpj, validaCNPJ, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
-import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
 import { useNavigation } from "expo-router";
+import { useMutateCompany } from "../hooks/useMutateCompany";
 
 export default function CompanySignUpScreen({ options }) {
   const navigation = useNavigation();
@@ -24,7 +32,7 @@ export default function CompanySignUpScreen({ options }) {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const date = new Date();
-  const { mutate, isError, error, isSuccess, status } = useMutateUsers();
+  const { mutate, isError, error, isSuccess, status } = useMutateCompany();
   const {
     control,
     handleSubmit,
@@ -34,19 +42,20 @@ export default function CompanySignUpScreen({ options }) {
     setValue,
   } = useForm({
     defaultValues: {
-      razaoSocial: "",
-      nomeFantasia: "",
+      companyName: "",
       email: "",
       password: "",
       cnpj: "",
-      segment: "",
+      cpf: "159.608.517-76",
+      type: selectedOption,
       termsOfUse: false,
       confirmPassword: "",
     },
   });
-
   const cnpjValue = watch("cnpj");
   const passwordValue = watch("password");
+  const termsOfUse = watch("termsOfUse", false); 
+
 
   useEffect(() => {
     navigation.setOptions({
@@ -60,16 +69,18 @@ export default function CompanySignUpScreen({ options }) {
   }, [isSuccess]);
 
   useEffect(() => {
-    setValue("cnpj", maskCnpj(cnpjValue));
+   
+      setValue("cnpj", maskCnpj(cnpjValue));
+    
   }, [cnpjValue]);
 
   const onSubmit = (data) => {
+    console.log(data)
     const dataToPost = {
       ...data,
-      termsOfUse: isChecked,
+      termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
-      cnpj: null,
-      roles: [],
+      contactPhone: "",
     };
     mutate(dataToPost);
   };
@@ -83,147 +94,203 @@ export default function CompanySignUpScreen({ options }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-        <Pressable onPress={() => router.navigate("/")}>
-          <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
-        </Pressable>
-      </View>
-
-      <CustomText style={{ fontSize: 30 }} variant="semiBold">
-        Cadastro
-      </CustomText>
-
-      <View>
-        <CustomInput
-          control={control}
-          name="razaoSocial"
-          placeholder="Razão Social"
-        />
-        {errors.razaoSocial && (
-          <ErrorMessageComponent>
-            {errors.razaoSocial.message}
-          </ErrorMessageComponent>
-        )}
-        <CustomInput
-          control={control}
-          name="nomeFantasia"
-          placeholder="Nome fantasia"
-        />
-        {errors.nomeFantasia && (
-          <ErrorMessageComponent>
-            {errors.nomeFantasia.message}
-          </ErrorMessageComponent>
-        )}
-        <CustomInput control={control} name="email" placeholder="E-mail" />
-        {errors.email && (
-          <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
-        )}
-        <CustomInput control={control} name="cnpj" placeholder="CNPJ" />
-        {errors.cnpj && (
-          <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
-        )}
-
-        <Select
-          name="segment"
-          control={control}
-          options={[
-            { label: "Alimentos", value: "alimentos" },
-            { label: "Bebidas", value: "bebidas" },
-            { label: "Roupas", value: "roupas" },
-          ]}
-          onChangeSelect={(itemValue) => setValue("segment", itemValue)}
-        />
-
-        {errors.segment && (
-          <ErrorMessageComponent>
-            {errors.segment.message}
-          </ErrorMessageComponent>
-        )}
-        <CustomPasswordInput
-          control={control}
-          name="password"
-          placeholder="Senha"
-          secureTextEntry={true}
-          type="password"
-          rules={{
-            required: true,
-            pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message:
-                "A senha deve ter pelo menos 8 caracteres, incluir pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial",
-            },
-          }}
-        />
-        {errors.password && (
-          <ErrorMessageComponent>
-            {errors.password.message || "Campo Obrigatório"}
-          </ErrorMessageComponent>
-        )}
-        <CustomPasswordInput
-          control={control}
-          name="confirmPassword"
-          placeholder="Confirmar Senha"
-          secureTextEntry={true}
-          type="password"
-          rules={{
-            required: "Campo Obrigatorio",
-            validate: (value) =>
-              value === passwordValue || "As senhas nao coincidem",
-          }}
-        />
-        {errors.confirmPassword && (
-          <ErrorMessageComponent>
-            {errors.confirmPassword.message}
-          </ErrorMessageComponent>
-        )}
-        <View style={styles.checkBoxContainer}>
-          <Checkbox
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#4630EB" : undefined}
-          />
-          <CustomText style={{ fontSize: 16, color: "gray" }}>
-            Concordo com os
-          </CustomText>
-          <CustomText style={{ fontSize: 16, textDecorationLine: "underline" }}>
-            Termos e Condições
-          </CustomText>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+    >
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={{ alignSelf: "flex-start", margin: 25 }}>
+          <Pressable onPress={() => router.navigate("/")}>
+            <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
+          </Pressable>
         </View>
-        {errors.name && (
-          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+
+        <CustomText style={{ fontSize: 30 }} variant="semiBold">
+          Sou Empresa
+        </CustomText>
+
+        <View>
+          <CustomInput
+            control={control}
+            name="companyName"
+            placeholder="Nome fantasia"
+            rules={{
+              required: "Campo Obrigatório",
+              maxLength: {
+                value: 256,
+                message: "O nome fantasia não pode exceder 256 caracteres",
+              },
+              pattern: {
+                value: /^[a-zA-Z]+$/,
+                message: "Nome deve conter somente letras",
+              },
+            }}
+          />
+          {errors.companyName && (
+            <ErrorMessageComponent>
+              {errors.companyName.message}
+            </ErrorMessageComponent>
+          )}
+          <CustomInput
+            control={control}
+            name="email"
+            placeholder="E-mail"
+            rules={{
+              required: "Campo Obrigatório",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "O e-mail inserido é inválido",
+              },
+            }}
+          />
+          {errors.email && (
+            <ErrorMessageComponent>
+              {errors.email.message}
+            </ErrorMessageComponent>
+          )}
+          <CustomInput
+            control={control}
+            name="cnpj"
+            placeholder="CNPJ / CPF"
+            rules={{
+              required: "Campo Obrigatório",
+              minLength: { value: 18, message: "cnpj invalido" },
+              validate: (cnpjValue) => validateCpnj(cnpjValue) || "CNPJ Invalido"
+              }
+            }
+          />
+          {errors.cnpj && (
+            <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
+          )}
+          <Controller
+            control={control}
+            rules={{ required: "Campo Obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                selectedValue={value}
+                options={[
+                  { label: "Alimentação", value: "alimentacao" },
+                  { label: "Cosméticos/Perfumaria", value: "cosmeticos" },
+                  { label: "Mecânico", value: "mecanico" },
+                  {
+                    label: "Produtos Artesanais",
+                    value: "produtos artesanais",
+                  },
+                  { label: "Sapato", value: "sapato" },
+                  { label: "Vestuário", value: "vestuario" },
+                  { label: "Outro", value: "outro" },
+                ]}
+                onChangeSelect={onChange}
+              />
+            )}
+            name="type"
+            defaultValue={"undefined"}
+          />
+
+          {errors.type && (
+            <ErrorMessageComponent>{errors.type.message}</ErrorMessageComponent>
+          )}
+          <CustomPasswordInput
+            control={control}
+            name="password"
+            placeholder="Senha"
+            secureTextEntry={true}
+            type="password"
+            rules={{
+              required: true,
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                message:
+                  "Sua senha precisa conter 8 a 20 caracteres incluindo números, letras maiúsculas e minúsculas e caracteres especiais.",
+              },
+            }}
+          />
+          {errors.password && (
+            <ErrorMessageComponent>
+              {errors.password.message || "Campo Obrigatório"}
+            </ErrorMessageComponent>
+          )}
+          <CustomPasswordInput
+            control={control}
+            name="confirmPassword"
+            placeholder="Confirmar Senha"
+            secureTextEntry={true}
+            type="password"
+            rules={{
+              required: "Campo Obrigatorio",
+              validate: (value) =>
+                value === passwordValue || "As senhas nao coincidem",
+            }}
+          />
+          {errors.confirmPassword && (
+            <ErrorMessageComponent>
+              {errors.confirmPassword.message}
+            </ErrorMessageComponent>
+          )}
+          <Controller
+            control={control}
+            rules={{ required: "Deve aceitar termos e condicoes" }}
+            name="termsOfUse"
+            render={({ field: { onChange, value } }) => (
+              <View style={styles.checkBoxContainer}>
+                <Checkbox
+                  value={value}
+                  onValueChange={(newValue) => {
+                    setChecked(newValue);
+                    onChange(newValue);
+                  }}
+                  color={isChecked ? "#4630EB" : undefined}
+                />
+                <CustomText style={{ fontSize: 16, color: "gray" }}>
+                  Concordo com os
+                </CustomText>
+                <CustomText
+                  style={{ fontSize: 16, textDecorationLine: "underline" }}
+                >
+                  Termos e Condições
+                </CustomText>
+              </View>
+            )}
+          />
+          {errors.termsOfUse && (
+            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+          )}
+        </View>
+
+        <CustomButton
+          onPress={handleSubmit(onSubmit, onInvalid)}
+          disabled={!termsOfUse}
+        >
+          Cadastrar-se
+        </CustomButton>
+
+        <CustomText style={{ fontSize: 20, color: "gray" }}>
+          Já tem uma conta?{" "}
+          <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
+            Acessar!
+          </Link>
+        </CustomText>
+        {isConfirmationModal && (
+          <ConfirmationModal
+            text="Cadastro realizado com sucesso!"
+            onPress={() => router.navigate("/home")}
+            iconClose={() => setIsConfirmationModal(false)}
+          />
         )}
-      </View>
-
-      <CustomButton onPress={handleSubmit(onSubmit, onInvalid)}>
-        Cadastrar-se
-      </CustomButton>
-
-      <CustomText style={{ fontSize: 20, color: "gray" }}>
-        Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
-          Acessar!
-        </Link>
-      </CustomText>
-      {isConfirmationModal && (
-        <ConfirmationModal
-          text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("/home")}
-          iconClose={() => setIsConfirmationModal(false)}
-        />
-      )}
-      {isError && (
-        <ConfirmationModal
-          onPress={() => router.back()}
-          iconClose={() => router.back()}
-          text={
-            error?.response?.data ||
-            "Nao foi possivel realizar o cadastro no momento, tente novamente!"
-          }
-        />
-      )}
-    </View>
+        {isError && (
+          <ConfirmationModal
+            onPress={() => setIsConfirmationModal(false)}
+            iconClose={() => setIsConfirmationModal(false)}
+            text={
+              error?.response?.data ||
+              "Nao foi possivel realizar o cadastro no momento, tente novamente!"
+            }
+          />
+        )}
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -232,11 +299,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: "#FFFAEB",
-    flexDirection: "column",
+  },
+  scrollViewContent: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
-
   checkBoxContainer: {
     flexDirection: "row",
     justifyContent: "start",
