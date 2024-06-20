@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     width: 297,
     height: 225,
     marginTop: 50,
-    resizeMode: "contain",
+    contentFit: "contain",
   },
   input: {
     width: 350,
