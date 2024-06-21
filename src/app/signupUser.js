@@ -107,7 +107,7 @@ export default function UserSignUpScreen() {
           rules={{
             required: "Campo Obrigatório",
             minLength: { value: 14, message: "CPF invalido" },
-            validate: cpfValue => validateCpf(cpfValue) || "CPF invalido"
+            validate: (cpfValue) => validateCpf(cpfValue) || "CPF invalido",
           }}
         />
         {errors.cpf && (
@@ -171,7 +171,7 @@ export default function UserSignUpScreen() {
       <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/index">
+        <Link style={{ fontWeight: "bold", color: "black" }} href="/">
           Acessar!
         </Link>
       </CustomText>

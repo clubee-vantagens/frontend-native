@@ -14,34 +14,43 @@ import {
 import { Image } from "expo-image";
 import { Link, useNavigation } from "expo-router";
 import axios from "axios";
+import { useForm, Controller } from "react-hook-form";
+import CustomPasswordInput from "../components/CustomPasswordInput";
 
 export default function Login() {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({ email: "", password: "" });
 
-  const handleLogin = async () => {
-    setError({ email: "", password: "" });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = async (data) => {
+    const { email, password } = data;
 
     console.log("Tentativa de login com:", email, password);
 
     if (!isValidEmail(email)) {
-      setError((prevError) => ({
-        ...prevError,
-        email: "Por favor, insira um email válido.",
-      }));
+      setError("email", {
+        type: "manual",
+        message: "Por favor, insira um email válido.",
+      });
       Vibration.vibrate(300);
       console.log("Email inválido:", email);
       return;
     }
 
     if (!isValidPassword(password)) {
-      setError((prevError) => ({
-        ...prevError,
-        password: "Senha incorreta",
-      }));
+      setError("password", { type: "manual", message: "Senha incorreta" });
       Vibration.vibrate(300);
       console.log("Senha inválida:", password);
       return;
@@ -60,27 +69,41 @@ export default function Login() {
 
       setIsLoading(false);
       console.log("Login bem-sucedido para:", email);
-      navigation.navigate("Home");
+      navigation.navigate("home");
+
+      reset();
     } catch (error) {
       setIsLoading(false);
       console.error("Erro ao realizar login:", error.message);
 
       if (error.response) {
         if (error.response.status === 400) {
-          setError({
-            email: "Credenciais inválidas. Verifique seu email e senha.",
-            password: "Credenciais inválidas. Verifique seu email e senha.",
+          setError("email", {
+            type: "manual",
+            message: "Credenciais inválidas. Verifique seu email ou senha.",
+          });
+          setError("password", {
+            type: "manual",
+            message: "Credenciais inválidas. Verifique seu email ou senha.",
           });
         } else {
-          setError({
-            email: "Erro ao realizar login.",
-            password: "Erro ao realizar login.",
+          setError("email", {
+            type: "manual",
+            message: "Erro ao realizar login.",
+          });
+          setError("password", {
+            type: "manual",
+            message: "Erro ao realizar login.",
           });
         }
       } else {
-        setError({
-          email: "Erro ao realizar login.",
-          password: "Erro ao realizar login.",
+        setError("email", {
+          type: "manual",
+          message: "Erro ao realizar login.",
+        });
+        setError("password", {
+          type: "manual",
+          message: "Erro ao realizar login.",
         });
       }
     }
@@ -106,27 +129,37 @@ export default function Login() {
         />
 
         <View>
-          <TextInput
-            style={styles.input}
-            placeholder="E-mail"
-            maxLength={50}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
+          {/* Controller para facilitar a integração dos componentes controlados, fornecendos os métodos */}
+          <Controller
+            control={control}
+            name="email"
+            // field recebe os métodos para conectar os componentes do form
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="E-mail"
+                maxLength={50}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                // rules={{ required: "Email é obrigatório!" }}
+              />
+            )}
           />
-          {error.email ? (
-            <Text style={styles.errorText}>{error.email}</Text>
-          ) : null}
+          {errors.email && (
+            <Text style={styles.errorText}>{errors.email.message}</Text>
+          )}
 
-          <TextInput
-            style={styles.input}
+          <CustomPasswordInput
+            control={control}
+            name="password"
             placeholder="Senha"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
+            type="text"
+            rules={{ required: "Senha é obrigatória" }}
           />
-          {error.password ? (
-            <Text style={styles.errorText}>{error.password}</Text>
-          ) : null}
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password.message}</Text>
+          )}
         </View>
 
         <View style={styles.lembrarSenha}>
@@ -135,7 +168,7 @@ export default function Login() {
           </Link>
         </View>
 
-        <Pressable style={styles.btnEntrar} onPress={handleLogin}>
+        <Pressable style={styles.btnEntrar} onPress={handleSubmit(handleLogin)}>
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (

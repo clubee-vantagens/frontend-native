@@ -153,8 +153,7 @@ export default function CompanySignUpScreen({ options }) {
             rules={{
               required: "Campo Obrigatório",
               minLength: { value: 18, message: "cnpj invalido" },
-              validate: (cnpjValue) =>
-                validaCNPJ(cnpjValue) || "CNPJ Invalido",
+              validate: (cnpjValue) => validaCNPJ(cnpjValue) || "CNPJ Invalido",
             }}
           />
           {errors.cnpj && (
