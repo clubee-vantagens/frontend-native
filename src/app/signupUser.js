@@ -3,11 +3,11 @@ import Constants from "expo-constants";
 import { Link, router } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { useEffect, useState } from "react";
-import { maskCpf } from "../utils/utils";
+import { maskCpf, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useMutateUsers } from "../hooks/useMutateUser";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -39,6 +39,7 @@ export default function UserSignUpScreen() {
   });
   const cpfValue = watch("cpf");
   const passwordValue = watch("password");
+  const termsOfUse = watch("termsOfUse", false);
   useEffect(() => {
     if (isSuccess) {
       reset();
@@ -52,7 +53,7 @@ export default function UserSignUpScreen() {
   const onSubmit = (data) => {
     const dataToPost = {
       ...data,
-      termsOfUse: isChecked,
+      termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
       cnpj: null,
       roles: [],
@@ -60,8 +61,8 @@ export default function UserSignUpScreen() {
     mutate(dataToPost);
   };
 
-  if(status === 'pending') {
-    return <LoadingScreen />
+  if (status === "pending") {
+    return <LoadingScreen />;
   }
   return (
     <View style={styles.container}>
@@ -74,15 +75,50 @@ export default function UserSignUpScreen() {
         Sou Cliente
       </CustomText>
       <View>
-        <CustomInput control={control} name="name" placeholder="Nome" />
+        <CustomInput
+          control={control}
+          name="name"
+          placeholder="Nome"
+          rules={{
+            required: "Campo Obrigatório",
+            maxLength: {
+              value: 256,
+              message: "O nome fantasia não pode exceder 256 caracteres",
+            },
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Nome deve conter somente letras",
+            },
+          }}
+        />
         {errors.name && (
           <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
         )}
-        <CustomInput control={control} name="email" placeholder="E-mail" />
+        <CustomInput
+          control={control}
+          name="email"
+          placeholder="E-mail"
+          rules={{
+            required: "Campo Obrigatório",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "O e-mail inserido é inválido",
+            },
+          }}
+        />
         {errors.email && (
           <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
-        <CustomInput control={control} name="cpf" placeholder="CPF" />
+        <CustomInput
+          control={control}
+          name="cpf"
+          placeholder="CPF"
+          rules={{
+            required: "Campo Obrigatório",
+            minLength: { value: 14, message: "CPF invalido" },
+            validate: cpfValue => validateCpf(cpfValue) || "CPF invalido"
+          }}
+        />
         {errors.cpf && (
           <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
         )}
@@ -96,9 +132,9 @@ export default function UserSignUpScreen() {
             required: true,
             pattern: {
               value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
               message:
-                "A senha deve ter pelo menos 8 caracteres, incluir pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial",
+                "Sua senha precisa conter 8 a 20 caracteres incluindo números, letras maiúsculas e minúsculas e caracteres especiais.",
             },
           }}
         />
@@ -114,9 +150,9 @@ export default function UserSignUpScreen() {
           secureTextEntry={true}
           type="password"
           rules={{
-            required: "Campo Obrigatorio",
+            required: "Campo Obrigatório",
             validate: (value) =>
-              value === passwordValue || "As senhas nao coincidem",
+              value === passwordValue || "As senhas não coincidem",
           }}
         />
         {errors.confirmPassword && (
@@ -124,27 +160,39 @@ export default function UserSignUpScreen() {
             {errors.confirmPassword.message}
           </ErrorMessageComponent>
         )}
-        <View style={styles.checkBoxContainer}>
-          <Checkbox
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#4630EB" : undefined}
+        <Controller
+            control={control}
+            rules={{ required: "Deve aceitar termos e condicoes" }}
+            name="termsOfUse"
+            render={({ field: { onChange, value } }) => (
+              <View style={styles.checkBoxContainer}>
+                <Checkbox
+                  value={value}
+                  onValueChange={(newValue) => {
+                    setChecked(newValue);
+                    onChange(newValue);
+                  }}
+                  color={isChecked ? "#4630EB" : undefined}
+                />
+                <CustomText style={{ fontSize: 16, color: "gray" }}>
+                  Concordo com os
+                </CustomText>
+                <CustomText
+                  style={{ fontSize: 16, textDecorationLine: "underline" }}
+                >
+                  Termos e Condições
+                </CustomText>
+              </View>
+            )}
           />
-          <CustomText style={{ fontSize: 16, color: "gray" }}>
-            Concordo com os
-          </CustomText>
-          <CustomText style={{ fontSize: 16, textDecorationLine: "underline" }}>
-            Termos e Condições
-          </CustomText>
-        </View>
-        {errors.name && (
-          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
-        )}
+          {errors.termsOfUse && (
+            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+          )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)}>Cadastrar-se</CustomButton>
+      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>Cadastrar-se</CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/login">
+        <Link style={{ fontWeight: "bold", color: "black" }} href="/">
           Acessar!
         </Link>
       </CustomText>
@@ -157,8 +205,8 @@ export default function UserSignUpScreen() {
       )}
       {isError && (
         <ConfirmationModal
-          onPress={() => router.back()}
-          iconClose={() => router.back()}
+          onPress={() => setIsConfirmationModal(false)}
+          iconClose={() => setIsConfirmationModal(false)}
           text={
             error?.response?.data ||
             "Nao foi possivel realizar o cadastro no momento, tente novamente!"
