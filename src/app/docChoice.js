@@ -1,9 +1,10 @@
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import CustomText from "../components/CustomText";
 
-export default function Signup() {
+export default function DocChoiceScreen() {
+    const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image
@@ -12,15 +13,15 @@ export default function Signup() {
       />
       <Pressable
         style={styles.indexBtn}
-        onPress={() => router.navigate("/signupUser")}
+        onPress={() => router.push({pathname: "signupCompany", params: {type: "cpf"}})}
       >
-        <CustomText style={styles.btnText}>Sou cliente!</CustomText>
+        <CustomText style={styles.btnText}>Possuo CPF</CustomText>
       </Pressable>
       <Pressable
         style={styles.indexBtn}
-        onPress={() => router.navigate("/docChoice")}
+        onPress={() => router.push({pathname: "signupCompany", params: {type: "cnpj"}})}
       >
-        <CustomText style={styles.btnText}>Sou empresa!</CustomText>
+        <CustomText style={styles.btnText}>Possuo CNPJ</CustomText>
       </Pressable>
     </View>
   );

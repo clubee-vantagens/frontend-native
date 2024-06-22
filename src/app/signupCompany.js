@@ -7,7 +7,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
@@ -15,17 +15,17 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Select from "../components/CustomOption";
 import { useEffect, useState } from "react";
-import { maskCnpj, validaCNPJ, validateCpf } from "../utils/utils";
+import { maskCnpj, maskCpf, validaCNPJ, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
-import { useNavigation } from "expo-router";
 import { useMutateCompany } from "../hooks/useMutateCompany";
 
 export default function CompanySignUpScreen({ options }) {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
+  const {type} = useLocalSearchParams()
 
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
@@ -45,14 +45,14 @@ export default function CompanySignUpScreen({ options }) {
       companyName: "",
       email: "",
       password: "",
+      cpf: "",
       cnpj: "",
-      cpf: "159.608.517-76",
       type: selectedOption,
       termsOfUse: false,
       confirmPassword: "",
     },
   });
-  const cnpjValue = watch("cnpj");
+  const inputValue = watch(type === "cnpj" ? "cnpj" : "cpf")
   const passwordValue = watch("password");
   const termsOfUse = watch("termsOfUse", false);
 
@@ -68,11 +68,10 @@ export default function CompanySignUpScreen({ options }) {
   }, [isSuccess]);
 
   useEffect(() => {
-    setValue("cnpj", maskCnpj(cnpjValue));
-  }, [cnpjValue]);
+    setValue(type === "cnpj" ? "cnpj" : "cpf", type === "cnpj" ? maskCnpj(inputValue) : maskCpf(inputValue));
+  }, [inputValue]);
 
   const onSubmit = (data) => {
-    console.log(data);
     const dataToPost = {
       ...data,
       termsOfUse: data.termsOfUse,
@@ -119,9 +118,8 @@ export default function CompanySignUpScreen({ options }) {
                 message: "O nome fantasia não pode exceder 256 caracteres",
               },
               pattern: {
-                value: /^[a-zA-Z\sÀ-ÖØ-öø-ÿ´`~]+$/,
-                message:
-                  "Nome deve conter somente letras, espaços e caracteres especiais permitidos",
+                value: /^[a-zA-Z]+$/,
+                message: "Nome deve conter somente letras",
               },
             }}
           />
@@ -149,12 +147,13 @@ export default function CompanySignUpScreen({ options }) {
           )}
           <CustomInput
             control={control}
-            name="cnpj"
-            placeholder="CNPJ / CPF"
+            name={type}
+            placeholder={type.toUpperCase()}
             rules={{
               required: "Campo Obrigatório",
               minLength: { value: 18, message: "cnpj invalido" },
-              validate: (cnpjValue) => validaCNPJ(cnpjValue) || "CNPJ Invalido",
+              validate: (cnpjValue) =>
+                validateCpnj(cnpjValue) || "CNPJ Invalido",
             }}
           />
           {errors.cnpj && (
@@ -278,8 +277,8 @@ export default function CompanySignUpScreen({ options }) {
         )}
         {isError && (
           <ConfirmationModal
-            onPress={() => setIsConfirmationModal(false)}
-            iconClose={() => setIsConfirmationModal(false)}
+            onPress={() => router.navigate("/")}
+            iconClose={() => router.navigate("/")}
             text={
               error?.response?.data ||
               "Nao foi possivel realizar o cadastro no momento, tente novamente!"
