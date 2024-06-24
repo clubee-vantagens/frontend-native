@@ -100,6 +100,7 @@ export default function UserSignUpScreen() {
           placeholder="E-mail"
           rules={{
             required: "Campo Obrigatório",
+            maxLength: {value: 50, message: "O e-mail inserido é inválido"},
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "O e-mail inserido é inválido",
