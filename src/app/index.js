@@ -124,7 +124,7 @@ export default function Index() {
         </View>
 
         <View style={styles.lembrarSenha}>
-          <Link href="/recuperar">
+          <Link href="/passwordRecovery">
             <Text style={styles.lembrarSenhaText}>Esqueceu a senha?</Text>
           </Link>
         </View>
