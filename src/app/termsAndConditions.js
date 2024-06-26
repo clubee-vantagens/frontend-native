@@ -7,7 +7,7 @@ export default function TermsAndConditionsScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={{ alignSelf: "flex-start", marginBottom: 20 }}>
-        <Pressable onPress={() => router.navigate("/signupUser")}>
+        <Pressable onPress={() => router.back()}>
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Pressable>
       </View>
