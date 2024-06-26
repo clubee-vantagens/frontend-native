@@ -34,6 +34,7 @@ export default function RootLayout() {
           <Stack.Screen options={{ headerShown: false }} name="home" />
           <Stack.Screen options={{headerShown: false}} name="docChoice" />
           <Stack.Screen options={{headerShown: false}} name="passwordRecovery" />
+          <Stack.Screen options={{headerShown: false}} name="termsAndConditions" />
         </Stack>
       </QueryClientProvider>
     </GestureHandlerRootView>
