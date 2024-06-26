@@ -180,8 +180,9 @@ export default function UserSignUpScreen() {
                 </CustomText>
                 <CustomText
                   style={{ fontSize: 16, textDecorationLine: "underline" }}
-                >
+                ><Link href="/termsAndConditions">
                   Termos e Condições
+                </Link>
                 </CustomText>
               </View>
             )}
