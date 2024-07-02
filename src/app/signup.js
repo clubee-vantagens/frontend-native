@@ -14,13 +14,13 @@ export default function Signup() {
         style={styles.indexBtn}
         onPress={() => router.navigate("/signupUser")}
       >
-        <CustomText style={styles.btnText}>Sou cliente!</CustomText>
+        <CustomText style={styles.btnText}>Sou cliente</CustomText>
       </Pressable>
       <Pressable
         style={styles.indexBtn}
-        onPress={() => router.navigate("/docChoice")}
+        onPress={() => router.navigate("/signupCompany")}
       >
-        <CustomText style={styles.btnText}>Sou empresa!</CustomText>
+        <CustomText style={styles.btnText}>Sou empresa</CustomText>
       </Pressable>
     </View>
   );
