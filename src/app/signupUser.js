@@ -207,8 +207,8 @@ export default function UserSignUpScreen() {
       )}
       {isError && (
         <ConfirmationModal
-          onPress={() => setIsConfirmationModal(false)}
-          iconClose={() => setIsConfirmationModal(false)}
+          onPress={() => router.navigate("/")}
+          iconClose={() => router.navigate("/")}
           text={
             error?.response?.data ||
             "Nao foi possivel realizar o cadastro no momento, tente novamente!"

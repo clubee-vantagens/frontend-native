@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
 export default function CustomPasswordInput({
@@ -35,9 +35,9 @@ export default function CustomPasswordInput({
       />
       <Pressable style={styles.icon} onPress={handleShowPassword}>
         {isPasswordHidden ? (
-          <Octicons name="eye" size={15} color="black" />
+          <Ionicons name="eye" size={15} color="gray" />
         ) : (
-          <Octicons name="eye-closed" size={15} color="black" />
+          <Ionicons name="eye-off" size={15} color="gray" />
         )}
       </Pressable>
     </View>

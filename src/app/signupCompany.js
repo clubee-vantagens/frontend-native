@@ -24,8 +24,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { useMutateCompany } from "../hooks/useMutateCompany";
 
 export default function CompanySignUpScreen({ options }) {
-  const navigation = useNavigation()
-  const {type} = useLocalSearchParams()
+  const navigation = useNavigation();
 
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
@@ -52,14 +51,11 @@ export default function CompanySignUpScreen({ options }) {
       confirmPassword: "",
     },
   });
-  const inputValue = watch(type === "cnpj" ? "cnpj" : "cpf")
+  const inputValue = watch("cnpj");
   const passwordValue = watch("password");
   const termsOfUse = watch("termsOfUse", false);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
@@ -68,7 +64,7 @@ export default function CompanySignUpScreen({ options }) {
   }, [isSuccess]);
 
   useEffect(() => {
-    setValue(type === "cnpj" ? "cnpj" : "cpf", type === "cnpj" ? maskCnpj(inputValue) : maskCpf(inputValue));
+    setValue("cnpj", maskCnpj(inputValue));
   }, [inputValue]);
 
   const onSubmit = (data) => {
@@ -134,7 +130,7 @@ export default function CompanySignUpScreen({ options }) {
             placeholder="E-mail"
             rules={{
               required: "Campo Obrigatório",
-              maxLength: {value: 50, message: "O e-mail inserido é inválido"},
+              maxLength: { value: 50, message: "O e-mail inserido é inválido" },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "O e-mail inserido é inválido",
@@ -148,22 +144,16 @@ export default function CompanySignUpScreen({ options }) {
           )}
           <CustomInput
             control={control}
-            name={type}
-            placeholder={type.toUpperCase()}
+            name="cnpj"
+            placeholder="CNPJ"
             rules={{
               required: "Campo Obrigatório",
-              minLength: { value: type === "cnpj" ? 18 : 14, message: type.toUpperCase() + "invalido" },
-              validate: (inputValue) => {
-                if(type === "cnpj") {
-                  validaCNPJ(inputValue)
-                } else {
-                  validateCpf(inputValue)
-                }
-              }
+              minLength: { value: 18 },
+              validate: (inputValue) => validaCNPJ(inputValue),
             }}
           />
-          {errors.cnpj && (
-            <ErrorMessageComponent>{errors.cnpj.message}</ErrorMessageComponent>
+          {errors?.cnpj && (
+            <ErrorMessageComponent>{errors?.cnpj.message}</ErrorMessageComponent>
           )}
           <Controller
             control={control}
@@ -251,9 +241,7 @@ export default function CompanySignUpScreen({ options }) {
                 <CustomText
                   style={{ fontSize: 16, textDecorationLine: "underline" }}
                 >
-                  <Link href="/termsAndConditions">
-                  Termos e Condições
-                  </Link>
+                  <Link href="/termsAndConditions">Termos e Condições</Link>
                 </CustomText>
               </View>
             )}

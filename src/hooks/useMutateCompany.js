@@ -15,7 +15,7 @@ export function useMutateCompany() {
         },
         onSettled: (data, error) => {
             if(data) console.log('Mutation successful:', data)
-            if(error) console.error('Mutation failed:', error.response.data)
+            if(error) console.error('Mutation failed:', error.response)
         }
     })
     return {mutate, isError, error, isSuccess, isLoading, status}

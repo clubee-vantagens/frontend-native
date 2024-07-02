@@ -31,8 +31,8 @@ export default function RootLayout() {
           <Stack.Screen options={{ headerShown: false }} name="index" />
           <Stack.Screen options={{ headerShown: false }} name="signup" />
           <Stack.Screen options={{ headerShown: false }} name="signupUser" />
+          <Stack.Screen options={{headerShown: false}} name="signupCompany" />
           <Stack.Screen options={{ headerShown: false }} name="home" />
-          <Stack.Screen options={{headerShown: false}} name="docChoice" />
           <Stack.Screen options={{headerShown: false}} name="passwordRecovery" />
           <Stack.Screen options={{headerShown: false}} name="termsAndConditions" />
         </Stack>
