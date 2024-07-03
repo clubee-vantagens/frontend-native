@@ -44,7 +44,6 @@ export default function CompanySignUpScreen({ options }) {
       companyName: "",
       email: "",
       password: "",
-      cpf: "",
       cnpj: "",
       type: selectedOption,
       termsOfUse: false,
