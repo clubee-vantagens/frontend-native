@@ -86,7 +86,7 @@ export default function UserSignUpScreen() {
               message: "O nome fantasia não pode exceder 256 caracteres",
             },
             pattern: {
-              value: /^[a-zA-Z\s]+$/,
+              value: /^[a-zA-Z\s\u00C0-\u00FF]+$/,
               message: "Nome deve conter somente letras",
             },
           }}
