@@ -5,8 +5,8 @@ import {Link} from 'expo-router'
 export default function Home() {
   return (
     <View style={styles.container}>
-      <Pressable>Tela de inicio</Pressable>
-      <Link href="/" style={{color: 'red'}}>
+      <Pressable><Text>Tela de inicio</Text></Pressable>
+      <Link href="/sign-in" style={{color: 'red'}}>
           Voltar para tela de login
         </Link>
     </View>
