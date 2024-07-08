@@ -21,7 +21,7 @@ export default function PasswordRecoveryScreen() {
     setValue,
   } = useForm({ defaultValues: { email: "" } });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { mutate, isSuccess, status } = usePasswordRecovery();
+  const { mutate, isSuccess, status, isError } = usePasswordRecovery();
   const onSubmit = (data) => {
     mutate(data);
   };
@@ -100,6 +100,7 @@ export default function PasswordRecoveryScreen() {
         <CustomButton onPress={handleSubmit(onSubmit)} type="red">
           Enviar Link
         </CustomButton>
+        {isError && <ErrorMessageComponent>Email nao cadastrado</ErrorMessageComponent>}
       </View>
       <Link href="/">
         <CustomText variant="bold" style={{ textDecorationLine: "underline" }}>

@@ -58,7 +58,6 @@ export default function CompanySignUpScreen({ options }) {
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
-      navigation.navigate("Login");
     }
   }, [isSuccess]);
 
@@ -147,8 +146,8 @@ export default function CompanySignUpScreen({ options }) {
             placeholder="CNPJ"
             rules={{
               required: "Campo Obrigatório",
-              minLength: { value: 18 },
-              validate: (inputValue) => validaCNPJ(inputValue),
+              minLength: { value: 18, message: "CNPJ inserido é inválido" },
+              validate: (inputValue) => validaCNPJ(inputValue) || "CNPJ inserido é inválido",
             }}
           />
           {errors?.cnpj && (
@@ -266,7 +265,7 @@ export default function CompanySignUpScreen({ options }) {
         {isConfirmationModal && (
           <ConfirmationModal
             text="Cadastro realizado com sucesso!"
-            onPress={() => router.navigate("/home")}
+            onPress={() => router.navigate("/sign-in")}
             iconClose={() => setIsConfirmationModal(false)}
           />
         )}
