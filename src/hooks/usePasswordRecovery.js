@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 const sendEmail = async (dataToSend) => {
   try {
     const res = await axios.post(`${api_url}/password/forgot`, dataToSend);
-    return res.data;
+    return res?.data;
   } catch (error) {
     throw new Error(error.message)
   }

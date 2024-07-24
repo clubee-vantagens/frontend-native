@@ -4,7 +4,7 @@ import {api_url} from '../constants/constants'
 
 const mutateUsers = async (userData) => {
         const res = await axios.post(`${api_url}/users/client/register`, userData)
-        return res.data
+        return res?.data
     
 }
 export function useMutateUsers() {
@@ -15,7 +15,7 @@ export function useMutateUsers() {
         },
         onSettled: (data, error) => {
             if(data) console.log('Mutation successful:', data)
-            if(error) console.error('Mutation failed:', error.response)
+            if(error) console.error('Mutation failed:', error)
         }
     })
     return {mutate, isError, error, isSuccess,  status}
