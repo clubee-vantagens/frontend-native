@@ -201,7 +201,7 @@ export default function UserSignUpScreen() {
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("/home")}
+          onPress={() => router.navigate("/sign-in")}
           iconClose={() => setIsConfirmationModal(false)}
         />
       )}

@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import Constants from "expo-constants";
 import { Image } from "expo-image";
 import { Link, router } from "expo-router";
 import { useSession } from "../context/ctx";
@@ -127,6 +128,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: Constants.statusBarHeight,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFAEB",

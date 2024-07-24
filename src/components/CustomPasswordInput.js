@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
   icon: {
     padding: 5,
     position: "absolute",
-    right: 0,
+    right: 30,
   },
 });
