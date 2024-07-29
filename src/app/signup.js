@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import CustomText from "../components/CustomText";
+import Constants from "expo-constants";
 
 export default function Signup() {
   return (
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
   image: { width: 297, height: 225 },
   container: {
     flex: 1,
+    marginTop: Constants.statusBarHeight,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFAEB",

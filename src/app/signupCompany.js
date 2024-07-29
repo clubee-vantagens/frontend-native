@@ -7,6 +7,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
+import Constants from "expo-constants";
 import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,8 +23,9 @@ import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
 import { useMutateCompany } from "../hooks/useMutateCompany";
+import CustomSelect from "../components/CustomSelect";
 
-export default function CompanySignUpScreen({ options }) {
+export default function CompanySignUpScreen() {
   const navigation = useNavigation();
 
   const [isChecked, setChecked] = useState(false);
@@ -53,6 +55,15 @@ export default function CompanySignUpScreen({ options }) {
   const inputValue = watch("cnpj");
   const passwordValue = watch("password");
   const termsOfUse = watch("termsOfUse", false);
+  const options = [
+    { label: "Alimentação", value: "alimentacao" },
+    { label: "Cosméticos/Perfumaria", value: "cosmeticos" },
+    { label: "Mecânico", value: "mecanico" },
+    { label: "Produtos Artesanais", value: "produtos artesanais" },
+    { label: "Sapato", value: "sapato" },
+    { label: "Vestuário", value: "vestuario" },
+    { label: "Outro", value: "outro" },
+  ];
 
   useEffect(() => {
     if (isSuccess) {
@@ -156,41 +167,21 @@ export default function CompanySignUpScreen({ options }) {
                 validateCpnj(cnpjValue) || "CNPJ Invalido",
 =======
               minLength: { value: 18, message: "CNPJ inserido é inválido" },
+<<<<<<< HEAD
               validate: (inputValue) => validaCNPJ(inputValue) || "CNPJ inserido é inválido",
 >>>>>>> b75501bf1019bc6baa2bdbff7135d4f29d39f017
+=======
+              validate: (inputValue) =>
+                validaCNPJ(inputValue) || "CNPJ inserido é inválido",
+>>>>>>> f23cd91aaada8f159abdb38d8b8466d559aa5282
             }}
           />
           {errors?.cnpj && (
-            <ErrorMessageComponent>{errors?.cnpj.message}</ErrorMessageComponent>
+            <ErrorMessageComponent>
+              {errors?.cnpj.message}
+            </ErrorMessageComponent>
           )}
-          <Controller
-            control={control}
-            rules={{ required: "Campo Obrigatório" }}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                selectedValue={value}
-                options={[
-                  { label: "Alimentação", value: "alimentacao" },
-                  { label: "Cosméticos/Perfumaria", value: "cosmeticos" },
-                  { label: "Mecânico", value: "mecanico" },
-                  {
-                    label: "Produtos Artesanais",
-                    value: "produtos artesanais",
-                  },
-                  { label: "Sapato", value: "sapato" },
-                  { label: "Vestuário", value: "vestuario" },
-                  { label: "Outro", value: "outro" },
-                ]}
-                onChangeSelect={onChange}
-              />
-            )}
-            name="type"
-            defaultValue={"undefined"}
-          />
 
-          {errors.type && (
-            <ErrorMessageComponent>{errors.type.message}</ErrorMessageComponent>
-          )}
           <CustomPasswordInput
             control={control}
             name="password"
@@ -228,6 +219,16 @@ export default function CompanySignUpScreen({ options }) {
             <ErrorMessageComponent>
               {errors.confirmPassword.message}
             </ErrorMessageComponent>
+          )}
+          <CustomSelect
+            control={control}
+            name="type"
+            rules={{ required: "Campo Obrigatorio" }}
+            options={options}
+            defaultValue={undefined}
+          />
+          {errors.type && (
+            <ErrorMessageComponent>{errors.type.message}</ErrorMessageComponent>
           )}
           <Controller
             control={control}
@@ -301,6 +302,7 @@ export default function CompanySignUpScreen({ options }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: Constants.statusBarHeight,
     paddingTop: 20,
     backgroundColor: "#FFFAEB",
   },

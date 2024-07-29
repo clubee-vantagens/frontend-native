@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useStorageState } from '../hooks/useAsyncState';
 import axios from 'axios';
+import { api_url } from '../constants/constants';
+import { jwtDecode } from 'jwt-decode';
 
 // Define the shape of the context's value
 const AuthContext = React.createContext({
@@ -33,7 +35,7 @@ export function SessionProvider(props) {
   useEffect(() => {
     const checkTokenExpiration = async () => {
       if (session && refreshToken) {
-        const {exp} = JSON.parse(atob(session.split('.')[1]))
+        const {exp} = jwtDecode(session)
         const expirationTime = exp * 1000
         console.log(expirationTime)
         const currentTime = new Date().getTime()
@@ -52,33 +54,35 @@ export function SessionProvider(props) {
     try {
       console.log('token:',session);
       console.log('refresh:', refreshToken[1]);
-      const response = await axios.post('http://localhost:8080/api/users/newtoken', {
+      const response = await axios.post(`${api_url}/users/newtoken`, {
         expiredAccessToken: session, 
         refreshToken: refreshToken[1]
       })
-      setSession(response.data.newAccessToken)
-      setRefreshToken(response.data.newRefreshToken)
+      setSession(response?.data?.newAccessToken)
+      setRefreshToken(response?.data?.newRefreshToken)
       setError(null)
     } catch (error) {
-      console.log(error);
-      setError(error.response?.data)
+      setError(error.message)
       signOut()
     }
   }
 
   const signIn = async (email, password) => {
     try {
-      const response = await axios.post("http://localhost:8080/api/users/login", {
+      const response = await axios.post(`${api_url}/users/login`, {
         email,
         password,
       });
-      setSession(response.data.accessToken);
-      setRefreshToken(response?.data.refreshToken)
+      console.log(response);
+      setSession(response?.data?.accessToken);
+      setRefreshToken(response?.data?.refreshToken)
       setError(null)
     } catch (error) {
-      setError(error.response.data || "Erro inesperado, tente novamente.")
+      console.log(error)
+      setError("Erro inesperado, tente novamente.")
     }
   };
+  
  const signOut = () => {
     setSession(null)
     setRefreshToken(null);
