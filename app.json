@@ -4,33 +4,29 @@
     "slug": "Clubee Vantagens",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Clubee_logo-2.png",
+    "icon": "./assets/images/novoLogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/Clubee_logo-2.png",
+      "image": "./assets/images/novoLogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F4EAA6"
+      "backgroundColor": "#FFEAAD"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Clubee_logo-2.png",
-        "backgroundColor": "#F4EAA6"
+        "foregroundImage": "./assets/images/novoLogo.png",
+        "backgroundColor": "#FFEAAD"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/Clubee_logo-2.png"
+      "favicon": "./assets/images/novoLogo.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font",
-      "expo-secure-store"
-    ],
+    "plugins": ["expo-router", "expo-font", "expo-secure-store"],
     "experiments": {
       "typedRoutes": true
     }

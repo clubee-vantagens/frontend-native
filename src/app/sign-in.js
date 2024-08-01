@@ -52,16 +52,18 @@ export default function Index() {
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Image
-          source={require("@/assets/images/Clubee_logo-2.png")}
-          style={styles.image}
-        />
+        <View style={styles.containerImage}>
+          <Image
+            source={require("@/assets/images/novoLogo.png")}
+            style={styles.image}
+          />
+        </View>
 
-        <View>
+        <View style={styles.containerInput}>
           <CustomInput
             control={control}
             name="email"
-            placeholder="E-mail"
+            placeholder="Informe seu e-mail"
             rules={{
               required: "Campo Obrigatório",
               maxLength: { value: 50, message: "O e-mail inserido é inválido" },
@@ -111,7 +113,7 @@ export default function Index() {
         </Pressable>
         {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <View style={styles.containerFooter}>
-          <CustomText style={{ fontSize: 20, color: "gray" }}>
+          <CustomText style={{ fontSize: 18, color: "#000" }}>
             Não tem cadastro?{" "}
             <Link href="/signup">
               <CustomText style={{ fontWeight: "bold", color: "black" }}>
@@ -131,24 +133,36 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#F7F7F7",
+  },
+  containerImage: {
+    // backgroundColor: "red",
+    width: "100%",
+    alignItems: "center",
   },
   image: {
-    width: 297,
-    height: 225,
+    width: "90%",
+    height: 250,
     marginTop: 50,
-    contentFit: "contain",
+    // backgroundColor: "blue",
+    resizeMode: "contain",
+
+    // borderColor: "red",
+  },
+  containerInput: {
+    marginTop: 53,
   },
   input: {
-    width: 350,
+    width: 359,
     height: 50,
-    borderRadius: 7,
+    borderRadius: 10,
     padding: 10,
     margin: 10,
     elevation: 5,
     backgroundColor: "#fff",
-    textAlign: "center",
+    // textAlign: "center",
   },
+
   lembrarSenha: {
     width: "100%",
     flexDirection: "row",
@@ -158,26 +172,27 @@ const styles = StyleSheet.create({
     marginBottom: 41,
   },
   lembrarSenhaText: {
-    fontSize: 16,
+    fontSize: 14,
     textDecorationLine: "underline",
     color: "#757575",
+    fontWeight: 400,
   },
   btnEntrar: {
-    width: 215,
-    height: 50,
-    borderRadius: 15,
+    width: 180,
+    height: 46,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#6ff79a",
+    backgroundColor: "#150F02",
     elevation: 5,
   },
   textEntrar: {
     fontWeight: "bold",
     fontSize: 18,
-    color: "#000",
+    color: "#fff",
   },
   containerFooter: {
-    marginTop: 130,
+    marginTop: 180,
   },
   errorText: {
     color: "red",

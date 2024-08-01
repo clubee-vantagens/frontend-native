@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     elevation: 5,
     margin: 10,
-    textAlign: "center",
+    textAlign: "left",
+    paddingLeft: 25,
+    color: '#757575',
+    fontSize: 18,
+    fontWeight: 400
   },
 });

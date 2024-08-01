@@ -100,7 +100,7 @@ export default function UserSignUpScreen() {
           placeholder="E-mail"
           rules={{
             required: "Campo Obrigatório",
-            maxLength: {value: 50, message: "O e-mail inserido é inválido"},
+            maxLength: { value: 50, message: "O e-mail inserido é inválido" },
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "O e-mail inserido é inválido",
@@ -162,36 +162,37 @@ export default function UserSignUpScreen() {
           </ErrorMessageComponent>
         )}
         <Controller
-            control={control}
-            rules={{ required: "Deve aceitar termos e condicoes" }}
-            name="termsOfUse"
-            render={({ field: { onChange, value } }) => (
-              <View style={styles.checkBoxContainer}>
-                <Checkbox
-                  value={value}
-                  onValueChange={(newValue) => {
-                    setChecked(newValue);
-                    onChange(newValue);
-                  }}
-                  color={isChecked ? "#4630EB" : undefined}
-                />
-                <CustomText style={{ fontSize: 16, color: "gray" }}>
-                  Concordo com os
-                </CustomText>
-                <CustomText
-                  style={{ fontSize: 16, textDecorationLine: "underline" }}
-                ><Link href="/termsAndConditions">
-                  Termos e Condições
-                </Link>
-                </CustomText>
-              </View>
-            )}
-          />
-          {errors.termsOfUse && (
-            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+          control={control}
+          rules={{ required: "Deve aceitar termos e condicoes" }}
+          name="termsOfUse"
+          render={({ field: { onChange, value } }) => (
+            <View style={styles.checkBoxContainer}>
+              <Checkbox
+                value={value}
+                onValueChange={(newValue) => {
+                  setChecked(newValue);
+                  onChange(newValue);
+                }}
+                color={isChecked ? "#4630EB" : undefined}
+              />
+              <CustomText style={{ fontSize: 16, color: "gray" }}>
+                Concordo com os
+              </CustomText>
+              <CustomText
+                style={{ fontSize: 16, textDecorationLine: "underline" }}
+              >
+                <Link href="/termsAndConditions">Termos e Condições</Link>
+              </CustomText>
+            </View>
           )}
+        />
+        {errors.termsOfUse && (
+          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+        )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>Cadastrar-se</CustomButton>
+      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>
+        Cadastrar-se
+      </CustomButton>
       <CustomText style={{ fontSize: 20, color: "gray" }}>
         Já tem uma conta?{" "}
         <Link style={{ fontWeight: "bold", color: "black" }} href="/">
@@ -201,11 +202,7 @@ export default function UserSignUpScreen() {
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-<<<<<<< HEAD
-          onPress={() => router.navigate("/")}
-=======
           onPress={() => router.navigate("/sign-in")}
->>>>>>> f23cd91aaada8f159abdb38d8b8466d559aa5282
           iconClose={() => setIsConfirmationModal(false)}
         />
       )}
