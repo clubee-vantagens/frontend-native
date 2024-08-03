@@ -58,9 +58,13 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    textAlign: "center",
+    paddingLeft: 15,
+    color: '#757575',
+    fontSize: 18
+    // textAlign: "center",
   },
   icon: {
+    fontSize: 18,
     padding: 5,
     position: "absolute",
     right: 30,
