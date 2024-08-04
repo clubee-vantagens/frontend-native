@@ -20,6 +20,7 @@ import CustomText from "../components/CustomText";
 
 export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
+  const [emailValue, setEmailValue] = useState("");
   const {
     control,
     handleSubmit,
@@ -28,12 +29,12 @@ export default function Index() {
   } = useForm({ defaultValues: { email: "", password: "" } });
   const { signIn, session, error, setError } = useSession();
 
-  console.log(session);
   useEffect(() => {
     if (session) {
       router.replace("/"); // Redirect to a protected route once session is set
     }
   }, [session]);
+
   const handleLogin = async (data) => {
     setIsLoading(true);
     try {
@@ -66,15 +67,27 @@ export default function Index() {
             placeholder="Informe seu e-mail"
             rules={{
               required: "Campo Obrigatório",
-              maxLength: { value: 50, message: "O e-mail inserido é inválido" },
+              maxLength: {
+                value: 50,
+                message: "Atenção! E-mail não pode ultrapassar 50 caracteres",
+              },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "O e-mail inserido é inválido",
               },
             }}
+            onChangeText={(text) => {
+              if (text.length <= 50) {
+                setEmailValue(text);
+              } else {
+                Alert.alert("Atenção", "O máximo é 50 caracteres");
+              }
+            }}
+            value={emailValue}
           />
+
           {errors.email && (
-            <ErrorMessageComponent>
+            <ErrorMessageComponent style={styles.errorText}>
               {errors.email.message}
             </ErrorMessageComponent>
           )}
@@ -104,6 +117,7 @@ export default function Index() {
           </Link>
         </View>
 
+        {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <Pressable style={styles.btnEntrar} onPress={handleSubmit(handleLogin)}>
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
@@ -111,7 +125,7 @@ export default function Index() {
             <CustomText style={styles.textEntrar}>Entrar</CustomText>
           )}
         </Pressable>
-        {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
+
         <View style={styles.containerFooter}>
           <CustomText style={{ fontSize: 18, color: "#000" }}>
             Não tem cadastro?{" "}
@@ -136,7 +150,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F7F7",
   },
   containerImage: {
-    // backgroundColor: "red",
     width: "100%",
     alignItems: "center",
   },
@@ -144,10 +157,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 250,
     marginTop: 50,
-    // backgroundColor: "blue",
     resizeMode: "contain",
-
-    // borderColor: "red",
   },
   containerInput: {
     marginTop: 53,
@@ -160,9 +170,7 @@ const styles = StyleSheet.create({
     margin: 10,
     elevation: 5,
     backgroundColor: "#fff",
-    // textAlign: "center",
   },
-
   lembrarSenha: {
     width: "100%",
     flexDirection: "row",
@@ -175,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecorationLine: "underline",
     color: "#757575",
-    fontWeight: 400,
+    fontWeight: "400",
   },
   btnEntrar: {
     width: 180,
@@ -195,9 +203,9 @@ const styles = StyleSheet.create({
     marginTop: 180,
   },
   errorText: {
-    color: "red",
+    color: "blue",
     fontSize: 10,
     marginLeft: 10,
-    maxWidth: "60%",
+    maxWidth: "90%",
   },
 });
