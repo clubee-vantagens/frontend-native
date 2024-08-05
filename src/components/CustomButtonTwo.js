@@ -11,17 +11,18 @@ export default function CustomButtonTwo({children, onPress}) {
 
 const styles = StyleSheet.create({
     baseButton: {
-        width: 270,
-        height: 50,
-        borderRadius: 15,
+        width: 133,
+        height: 43,
+        borderRadius: 30,
         elevation: 5,
         alignItems: "center",
         justifyContent: "center"
     },
     buttonTypeTwo: {
-        backgroundColor: "#6FF79A",
+        backgroundColor: "#150F02",
     },
     buttonText: {
-        fontSize: 18
+        fontSize: 18,
+        color: "#fff"
     }
 })
