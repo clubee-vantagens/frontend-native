@@ -14,6 +14,8 @@ import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
+import { api_url } from "../constants/constants";
+import axios from "axios";
 
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
@@ -40,30 +42,45 @@ export default function UserSignUpScreen() {
   const cpfValue = watch("cpf");
   const passwordValue = watch("password");
   const termsOfUse = watch("termsOfUse", false);
+
   useEffect(() => {
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
     }
   }, [isSuccess]);
+
   useEffect(() => {
     setValue("cpf", maskCpf(cpfValue));
   }, [cpfValue]);
 
-  const onSubmit = (data) => {
+  const handleRegister = async (data) => {
     const dataToPost = {
-      ...data,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      cpf: data.cpf,
       termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
-      cnpj: null,
-      roles: [],
+      // roles: [],
     };
-    mutate(dataToPost);
+
+    try {
+      const response = await axios.post(
+        `${api_url}/users/client/register`,
+        dataToPost
+      );
+      console.log("registrado", response.data);
+      setIsConfirmationModal(true);
+    } catch (error) {
+      console.log("erro ao cadastrar", error);
+    }
   };
 
   if (status === "pending") {
     return <LoadingScreen />;
   }
+
   return (
     <View style={styles.container}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
@@ -83,10 +100,10 @@ export default function UserSignUpScreen() {
             required: "Campo Obrigatório",
             maxLength: {
               value: 256,
-              message: "O nome fantasia não pode exceder 256 caracteres",
+              message: "O nome não pode exceder 256 caracteres",
             },
             pattern: {
-              value: /^[a-zA-Z\s\u00C0-\u00FF]+$/,
+              value: /^[a-zA-Z\s]+$/,
               message: "Nome deve conter somente letras",
             },
           }}
@@ -100,7 +117,6 @@ export default function UserSignUpScreen() {
           placeholder="E-mail"
           rules={{
             required: "Campo Obrigatório",
-            maxLength: { value: 50, message: "O e-mail inserido é inválido" },
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "O e-mail inserido é inválido",
@@ -181,7 +197,7 @@ export default function UserSignUpScreen() {
               <CustomText
                 style={{ fontSize: 16, textDecorationLine: "underline" }}
               >
-                <Link href="/termsAndConditions">Termos e Condições</Link>
+                Termos e Condições
               </CustomText>
             </View>
           )}
@@ -190,26 +206,31 @@ export default function UserSignUpScreen() {
           <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
         )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>
-        Cadastrar-se
+      <CustomButton
+        onPress={handleSubmit(handleRegister)}
+        type="black"
+        disabled={!termsOfUse}
+      >
+        Cadastre-se
       </CustomButton>
-      <CustomText style={{ fontSize: 20, color: "gray" }}>
+
+      <CustomText style={{ fontSize: 20, color: "#757575" }}>
         Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/">
+        <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
           Acessar!
         </Link>
       </CustomText>
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("/sign-in")}
+          onPress={() => router.navigate("/home")}
           iconClose={() => setIsConfirmationModal(false)}
         />
       )}
       {isError && (
         <ConfirmationModal
-          onPress={() => router.navigate("/")}
-          iconClose={() => router.navigate("/")}
+          onPress={() => setIsConfirmationModal(false)}
+          iconClose={() => setIsConfirmationModal(false)}
           text={
             error?.response?.data ||
             "Nao foi possivel realizar o cadastro no momento, tente novamente!"
@@ -224,7 +245,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#FAF9F6",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",

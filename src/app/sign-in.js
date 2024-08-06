@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import Constants from "expo-constants";
 import { Image } from "expo-image";
@@ -25,7 +26,7 @@ export default function Index() {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
+    setValue,
   } = useForm({ defaultValues: { email: "", password: "" } });
   const { signIn, session, error, setError } = useSession();
 
@@ -37,11 +38,16 @@ export default function Index() {
 
   const handleLogin = async (data) => {
     setIsLoading(true);
+    setError(null);
     try {
       await signIn(data.email, data.password);
-      reset();
+      // console.log("entrou");
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 400) {
+        setError("Verifique suas credenciais");
+      } else {
+        setError("Ocorreu um erro inesperado. Por favor, tente novamente.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -78,6 +84,7 @@ export default function Index() {
             }}
             onChangeText={(text) => {
               if (text.length <= 50) {
+                setValue("email", text);
                 setEmailValue(text);
               } else {
                 Alert.alert("Atenção", "O máximo é 50 caracteres");

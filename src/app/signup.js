@@ -3,15 +3,15 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import CustomText from "../components/CustomText";
 import Constants from "expo-constants";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Signup() {
   return (
     <SafeAreaView style={styles.areaView}>
-      <View style={styles.contentArrow}>
+      <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
         <Link href="/sign-in">
-          <Ionicons name="arrow-back" size={24} color="black" />
+          <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Link>
       </View>
       <View style={styles.container}>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F7F7",
   },
   contentArrow: {
+    backgroundColor: "red",
     marginLeft: 30,
   },
   image: { width: 297, height: 225, resizeMode: "contain", marginBottom: 50 },
