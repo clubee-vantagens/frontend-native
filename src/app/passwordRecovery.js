@@ -42,11 +42,11 @@ export default function PasswordRecoveryScreen() {
         <View style={styles.confirmation}>
           <View style={styles.modal}>
             <CustomText variant="bold" style={styles.modalText}>
-              Pronto! Pode ir lá conferir a sua caixa de entrada!
+              Link de recuperacao enviado!
             </CustomText>
             <CustomText style={styles.modalText}>
-              Foi enviado para seu e-mail as instruções para redefinir sua
-              senha.
+              Confira sua caixa de entrada no e-mail as instruções para
+              redefinir sua senha.
             </CustomText>
             <CustomButtonTwo
               onPress={() => {
@@ -54,32 +54,34 @@ export default function PasswordRecoveryScreen() {
                 router.navigate("/");
               }}
             >
-              Voltar ao login
+              Continuar
             </CustomButtonTwo>
           </View>
         </View>
       )}
-      <View
+      {/* <View
         style={{
           alignItems: "center",
           padding: 10,
-          justifyContent: "space-around",
+          justifyContent: "space-evenly",
           width: "80%",
-          height: "70%",
+          height: "100%",
         }}
-      >
-        <Image
-          style={styles.image}
-          source={require("@/assets/images/Clubee_logo_only_bee.png")}
-        />
+      > */}
+      <View style={{ alignItems: "center", marginTop: 350 }}>
         <CustomText variant="bold" style={styles.text}>
-          Redefinir senha
+          Redefina sua senha
         </CustomText>
         <CustomText
-          style={{ textAlign: "center", width: "75%", fontSize: "18" }}
+          style={{
+            textAlign: "center",
+            width: "70%",
+            fontSize: "18",
+            marginTop: 60,
+          }}
+          variant="semiBold"
         >
-          Para redefinir sua senha, informe o e-mail cadastrado na sua conta e
-          lhe enviaremos um link com as instruções.
+          Informe seu e-mail de cadastro para receber o link com as instruções.
         </CustomText>
         <CustomInput
           control={control}
@@ -87,7 +89,7 @@ export default function PasswordRecoveryScreen() {
           placeholder="Informe seu e-mail"
           rules={{
             required: "Campo Obrigatório",
-            maxLength: {value: 50, message: "O e-mail inserido é inválido"},
+            maxLength: { value: 50, message: "O e-mail inserido é inválido" },
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "O e-mail inserido é inválido",
@@ -97,16 +99,19 @@ export default function PasswordRecoveryScreen() {
         {errors.email && (
           <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
-        <CustomButton onPress={handleSubmit(onSubmit)} type="red">
-          Enviar Link
-        </CustomButton>
-        {isError && <ErrorMessageComponent>Email nao cadastrado</ErrorMessageComponent>}
       </View>
-      <Link href="/">
-        <CustomText variant="bold" style={{ textDecorationLine: "underline" }}>
-          Voltar ao login
-        </CustomText>
-      </Link>
+      <View style={{ alignItems: "center" }}>
+        <CustomButton onPress={handleSubmit(onSubmit)}>
+          Receber Link
+        </CustomButton>
+        {isError && (
+          <ErrorMessageComponent>Email nao cadastrado</ErrorMessageComponent>
+        )}
+        <Link href="/" style={{ marginTop: 15, marginBottom: 15 }}>
+          <CustomText variant="bold">Voltar ao login</CustomText>
+        </Link>
+      </View>
+      {/* </View> */}
     </View>
   );
 }
@@ -114,9 +119,9 @@ export default function PasswordRecoveryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#F7F7F7",
   },
   image: {
     width: 168,
@@ -128,22 +133,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   confirmation: {
-    height: "80%",
+    height: "100%",
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
     position: "absolute",
-    top: "35%",
+    top: 0,
     zIndex: 99,
-    backgroundColor: "#FFFAEB",
     alignItems: "center",
   },
   modal: {
-    height: 339,
-    width: 331,
-    backgroundColor: "#6FF79A4D",
+    height: 359,
+    width: 320,
+    backgroundColor: "#FAF9F6",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 20,
     justifyContent: "space-around",
+    elevation: 5,
+    marginTop: 250,
   },
   modalText: {
     fontSize: 20,
