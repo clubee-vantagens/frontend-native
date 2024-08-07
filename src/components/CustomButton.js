@@ -8,15 +8,16 @@ export default function CustomButton({ children, onPress, type }) {
       : type === "black"
       ? styles.buttonBlack
       : styles.buttonGreen;
-  // const buttonTextColor = type === "red" ? styles.buttonTextWhite : null;
+
   const buttonTextColor =
     type === "black" || type === "red" ? styles.buttonTextWhite : null;
+
   return (
-    <Pressable
-      style={[buttonType, styles.baseButton, buttonTextColor]}
-      onPress={onPress}
-    >
-      <CustomText style={styles.buttonText} variant="semiBold">
+    <Pressable style={[buttonType, styles.baseButton]} onPress={onPress}>
+      <CustomText
+        style={[styles.buttonText, buttonTextColor]}
+        variant="semiBold"
+      >
         {children}
       </CustomText>
     </Pressable>
@@ -26,8 +27,8 @@ export default function CustomButton({ children, onPress, type }) {
 const styles = StyleSheet.create({
   baseButton: {
     width: 359,
-    height: 50,
-    borderRadius: 15,
+    height: 47,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
     elevation: 5,
