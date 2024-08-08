@@ -44,30 +44,30 @@ export default function PasswordRecoveryScreen() {
             <CustomText variant="bold" style={styles.modalText}>
               Link de recuperacao enviado!
             </CustomText>
-            <CustomText style={styles.modalText}>
+            <View style={styles.containerImage}>
+              <Image
+                source={require("../../assets/images/imgSendEmail.png")}
+                style={styles.ImagemSend}
+              />
+            </View>
+            <CustomText style={styles.modalTextConfirmation}>
               Confira sua caixa de entrada no e-mail as instruções para
               redefinir sua senha.
             </CustomText>
-            <CustomButtonTwo
-              onPress={() => {
-                setIsModalOpen(false);
-                router.navigate("/");
-              }}
-            >
-              Continuar
-            </CustomButtonTwo>
+            <View style={styles.ButtonConfirmation}>
+              <CustomButtonTwo
+                onPress={() => {
+                  setIsModalOpen(false);
+                  router.navigate("/");
+                }}
+              >
+                Continuar
+              </CustomButtonTwo>
+            </View>
           </View>
         </View>
       )}
-      {/* <View
-        style={{
-          alignItems: "center",
-          padding: 10,
-          justifyContent: "space-evenly",
-          width: "80%",
-          height: "100%",
-        }}
-      > */}
+
       <View style={{ alignItems: "center", marginTop: 350 }}>
         <CustomText variant="bold" style={styles.text}>
           Redefina sua senha
@@ -143,17 +143,41 @@ const styles = StyleSheet.create({
   },
   modal: {
     height: 359,
-    width: 320,
+    width: 394,
     backgroundColor: "#FAF9F6",
     alignItems: "center",
-    borderRadius: 20,
     justifyContent: "space-around",
+    borderRadius: 20,
     elevation: 5,
     marginTop: 250,
   },
   modalText: {
     fontSize: 20,
     textAlign: "center",
-    width: "70%",
+    marginTop: 50,
+    // PaddingHorizontal: 29,
+    // width: "70%",
+  },
+  modalTextConfirmation: {
+    fontSize: 18,
+    marginHorizontal: 40,
+    textAlign: "center",
+  },
+  containerImage: {
+    backgroundColor: "rgba(76, 187, 136, 0.50)",
+    width: 65,
+    height: 65,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 24,
+  },
+  ImagemSend: {
+    width: 48,
+    height: 48,
+    resizeMode: "contain",
+  },
+  ButtonConfirmation: {
+    marginVertical: 24,
   },
 });

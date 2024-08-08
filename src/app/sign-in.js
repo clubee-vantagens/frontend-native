@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +18,8 @@ import CustomInput from "../components/CustomInput";
 import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useForm } from "react-hook-form";
 import CustomText from "../components/CustomText";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +37,13 @@ export default function Index() {
       router.replace("/"); // Redirect to a protected route once session is set
     }
   }, [session]);
+
+  useFocusEffect(
+    useCallback(() => {
+      // Reset error when screen is focused
+      setError(null);
+    }, [])
+  );
 
   const handleLogin = async (data) => {
     setIsLoading(true);
@@ -65,6 +74,25 @@ export default function Index() {
             style={styles.image}
           />
         </View>
+
+        {error && (
+          <View style={styles.containerError}>
+            <View style={styles.contentError}>
+              <Fontisto
+                name="close"
+                size={24}
+                color="#A92525"
+                style={styles.icon}
+              />
+              <ErrorMessageComponent style={styles.errorMessage}>
+                Ooops! {error}. Podemos ajudar a{" "}
+                <Link href={"passwordRecovery"} style={styles.link}>
+                  recuperar seu acesso?{" "}
+                </Link>
+              </ErrorMessageComponent>
+            </View>
+          </View>
+        )}
 
         <View style={styles.containerInput}>
           <CustomInput
@@ -124,7 +152,6 @@ export default function Index() {
           </Link>
         </View>
 
-        {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <Pressable style={styles.btnEntrar} onPress={handleSubmit(handleLogin)}>
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
@@ -214,5 +241,34 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginLeft: 10,
     maxWidth: "90%",
+  },
+  containerError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 359,
+    height: 88,
+    borderRadius: 10,
+    backgroundColor: "rgba(251, 80, 80, 0.25)",
+    padding: 10,
+  },
+  contentError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    fontSize: 14,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  errorMessage: {
+    flex: 1,
+    textAlign: "center",
+  },
+  link: {
+    fontWeight: "bold",
+    color: "#A92525",
+    textDecorationLine: "underline",
   },
 });
