@@ -1,13 +1,13 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 import CustomText from "./CustomText";
 
-export default function CustomButtonTwo({ children, onPress }) {
+export default function CustomButtonTwo({ children, onPress, style }) {
   return (
     <Pressable
-      style={[styles.baseButton, styles.buttonTypeTwo]}
+      style={[styles.baseButton, styles.buttonTypeTwo, style]}
       onPress={onPress}
     >
-      <CustomText style={styles.buttonText} variant="semiBold">
+      <CustomText style={[styles.buttonText]} variant="semiBold">
         {children}
       </CustomText>
     </Pressable>
