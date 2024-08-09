@@ -32,6 +32,7 @@ export default function UserSignUpScreen() {
   } = useForm({
     defaultValues: {
       name: "",
+      socialName: "",
       email: "",
       password: "",
       cpf: "",
@@ -57,6 +58,7 @@ export default function UserSignUpScreen() {
   const handleRegister = async (data) => {
     const dataToPost = {
       name: data.name,
+      socialName: data.socialName,
       email: data.email,
       password: data.password,
       cpf: data.cpf,
@@ -111,6 +113,28 @@ export default function UserSignUpScreen() {
         {errors.name && (
           <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
         )}
+        <CustomInput
+          control={control}
+          name="socialName"
+          placeholder="Nome social"
+          rules={{
+            // required: "Campo Obrigatório",
+            maxLength: {
+              value: 256,
+              message: "O nome não pode exceder 256 caracteres",
+            },
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Nome deve conter somente letras",
+            },
+          }}
+        />
+        {errors.socialName && (
+          <ErrorMessageComponent>
+            {errors.socialName.message}
+          </ErrorMessageComponent>
+        )}
+
         <CustomInput
           control={control}
           name="email"
@@ -191,14 +215,20 @@ export default function UserSignUpScreen() {
                 }}
                 color={isChecked ? "#4630EB" : undefined}
               />
-              <CustomText style={{ fontSize: 16, color: "gray" }}>
+              <CustomText style={{ fontSize: 16, color: "#757575" }}>
                 Concordo com os
               </CustomText>
-              <CustomText
-                style={{ fontSize: 16, textDecorationLine: "underline" }}
-              >
-                Termos e Condições
-              </CustomText>
+              <Link href={"termsAndConditions"}>
+                <CustomText
+                  style={{
+                    fontSize: 16,
+                    textDecorationLine: "underline",
+                    color: "#757575",
+                  }}
+                >
+                  Termos e Condições
+                </CustomText>
+              </Link>
             </View>
           )}
         />
@@ -223,8 +253,9 @@ export default function UserSignUpScreen() {
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("/home")}
+          onPress={() => router.navigate("sign-in")}
           iconClose={() => setIsConfirmationModal(false)}
+          style={{ fontSize: 30 }}
         />
       )}
       {isError && (
@@ -252,8 +283,9 @@ const styles = StyleSheet.create({
   },
   checkBoxContainer: {
     flexDirection: "row",
-    justifyContent: "start",
-    gap: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 3,
     marginTop: 5,
     paddingLeft: 5,
   },

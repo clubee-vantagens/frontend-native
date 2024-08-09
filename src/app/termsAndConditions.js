@@ -11,6 +11,7 @@ export default function TermsAndConditionsScreen() {
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Pressable>
       </View>
+      <Text style={styles.title}>Termos e Condições</Text>
       <CustomText variant="bold">
         Ao efetuar o seu cadastro no Clubee, você estará aceitando nossos termos
         e condições, assim como de nossos parceiros. A adesão ao Clubee e seus
@@ -254,5 +255,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFAEB",
     padding: 30,
+  },
+  title: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 30,
+    marginBottom: 30,
+    marginTop: 40
   },
 });

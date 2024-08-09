@@ -40,7 +40,6 @@ export default function Index() {
 
   useFocusEffect(
     useCallback(() => {
-      // Reset error when screen is focused
       setError(null);
     }, [])
   );
@@ -50,7 +49,6 @@ export default function Index() {
     setError(null);
     try {
       await signIn(data.email, data.password);
-      // console.log("entrou");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError("Verifique suas credenciais");
@@ -85,7 +83,7 @@ export default function Index() {
                 style={styles.icon}
               />
               <ErrorMessageComponent style={styles.errorMessage}>
-                Ooops! {error}. Podemos ajudar a{" "}
+                Ooops! {error} Podemos ajudar a{" "}
                 <Link href={"passwordRecovery"} style={styles.link}>
                   recuperar seu acesso?{" "}
                 </Link>
@@ -264,7 +262,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     flex: 1,
-    textAlign: "center",
+    fontSize: 14,
   },
   link: {
     fontWeight: "bold",
