@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Pressable, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import CustomText from "../components/CustomText";
 import CustomButtonTwo from "../components/CustomButtonTwo";
+import ConfirmationModal from "../components/ConfirmationModal";
+import { router } from "expo-router";
 
 const options = [
   "Alimentação",
@@ -21,7 +23,7 @@ const options = [
 
 export default function Preferences() {
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const handleSelect = (option) => {
     setSelectedOptions((prevState) =>
       prevState.includes(option)
@@ -38,6 +40,7 @@ export default function Preferences() {
 
     // Simulação de resposta do backend
     console.log("Resposta do backend: Sucesso");
+    setModalOpen(true);
   };
 
   return (
@@ -84,10 +87,15 @@ export default function Preferences() {
         >
           Continuar
         </CustomButtonTwo>
-        {/* <Pressable>
-          <CustomText>Pular</CustomText>
-        </Pressable> */}
       </View>
+      {modalOpen && (
+        <ConfirmationModal
+          text={"Preferências cadastradas!"}
+          iconClose={() => setModalOpen(false)}
+          onPress={() => router.navigate("home")}
+          style={{ fontSize: 30 }}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -139,8 +147,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 14,
-    color: "#000",
-    fontWeight: "400",
+    color: "#150F02",
+    fontWeight: 400,
   },
   optionTextSelected: {
     color: "#150F02",

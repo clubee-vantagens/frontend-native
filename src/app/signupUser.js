@@ -105,11 +105,12 @@ export default function UserSignUpScreen() {
               message: "O nome não pode exceder 256 caracteres",
             },
             pattern: {
-              value: /^[a-zA-Z\s]+$/,
+              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
               message: "Nome deve conter somente letras",
             },
           }}
         />
+
         {errors.name && (
           <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
         )}
