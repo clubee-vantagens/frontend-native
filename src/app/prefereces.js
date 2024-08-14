@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Pressable, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import CustomText from "../components/CustomText";
 import CustomButtonTwo from "../components/CustomButtonTwo";
@@ -24,6 +31,8 @@ const options = [
 export default function Preferences() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSelect = (option) => {
     setSelectedOptions((prevState) =>
       prevState.includes(option)
@@ -32,16 +41,30 @@ export default function Preferences() {
     );
   };
 
+  const handleSkip = () => {
+    setSelectedOptions(options);
+    handlePreferencies(options);
+    setIsLoading(true);
+    setModalOpen(false);
+
+    router.navigate("home");
+  };
+
   const isButtonEnabled = selectedOptions.length > 0;
 
-  const handlePreferencies = () => {
-    // Simulação de envio das preferências
-    console.log("Preferências enviadas:", selectedOptions);
-
-    // Simulação de resposta do backend
+  const handlePreferencies = (preferences) => {
+    console.log("Preferências enviadas:", preferences);
     console.log("Resposta do backend: Sucesso");
     setModalOpen(true);
   };
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="#FCD562" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -83,10 +106,13 @@ export default function Preferences() {
             !isButtonEnabled && styles.btnContinueDisabled,
           ]}
           disabled={!isButtonEnabled}
-          onPress={handlePreferencies}
+          onPress={() => handlePreferencies(selectedOptions)}
         >
           Continuar
         </CustomButtonTwo>
+        <Pressable onPress={handleSkip}>
+          <Text>Pular</Text>
+        </Pressable>
       </View>
       {modalOpen && (
         <ConfirmationModal

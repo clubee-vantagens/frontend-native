@@ -1,25 +1,27 @@
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
-import Constants from "expo-constants";
 import { Link, router } from "expo-router";
-import Checkbox from "expo-checkbox";
+import { api_url } from "../constants/constants";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
+import { useMutateUsers } from "../hooks/useMutateUser";
+import { maskCpf, validateCpf } from "../utils/utils";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { useEffect, useState } from "react";
-import { maskCpf, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
-import { useMutateUsers } from "../hooks/useMutateUser";
+import Constants from "expo-constants";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
-import { api_url } from "../constants/constants";
+import Checkbox from "expo-checkbox";
 import axios from "axios";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const date = new Date();
   const { mutate, isError, error, isSuccess, status } = useMutateUsers();
   const {
@@ -75,6 +77,10 @@ export default function UserSignUpScreen() {
       console.log("registrado", response.data);
       setIsConfirmationModal(true);
     } catch (error) {
+      if (error.response?.status === 400) {
+        setErrorMessage("E-mail ou cpf cadastrado");
+        return;
+      }
       console.log("erro ao cadastrar", error);
     }
   };
@@ -94,6 +100,28 @@ export default function UserSignUpScreen() {
         Sou Cliente
       </CustomText>
       <View>
+        {errorMessage && (
+          <View style={styles.containerError}>
+            <View style={styles.contentError}>
+              <Fontisto
+                name="close"
+                size={24}
+                color="#A92525"
+                style={styles.icon}
+              />
+              <ErrorMessageComponent style={styles.errorMessage}>
+                {errorMessage} retorne para o
+                <Link href={"sign-in"} style={styles.link}>
+                  Login
+                </Link>
+                ou
+                <Link href={"passwordRecovery"} style={styles.link}>
+                  Recuperar senha
+                </Link>
+              </ErrorMessageComponent>
+            </View>
+          </View>
+        )}
         <CustomInput
           control={control}
           name="name"
@@ -130,11 +158,6 @@ export default function UserSignUpScreen() {
             },
           }}
         />
-        {errors.socialName && (
-          <ErrorMessageComponent>
-            {errors.socialName.message}
-          </ErrorMessageComponent>
-        )}
 
         <CustomInput
           control={control}
@@ -259,16 +282,6 @@ export default function UserSignUpScreen() {
           style={{ fontSize: 30 }}
         />
       )}
-      {isError && (
-        <ConfirmationModal
-          onPress={() => setIsConfirmationModal(false)}
-          iconClose={() => setIsConfirmationModal(false)}
-          text={
-            error?.response?.data ||
-            "Nao foi possivel realizar o cadastro no momento, tente novamente!"
-          }
-        />
-      )}
     </View>
   );
 }
@@ -277,7 +290,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    backgroundColor: "#FAF9F6",
+    backgroundColor: "#F7F7F7",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
@@ -294,5 +307,36 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 12,
     marginTop: 5,
+  },
+  containerError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: "auto",
+    width: 359,
+    height: 88,
+    borderRadius: 10,
+    backgroundColor: "rgba(251, 80, 80, 0.25)",
+    padding: 10,
+  },
+  contentError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    fontSize: 14,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  errorMessage: {
+    flex: 1,
+    fontSize: 14,
+  },
+  link: {
+    fontWeight: "bold",
+    color: "#A92525",
+    textDecorationLine: "underline",
+    marginHorizontal: 3,
   },
 });
