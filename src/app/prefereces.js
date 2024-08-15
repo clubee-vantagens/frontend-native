@@ -1,7 +1,16 @@
-import { StyleSheet, Text, View, Pressable, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import CustomText from "../components/CustomText";
 import CustomButtonTwo from "../components/CustomButtonTwo";
+import ConfirmationModal from "../components/ConfirmationModal";
+import { router } from "expo-router";
 
 const options = [
   "Alimentação",
@@ -21,6 +30,8 @@ const options = [
 
 export default function Preferences() {
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSelect = (option) => {
     setSelectedOptions((prevState) =>
@@ -30,15 +41,30 @@ export default function Preferences() {
     );
   };
 
+  const handleSkip = () => {
+    setSelectedOptions(options);
+    handlePreferencies(options);
+    setIsLoading(true);
+    setModalOpen(false);
+
+    router.navigate("home");
+  };
+
   const isButtonEnabled = selectedOptions.length > 0;
 
-  const handlePreferencies = () => {
-    // Simulação de envio das preferências
-    console.log("Preferências enviadas:", selectedOptions);
-
-    // Simulação de resposta do backend
+  const handlePreferencies = (preferences) => {
+    console.log("Preferências enviadas:", preferences);
     console.log("Resposta do backend: Sucesso");
+    setModalOpen(true);
   };
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="#FCD562" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,14 +106,22 @@ export default function Preferences() {
             !isButtonEnabled && styles.btnContinueDisabled,
           ]}
           disabled={!isButtonEnabled}
-          onPress={handlePreferencies}
+          onPress={() => handlePreferencies(selectedOptions)}
         >
           Continuar
         </CustomButtonTwo>
-        {/* <Pressable>
-          <CustomText>Pular</CustomText>
-        </Pressable> */}
+        <Pressable onPress={handleSkip}>
+          <Text>Pular</Text>
+        </Pressable>
       </View>
+      {modalOpen && (
+        <ConfirmationModal
+          text={"Preferências cadastradas!"}
+          iconClose={() => setModalOpen(false)}
+          onPress={() => router.navigate("home")}
+          style={{ fontSize: 30 }}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -139,8 +173,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 14,
-    color: "#000",
-    fontWeight: "400",
+    color: "#150F02",
+    fontWeight: 400,
   },
   optionTextSelected: {
     color: "#150F02",
