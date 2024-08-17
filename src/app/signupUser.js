@@ -21,6 +21,7 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
+  const [cpfError, setCpfError] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
   const date = new Date();
   const { mutate, isError, error, isSuccess, status } = useMutateUsers();
@@ -54,7 +55,25 @@ export default function UserSignUpScreen() {
   }, [isSuccess]);
 
   useEffect(() => {
-    setValue("cpf", maskCpf(cpfValue));
+    setValue("cpf", maskCpf(cpfValue)); // Aplica a máscara ao CPF enquanto o usuário digita
+  }, [cpfValue]);
+
+  // Enquanto o usuário digita o CPF ele vai validando
+  useEffect(() => {
+    if (cpfValue.length === 0) {
+      // Se o campo estiver vazio, não exibe erro
+      setCpfError("");
+    } else if (cpfValue.length < 14) {
+      // Se o CPF tiver menos de 14 caracteres (com máscara), exibe "CPF inválido"
+      setCpfError("CPF inválido");
+    } else {
+      const isValid = validateCpf(cpfValue);
+      if (!isValid) {
+        setCpfError("CPF inválido");
+      } else {
+        setCpfError("");
+      }
+    }
   }, [cpfValue]);
 
   const handleRegister = async (data) => {
@@ -153,12 +172,16 @@ export default function UserSignUpScreen() {
               message: "O nome não pode exceder 256 caracteres",
             },
             pattern: {
-              value: /^[a-zA-Z\s]+$/,
+              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
               message: "Nome deve conter somente letras",
             },
           }}
         />
-
+        {errors.socialName && (
+          <ErrorMessageComponent>
+            {errors.socialName.message}
+          </ErrorMessageComponent>
+        )}
         <CustomInput
           control={control}
           name="email"
@@ -180,12 +203,13 @@ export default function UserSignUpScreen() {
           placeholder="CPF"
           rules={{
             required: "Campo Obrigatório",
-            minLength: { value: 14, message: "CPF invalido" },
-            validate: (cpfValue) => validateCpf(cpfValue) || "CPF invalido",
+            minLength: { value: 14, message: "CPF inválido" },
           }}
         />
-        {errors.cpf && (
-          <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
+        {(errors.cpf || cpfError) && (
+          <ErrorMessageComponent>
+            {errors.cpf?.message || cpfError}
+          </ErrorMessageComponent>
         )}
         <CustomPasswordInput
           control={control}
