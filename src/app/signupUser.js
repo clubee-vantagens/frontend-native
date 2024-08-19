@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import { Link, router } from "expo-router";
-import { api_url } from "../constants/constants";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
 import { useMutateUsers } from "../hooks/useMutateUser";
@@ -15,9 +15,9 @@ import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
 import Checkbox from "expo-checkbox";
-import axios from "axios";
-import Fontisto from "@expo/vector-icons/Fontisto";
 
+import Fontisto from "@expo/vector-icons/Fontisto";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
@@ -77,7 +77,7 @@ export default function UserSignUpScreen() {
   }, [cpfValue]);
 
   const handleRegister = async (data) => {
-    const dataToPost = {
+    const userData = {
       name: data.name,
       socialName: data.socialName,
       email: data.email,
@@ -85,22 +85,14 @@ export default function UserSignUpScreen() {
       cpf: data.cpf,
       termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
-      // roles: [],
     };
 
     try {
-      const response = await axios.post(
-        `${api_url}/users/client/register`,
-        dataToPost
-      );
-      console.log("registrado", response.data);
-      setIsConfirmationModal(true);
+      await AsyncStorage.setItem("userData", JSON.stringify(userData)); // Armazena os dados localmente
+      console.log(userData);
+      router.navigate("prefereces"); // Navega para a tela de preferências
     } catch (error) {
-      if (error.response?.status === 400) {
-        setErrorMessage("E-mail ou cpf cadastrado");
-        return;
-      }
-      console.log("erro ao cadastrar", error);
+      console.log("Erro ao armazenar os dados do usuário", error);
     }
   };
 

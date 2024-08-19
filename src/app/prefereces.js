@@ -11,6 +11,9 @@ import CustomText from "../components/CustomText";
 import CustomButtonTwo from "../components/CustomButtonTwo";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { api_url } from "../constants/constants";
 
 const options = [
   "Alimentação",
@@ -46,16 +49,39 @@ export default function Preferences() {
     handlePreferencies(options);
     setIsLoading(true);
     setModalOpen(false);
-
     router.navigate("home");
   };
 
   const isButtonEnabled = selectedOptions.length > 0;
 
-  const handlePreferencies = (preferences) => {
-    console.log("Preferências enviadas:", preferences);
-    console.log("Resposta do backend: Sucesso");
-    setModalOpen(true);
+  const handlePreferencies = async (preferences) => {
+    setIsLoading(true);
+    try {
+      const userData = JSON.parse(await AsyncStorage.getItem("userData")); // Recupera os dados do usuário armazenados
+
+      const dataToPost = {
+        ...userData,
+        preferences: preferences.join(","),
+        user: {
+          email: userData.email,
+          password: userData.password,
+        },
+      };
+
+      const response = await axios.post(
+        `${api_url}/users/client/register`,
+        dataToPost
+      );
+
+      console.log("Cadastro completo:", response.data);
+      setModalOpen(true);
+      router.navigate("index");
+      AsyncStorage.removeItem("userData"); // Limpa os dados após o envio bem-sucedido
+    } catch (error) {
+      console.log("Erro ao enviar preferências", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) {
