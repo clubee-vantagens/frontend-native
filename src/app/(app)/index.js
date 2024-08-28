@@ -5,6 +5,7 @@ import { useSession } from "../../context/ctx";
 
 export default function Home() {
   const { signOut, refreshAccessToken } = useSession();
+  
   return (
     <View style={styles.container}>
       <Pressable>

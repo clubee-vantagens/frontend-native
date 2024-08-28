@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecorationLine: "underline",
     color: "#757575",
-    fontWeight: "400",
+    fontWeight: "semibold",
   },
   btnEntrar: {
     width: 180,

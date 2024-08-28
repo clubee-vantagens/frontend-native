@@ -7,13 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import CustomText from "../components/CustomText";
-import CustomButtonTwo from "../components/CustomButtonTwo";
-import ConfirmationModal from "../components/ConfirmationModal";
+import CustomText from "../../components/CustomText";
+import CustomButtonTwo from "../../components/CustomButtonTwo";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { api_url } from "../constants/constants";
+import { useSession } from "../../context/ctx";
+import { useEditUser } from "../../hooks/useEditUser";
 
 const options = [
   "Alimentação",
@@ -35,6 +34,8 @@ export default function Preferences() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const {  session } = useSession();
+  const { mutate, status } = useEditUser()
 
   const handleSelect = (option) => {
     setSelectedOptions((prevState) =>
@@ -57,26 +58,17 @@ export default function Preferences() {
   const handlePreferencies = async (preferences) => {
     setIsLoading(true);
     try {
-      const userData = JSON.parse(await AsyncStorage.getItem("userData")); // Recupera os dados do usuário armazenados
-
       const dataToPost = {
-        ...userData,
         preferences: preferences.join(","),
-        user: {
-          email: userData.email,
-          password: userData.password,
-        },
-      };
+      };      
+      mutate({ userData: dataToPost, session })
+  
+      console.log(status)
+      if(status === 'idle') {
+        setIsLoading(true)
 
-      const response = await axios.post(
-        `${api_url}/users/client/register`,
-        dataToPost
-      );
-
-      console.log("Cadastro completo:", response.data);
+      }
       setModalOpen(true);
-      router.navigate("index");
-      AsyncStorage.removeItem("userData"); // Limpa os dados após o envio bem-sucedido
     } catch (error) {
       console.log("Erro ao enviar preferências", error);
     } finally {
@@ -144,7 +136,7 @@ export default function Preferences() {
         <ConfirmationModal
           text={"Preferências cadastradas!"}
           iconClose={() => setModalOpen(false)}
-          onPress={() => router.navigate("home")}
+          onPress={() => router.navigate("/")}
           style={{ fontSize: 30 }}
         />
       )}
@@ -200,7 +192,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 14,
     color: "#150F02",
-    fontWeight: 400,
+    fontWeight: 'semibold',
   },
   optionTextSelected: {
     color: "#150F02",
