@@ -4,7 +4,7 @@ import { Link, router } from "expo-router";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
-import { useMutateUsers } from "../hooks/useMutateUser";
+import { useMutateUsers } from "../hooks/useMutateUsers";
 import { maskCpf, validateCpf } from "../utils/utils";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
@@ -17,7 +17,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import Checkbox from "expo-checkbox";
 
 import Fontisto from "@expo/vector-icons/Fontisto";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSession } from "../context/ctx";
 export default function UserSignUpScreen() {
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
@@ -25,6 +25,7 @@ export default function UserSignUpScreen() {
   const [errorMessage, setErrorMessage] = useState(false);
   const date = new Date();
   const { mutate, isError, error, isSuccess, status } = useMutateUsers();
+  const { signIn } = useSession();
   const {
     control,
     handleSubmit,
@@ -85,12 +86,17 @@ export default function UserSignUpScreen() {
       cpf: data.cpf,
       termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
+      preferences: "",
     };
 
     try {
-      await AsyncStorage.setItem("userData", JSON.stringify(userData)); // Armazena os dados localmente
       console.log(userData);
-      router.navigate("prefereces"); // Navega para a tela de preferências
+      await mutate(userData, {
+        onSuccess: (data) => {
+          console.log("User registered successfully:", data);
+          signIn(userData.email, userData.password);
+        },
+      });
     } catch (error) {
       console.log("Erro ao armazenar os dados do usuário", error);
     }
@@ -293,7 +299,9 @@ export default function UserSignUpScreen() {
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("prefereces")}
+          onPress={() => {
+            router.navigate("preferences");
+          }}
           iconClose={() => setIsConfirmationModal(false)}
           style={{ fontSize: 30 }}
         />

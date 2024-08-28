@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     color: '#757575',
     fontSize: 18,
-    fontWeight: 400
+    fontWeight: 'semibold'
   },
 });
