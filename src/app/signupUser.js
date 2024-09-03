@@ -134,7 +134,7 @@ export default function UserSignUpScreen() {
                 style={styles.icon}
               />
               <ErrorMessageComponent style={styles.errorMessage}>
-                {errorMessage} retorne para o
+                {errorMessage} Retorne para o
                 <Link href={"sign-in"} style={styles.link}>
                   Login
                 </Link>
