@@ -35,9 +35,9 @@ export default function CustomPasswordInput({
       />
       <Pressable style={styles.icon} onPress={handleShowPassword}>
         {isPasswordHidden ? (
-          <Ionicons name="eye" size={15} color="gray" />
-        ) : (
           <Ionicons name="eye-off" size={15} color="gray" />
+        ) : (
+          <Ionicons name="eye" size={15} color="gray" />
         )}
       </Pressable>
     </View>

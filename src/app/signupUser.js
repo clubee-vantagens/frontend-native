@@ -89,17 +89,24 @@ export default function UserSignUpScreen() {
       preferences: "",
     };
 
-    try {
-      console.log(userData);
-      await mutate(userData, {
-        onSuccess: (data) => {
-          console.log("User registered successfully:", data);
-          signIn(userData.email, userData.password);
-        },
-      });
-    } catch (error) {
-      console.log("Erro ao armazenar os dados do usuário", error);
-    }
+    mutate(userData, {
+      onSuccess: (data) => {
+        console.log("User registered successfully:", data);
+        signIn(userData.email, userData.password);
+      },
+      onError: (error) => {
+        if (error.response?.status === 400) {
+          setErrorMessage(
+            "Este e-mail já está cadastrado. Por favor, use um e-mail diferente."
+          );
+        } else {
+          setErrorMessage(
+            error.response?.data?.message || "Ocorreu um erro desconhecido."
+          );
+        }
+        console.log("Erro ao armazenar os dados do usuário", error);
+      },
+    });
   };
 
   if (status === "pending") {
@@ -127,7 +134,7 @@ export default function UserSignUpScreen() {
                 style={styles.icon}
               />
               <ErrorMessageComponent style={styles.errorMessage}>
-                {errorMessage} retorne para o
+                {errorMessage} Retorne para o
                 <Link href={"sign-in"} style={styles.link}>
                   Login
                 </Link>
