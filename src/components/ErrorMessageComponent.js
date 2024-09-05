@@ -5,13 +5,13 @@ export default function ErrorMessageComponent({ children, style }) {
     <CustomText
       style={[
         {
-          color: "red",
+          color: "#A92525",
           fontSize: 10,
           marginLeft: 10 /*maxWidth: "60%" */,
         },
         style,
       ]}
-      variant="semiBold"
+      // variant="semiBold"
     >
       {children}
     </CustomText>

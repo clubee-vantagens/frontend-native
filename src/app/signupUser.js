@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Modal, ScrollView } from "react-native";
 import { Link, router } from "expo-router";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -15,10 +15,15 @@ import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
 import Checkbox from "expo-checkbox";
-
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { useSession } from "../context/ctx";
+import TermsAndConditionsScreen from "./termsAndConditions";
 export default function UserSignUpScreen() {
+  const [isTermsVisible, setIsTermsVisible] = useState(false);
+
+  const handleShowTerms = () => setIsTermsVisible(true);
+  const handleHideTerms = () => setIsTermsVisible(false);
+
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
   const [cpfError, setCpfError] = useState("");
@@ -96,9 +101,7 @@ export default function UserSignUpScreen() {
       },
       onError: (error) => {
         if (error.response?.status === 400) {
-          setErrorMessage(
-            "Este e-mail já está cadastrado. Por favor, use um e-mail diferente."
-          );
+          setErrorMessage("Usuário já cadastrado");
         } else {
           setErrorMessage(
             error.response?.data?.message || "Ocorreu um erro desconhecido."
@@ -129,7 +132,7 @@ export default function UserSignUpScreen() {
             <View style={styles.contentError}>
               <Fontisto
                 name="close"
-                size={24}
+                size={25}
                 color="#A92525"
                 style={styles.icon}
               />
@@ -271,7 +274,7 @@ export default function UserSignUpScreen() {
               <CustomText style={{ fontSize: 16, color: "#757575" }}>
                 Concordo com os
               </CustomText>
-              <Link href={"termsAndConditions"}>
+              <Pressable onPress={handleShowTerms}>
                 <CustomText
                   style={{
                     fontSize: 16,
@@ -281,7 +284,7 @@ export default function UserSignUpScreen() {
                 >
                   Termos e Condições
                 </CustomText>
-              </Link>
+              </Pressable>
             </View>
           )}
         />
@@ -313,6 +316,22 @@ export default function UserSignUpScreen() {
           style={{ fontSize: 30 }}
         />
       )}
+
+      <Modal
+        visible={isTermsVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={handleHideTerms}
+      >
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <TermsAndConditionsScreen handleHideTerms={handleHideTerms} />
+          </ScrollView>
+          {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
+            <MaterialIcons name="close" size={30} color="black" />
+          </Pressable> */}
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -359,15 +378,27 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    fontWeight: "bold",
+    width: 25,
+    height: 25,
   },
   errorMessage: {
     flex: 1,
     fontSize: 14,
+    // fontWeight: "500",
   },
+
   link: {
+    // backgroundColor: "blue",
     fontWeight: "bold",
-    color: "#A92525",
+    // color: "#A92525",
     textDecorationLine: "underline",
     marginHorizontal: 3,
+  },
+  modalContainer: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
 });

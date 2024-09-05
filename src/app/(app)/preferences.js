@@ -34,8 +34,8 @@ export default function Preferences() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const {  session } = useSession();
-  const { mutate, status } = useEditUser()
+  const { session } = useSession();
+  const { mutate, status } = useEditUser();
 
   const handleSelect = (option) => {
     setSelectedOptions((prevState) =>
@@ -50,7 +50,7 @@ export default function Preferences() {
     handlePreferencies(options);
     setIsLoading(true);
     setModalOpen(false);
-    router.navigate("home");
+    router.navigate("/");
   };
 
   const isButtonEnabled = selectedOptions.length > 0;
@@ -60,13 +60,12 @@ export default function Preferences() {
     try {
       const dataToPost = {
         preferences: preferences.join(","),
-      };      
-      mutate({ userData: dataToPost, session })
-  
-      console.log(status)
-      if(status === 'idle') {
-        setIsLoading(true)
+      };
+      mutate({ userData: dataToPost, session });
 
+      console.log(status);
+      if (status === "idle") {
+        setIsLoading(true);
       }
       setModalOpen(true);
     } catch (error) {
@@ -192,7 +191,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 14,
     color: "#150F02",
-    fontWeight: 'semibold',
+    fontWeight: "semibold",
   },
   optionTextSelected: {
     color: "#150F02",
