@@ -10,17 +10,17 @@ import CustomText from "../components/CustomText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
-export default function TermsAndConditionsScreen() {
+export default function TermsAndConditionsScreen({ handleHideTerms }) {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ alignSelf: "flex-start", marginBottom: 20 }}>
-        <Pressable onPress={() => router.back()}>
+      <View style={styles.header}>
+        <Pressable onPress={handleHideTerms}>
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Pressable>
-      </View>
-      <ScrollView>
         <Text style={styles.title}>Termos e Condições</Text>
-        <CustomText variant="bold">
+      </View>
+      <ScrollView style={{ marginHorizontal: 20 }}>
+        <CustomText variant="bold" style={styles.text}>
           Ao efetuar o seu cadastro no Clubee, você estará aceitando nossos
           termos e condições, assim como de nossos parceiros. A adesão ao Clubee
           e seus benefícios são oferecidos a exclusivo dos Estabelecimentos
@@ -30,7 +30,7 @@ export default function TermsAndConditionsScreen() {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText variant="semiBold">1.     INTRODUÇÃO</CustomText>
-        <CustomText>
+        <CustomText style={styles.text}>
           {"\n"}
           Obrigado pelo interesse em participar do Clubee, um programa
           desenvolvido e mantido pela SouJuniorLabs.{"\n"}
@@ -53,7 +53,7 @@ export default function TermsAndConditionsScreen() {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText variant="semiBold">2.     O CLUBEE</CustomText>
-        <CustomText>
+        <CustomText style={styles.text}>
           {"\n"}
           2.1. O Clubee disponibiliza uma plataforma virtual, por meio de
           aplicativos para celular (mobile), denominados neste contrato como
@@ -151,7 +151,7 @@ export default function TermsAndConditionsScreen() {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText variant="semiBold">3.     RESPONSABILIDADES</CustomText>
-        <CustomText>
+        <CustomText style={styles.text}>
           {"\n"}
           3.1. Os dados individuais dos Usuários serão armazenados em nossos
           sistemas, de forma confidencial e segura. Não faremos nenhuma
@@ -202,7 +202,7 @@ export default function TermsAndConditionsScreen() {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText variant="semiBold">4.     OUTROS ASSUNTOS</CustomText>
-        <CustomText>
+        <CustomText style={styles.text}>
           {"\n"}
           4.1. O Clubee poderá, a qualquer momento dentro dos critérios
           estabelecidos, modificar a configuração do App, podendo também
@@ -267,15 +267,22 @@ export default function TermsAndConditionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#F7F7F7",
     padding: 30,
-    marginTop: 20,
+    paddingTop: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 20,
+    gap: 30,
+    paddingBottom: 30,
   },
   title: {
-    textAlign: "center",
     fontWeight: "bold",
     fontSize: 30,
-    marginBottom: 30,
-    marginTop: 40,
+  },
+  text: {
+    textAlign: "justify",
   },
 });
