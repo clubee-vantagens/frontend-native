@@ -1,10 +1,10 @@
-import { Redirect, Stack } from 'expo-router';
-import { useSession } from '../../context/ctx';
-import LoadingScreen from '../../components/LoadingScreen';
-
+import { Redirect, Stack } from "expo-router";
+import { useSession } from "../../context/ctx";
+import LoadingScreen from "../../components/LoadingScreen";
+import { TabBar } from "../../TabNavigator/TabNavigator";
 export default function AppLayout() {
   const { session, isLoading } = useSession();
-  console.log(session, isLoading)
+  console.log(session, isLoading);
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
