@@ -104,7 +104,7 @@ export default function Home() {
                   )}
                 </Pressable>
                 <View style={styles.circleContainer}>
-                  <StarFour size={26} />
+                  <StarFour size={26} weight="fill" />
                 </View>
               </View>
             </View>
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     height: 459,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
-  
   },
   imageProfile: {
     width: 42,
