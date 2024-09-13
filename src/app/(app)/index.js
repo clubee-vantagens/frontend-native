@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { Link } from "expo-router";
 import { useSession } from "../../context/ctx";
@@ -21,6 +22,8 @@ import {
 import { User } from "../../components/UserData/UserData";
 import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
+import { CarouselNews } from "../../components/Carousels/News/CarouselNews";
+import { Highlights } from "../../components/Carousels/highlights/Hightlight";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -58,97 +61,101 @@ export default function Home() {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <View style={styles.containerHeader}>
-          <View style={styles.profileNotification}>
-            <View style={styles.profile}>
-              <Image style={styles.imageProfile} source={user.imagem} />
-              <CustomText style={styles.textProfile}>
-                Olá, {user.name}
-              </CustomText>
+        <ScrollView>
+          <View style={styles.containerHeader}>
+            <View style={styles.profileNotification}>
+              <View style={styles.profile}>
+                <Image style={styles.imageProfile} source={user.imagem} />
+                <CustomText style={styles.textProfile}>
+                  Olá, {user.name}
+                </CustomText>
+              </View>
+
+              <Pressable style={styles.btnNotification}>
+                <Bell size={25} color="#fff" />
+                {user.notification > 0 && (
+                  <View style={styles.notificationBadge}>
+                    <CustomText style={styles.notificationText}>
+                      {user.notification}
+                    </CustomText>
+                  </View>
+                )}
+              </Pressable>
             </View>
 
-            <Pressable style={styles.btnNotification}>
-              <Bell size={25} color="#fff" />
-              {user.notification > 0 && (
-                <View style={styles.notificationBadge}>
-                  <CustomText style={styles.notificationText}>
-                    {user.notification}
-                  </CustomText>
-                </View>
-              )}
-            </Pressable>
-          </View>
+            {/* Exibindo pontos do usuário */}
 
-          {/* Exibindo pontos do usuário */}
+            <View style={styles.containerPoints}>
+              <View style={styles.descriptionPoints}>
+                <CustomText style={styles.textPoints}>
+                  Pontos Disponíveis
+                </CustomText>
+                <CustomText style={styles.points}>
+                  {viewPoints ? `${user.points} pts` : "****"}
+                </CustomText>
+              </View>
 
-          <View style={styles.containerPoints}>
-            <View style={styles.descriptionPoints}>
-              <CustomText style={styles.textPoints}>
-                Pontos Disponíveis
-              </CustomText>
-              <CustomText style={styles.points}>
-                {viewPoints ? `${user.points} pts` : "****"}
-              </CustomText>
-            </View>
-
-            <View>
-              <View style={styles.startEye}>
-                <Pressable
-                  style={styles.eyeButton}
-                  onPress={() => setViewPoints(!viewPoints)}
-                >
-                  {viewPoints ? (
-                    <EyeClosed size={32} weight="bold" />
-                  ) : (
-                    <Eye size={32} weight="bold" />
-                  )}
-                </Pressable>
-                <View style={styles.circleContainer}>
-                  <StarFour size={26} weight="fill" />
+              <View>
+                <View style={styles.startEye}>
+                  <Pressable
+                    style={styles.eyeButton}
+                    onPress={() => setViewPoints(!viewPoints)}
+                  >
+                    {viewPoints ? (
+                      <EyeClosed size={32} weight="bold" />
+                    ) : (
+                      <Eye size={32} weight="bold" />
+                    )}
+                  </Pressable>
+                  <View style={styles.circleContainer}>
+                    <StarFour size={26} weight="fill" />
+                  </View>
                 </View>
               </View>
             </View>
+
+            {/* Search */}
+
+            <View style={styles.searchSection}>
+              <MagnifyingGlass
+                name="ios-search"
+                size={20}
+                color="#000"
+                style={styles.searchIcon}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Pesquisar lojas"
+                underlineColorAndroid="transparent"
+              />
+            </View>
+
+            {/* Menu */}
+
+            <View style={styles.menu}>
+              {MenuList.map((item, index) => (
+                <View style={styles.menuItem} key={index}>
+                  <Pressable style={styles.MenuButton}>{item.icon}</Pressable>
+                  {item.title ? (
+                    <Text style={styles.buttonText}>{item.title}</Text>
+                  ) : null}
+                </View>
+              ))}
+            </View>
           </View>
 
-          {/* Search */}
+          <CustomText style={styles.sectionNew}>Novidades no clubee</CustomText>
 
-          <View style={styles.searchSection}>
-            <MagnifyingGlass
-              name="ios-search"
-              size={20}
-              color="#000"
-              style={styles.searchIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Pesquisar lojas"
-              underlineColorAndroid="transparent"
-            />
-          </View>
+          {/* Carrossel das novidades */}
+          <Highlights />
+          <CarouselNews />
 
-          {/* Menu */}
+          <CustomText style={styles.sectionNew}>Destaques</CustomText>
+          {/* Carrossel dos destaques*/}
 
-          <View style={styles.menu}>
-            {MenuList.map((item, index) => (
-              <View style={styles.menuItem} key={index}>
-                <Pressable style={styles.MenuButton}>{item.icon}</Pressable>
-                {item.title ? (
-                  <Text style={styles.buttonText}>{item.title}</Text>
-                ) : null}
-              </View>
-            ))}
-          </View>
-        </View>
-
-        <CustomText style={styles.sectionNew}>Novidades no clubee</CustomText>
-
-        {/* Carrossel das novidades */}
-
-        <CustomText style={styles.sectionNew}>Destaques</CustomText>
-        {/* Carrossel dos destaques*/}
-
-        <CustomText style={styles.sectionNew}> Feito para você</CustomText>
-        {/* Carrossel dos destaques*/}
+          <CustomText style={styles.sectionNew}> Feito para você</CustomText>
+          {/* Carrossel dos destaques*/}
+        </ScrollView>
       </SafeAreaView>
     </>
   );
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
   },
   containerHeader: {
     backgroundColor: "#000",
-    height: 459,
+    // height: 459,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
   },
@@ -265,7 +272,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
-    marginTop: 10,
+    marginTop: 40,
     width: 350,
     marginHorizontal: "auto",
   },

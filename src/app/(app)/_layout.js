@@ -15,7 +15,7 @@ import Home from "./index.js";
 import Menu from "./screens/Menu.js";
 import Pontos from "./screens/Pontos.js";
 import Extrato from "./screens/Extrato.js";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 export default function AppLayout() {
   const Tab = createBottomTabNavigator();
@@ -31,7 +31,7 @@ export default function AppLayout() {
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         tabBarInactiveTintColor: "#fff",
         tabBarActiveTintColor: "#FFD700",
         tabBarStyle: {
@@ -43,9 +43,13 @@ export default function AppLayout() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: "bold",
-          color: "#fff",
         },
-      }}
+        tabBarLabel: ({ focused, color }) => (
+          <Text style={{ color: focused ? "#FFD700" : "#fff", fontSize: 12 }}>
+            {route.name}
+          </Text>
+        ),
+      })}
     >
       <Tab.Screen
         name="Home"
