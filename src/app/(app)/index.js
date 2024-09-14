@@ -22,9 +22,7 @@ import {
 import { User } from "../../components/UserData/UserData";
 import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
-import { CarouselNews } from "../../components/Carousels/News/CarouselNews";
-import { Highlights } from "../../components/Carousels/highlights/Hightlight";
-
+import { Hightlight } from "../../components/Carousels/HightLight";
 export default function Home() {
   const [user, setUser] = useState(null);
   const [viewPoints, setViewPoints] = useState(false);
@@ -147,14 +145,16 @@ export default function Home() {
           <CustomText style={styles.sectionNew}>Novidades no clubee</CustomText>
 
           {/* Carrossel das novidades */}
-          <Highlights />
-          <CarouselNews />
+          <Hightlight />
+          {/* <CarouselNews /> */}
 
           <CustomText style={styles.sectionNew}>Destaques</CustomText>
-          {/* Carrossel dos destaques*/}
+          <View style={styles.containerNews}>
+            <Hightlight />
+          </View>
 
           <CustomText style={styles.sectionNew}> Feito para você</CustomText>
-          {/* Carrossel dos destaques*/}
+          <Hightlight />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     // height: 459,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
+    marginBottom: 30,
   },
   imageProfile: {
     width: 42,
@@ -311,8 +312,12 @@ const styles = StyleSheet.create({
   },
 
   sectionNew: {
-    margin: 30,
+    margin: 10,
     fontWeight: "bold",
     fontSize: 16,
+  },
+  containerNews: {
+    paddingBottom: 10,
+    backgroundColor: "#F5C330",
   },
 });
