@@ -7,7 +7,7 @@ import {
   List,
   StarFour,
   Storefront,
-  Article,
+  Ticket,
 } from "@phosphor-icons/react";
 // Páginas para tabBar
 import Lojas from "./screens/Lojas.js";
@@ -15,8 +15,10 @@ import Home from "./index.js";
 import Menu from "./screens/Menu.js";
 import Pontos from "./screens/Pontos.js";
 import Extrato from "./screens/Extrato.js";
+import Preferences from "../preferences.js";
 import { View, Text } from "react-native";
-
+import CustomText from "../../components/CustomText.js";
+import PointsIcon from "../../components/Icons/PointsIcon.js";
 export default function AppLayout() {
   const Tab = createBottomTabNavigator();
   const { session, isLoading } = useSession();
@@ -38,16 +40,18 @@ export default function AppLayout() {
           backgroundColor: "#050505",
           borderTopWidth: 0,
           height: 80,
-          padding: 20,
+          padding: 15,
         },
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: "bold",
         },
         tabBarLabel: ({ focused, color }) => (
-          <Text style={{ color: focused ? "#FFD700" : "#fff", fontSize: 12 }}>
+          <CustomText
+            style={{ color: focused ? "#FFD700" : "#fff", fontSize: 12 }}
+          >
             {route.name}
-          </Text>
+          </CustomText>
         ),
       })}
     >
@@ -77,13 +81,13 @@ export default function AppLayout() {
         }}
       />
       <Tab.Screen
-        name="Extrato"
+        name="Regates"
         component={Extrato}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: "center" }}>
-              <Article size={24} color={focused ? "#FFD700" : color} />
+              <Ticket size={24} color={focused ? "#FFD700" : color} />
               {focused && (
                 <View
                   style={{
@@ -108,12 +112,12 @@ export default function AppLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: "center" }}>
-              <StarFour size={32} color={focused ? "#FFD700" : color} />
+              <PointsIcon size={32} color={focused ? "#FFD700" : color} />
               {focused && (
                 <View
                   style={{
                     position: "absolute",
-                    top: -20,
+                    top: -15,
                     height: 4,
                     width: 48,
                     borderBottomLeftRadius: 10,
@@ -174,6 +178,14 @@ export default function AppLayout() {
               )}
             </View>
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Preferences"
+        component={Preferences}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
         }}
       />
     </Tab.Navigator>

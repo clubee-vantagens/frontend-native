@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Link } from "expo-router";
 import { useSession } from "../../context/ctx";
 import {
   Bell,
@@ -19,6 +18,8 @@ import {
   StarFour,
   MagnifyingGlass,
 } from "@phosphor-icons/react";
+import IconPoints from "../../components/Icons/PointsIcon";
+
 import { User } from "../../components/UserData/UserData";
 import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
@@ -48,7 +49,13 @@ export default function Home() {
 
   if (!user) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <CustomText style={styles.textProfile}>
           <ActivityIndicator color={"#FCD562"} size={"large"} />
         </CustomText>
@@ -65,7 +72,8 @@ export default function Home() {
               <View style={styles.profile}>
                 <Image style={styles.imageProfile} source={user.imagem} />
                 <CustomText style={styles.textProfile}>
-                  Olá, {user.name}
+                  Olá, {"\n"}
+                  {user.name}!
                 </CustomText>
               </View>
 
@@ -89,7 +97,7 @@ export default function Home() {
                   Pontos Disponíveis
                 </CustomText>
                 <CustomText style={styles.points}>
-                  {viewPoints ? `${user.points} pts` : "****"}
+                  {viewPoints ? `${user.points} pts` : "**** pts"}
                 </CustomText>
               </View>
 
@@ -100,13 +108,13 @@ export default function Home() {
                     onPress={() => setViewPoints(!viewPoints)}
                   >
                     {viewPoints ? (
-                      <EyeClosed size={32} weight="bold" />
+                      <EyeClosed size={24} weight="bold" />
                     ) : (
-                      <Eye size={32} weight="bold" />
+                      <Eye size={24} weight="bold" />
                     )}
                   </Pressable>
                   <View style={styles.circleContainer}>
-                    <StarFour size={26} weight="fill" />
+                    <IconPoints width={40} height={40} />
                   </View>
                 </View>
               </View>
@@ -251,13 +259,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
+    backgroundColor: "#FAF9F6",
+    borderWidth: 3,
+    borderColor: "#F1F1EF",
+    borderRadius: 50,
+    width: 32,
+    height: 32,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   circleContainer: {
     width: 40,
     height: 40,
-    borderWidth: 2,
-    borderRadius: 50,
-    borderColor: "#000",
+
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",

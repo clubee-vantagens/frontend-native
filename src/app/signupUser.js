@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Pressable, Modal, ScrollView } from "react-native";
-import { Link, router } from "expo-router";
-
+import { Link, router, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
 import { useMutateUsers } from "../hooks/useMutateUsers";
@@ -19,8 +18,8 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import { useSession } from "../context/ctx";
 import TermsAndConditionsScreen from "./termsAndConditions";
 export default function UserSignUpScreen() {
+  const router = useRouter();
   const [isTermsVisible, setIsTermsVisible] = useState(false);
-
   const handleShowTerms = () => setIsTermsVisible(true);
   const handleHideTerms = () => setIsTermsVisible(false);
 
@@ -310,7 +309,8 @@ export default function UserSignUpScreen() {
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
           onPress={() => {
-            router.navigate("preferences");
+            console.log("preferencias");
+            router.push("preferences");
           }}
           iconClose={() => setIsConfirmationModal(false)}
           style={{ fontSize: 30 }}

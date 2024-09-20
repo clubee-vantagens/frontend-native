@@ -10,7 +10,8 @@ import {
 import { hightlightData } from "./HightlightData";
 import CustomText from "../CustomText";
 import { StarFour } from "@phosphor-icons/react";
-import points from "../../../assets/images/points.png";
+
+import ScoreStore from "../../components/Icons/ScoreStore";
 export const Hightlight = () => {
   const { width } = Dimensions.get("window");
 
@@ -38,10 +39,7 @@ const SliderItem = ({ item }) => {
 
       <View style={styles.pointsContainer}>
         <Text style={styles.pointsText}>{item.points} pontos</Text>
-        <Image
-          style={styles.imgPoint}
-          source={require("../../../assets/images/points.png")}
-        />
+        <ScoreStore />
       </View>
 
       <View style={styles.infoContainer}>
@@ -93,6 +91,7 @@ const styles = StyleSheet.create({
     gap: 3,
     justifyContent: "center",
     alignItems: "center",
+
   },
 
   pointsText: {
