@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     width: 168,
     height: 136,
     marginTop: 50,
-    contentFit: "contain",
+    resizeMode: "contain",
   },
   text: {
     fontSize: 30,
