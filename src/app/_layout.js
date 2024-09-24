@@ -1,5 +1,5 @@
 import { Slot, Stack } from "expo-router";
-import {SessionProvider} from '../context/ctx'
+import { SessionProvider } from "../context/ctx";
 import { Query, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";

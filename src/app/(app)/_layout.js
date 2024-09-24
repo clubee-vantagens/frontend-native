@@ -1,24 +1,183 @@
-import { Redirect, Stack } from 'expo-router';
-import { useSession } from '../../context/ctx';
-import LoadingScreen from '../../components/LoadingScreen';
+import { Redirect } from "expo-router";
+import { useSession } from "../../context/ctx";
+import LoadingScreen from "../../components/LoadingScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  House,
+  List,
+  StarFour,
+  Storefront,
+  Article,
+} from "@phosphor-icons/react";
+// Páginas para tabBar
+import Lojas from "./screens/Lojas.js";
+import Home from "./index.js";
+import Menu from "./screens/Menu.js";
+import Pontos from "./screens/Pontos.js";
+import Extrato from "./screens/Extrato.js";
+import { View, Text } from "react-native";
 
 export default function AppLayout() {
+  const Tab = createBottomTabNavigator();
   const { session, isLoading } = useSession();
-  console.log(session, isLoading)
 
-  // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
     return <LoadingScreen />;
   }
 
-  // Only require authentication within the (app) group's layout as users
-  // need to be able to access the (auth) group and sign in again.
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
     return <Redirect href="/onboardingScreen" />;
   }
 
-  // This layout can be deferred because it's not the root layout.
-  return <Stack />;
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarInactiveTintColor: "#fff",
+        tabBarActiveTintColor: "#FFD700",
+        tabBarStyle: {
+          backgroundColor: "#050505",
+          borderTopWidth: 0,
+          height: 80,
+          padding: 20,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "bold",
+        },
+        tabBarLabel: ({ focused, color }) => (
+          <Text style={{ color: focused ? "#FFD700" : "#fff", fontSize: 12 }}>
+            {route.name}
+          </Text>
+        ),
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <House size={24} color={focused ? "#FFD700" : color} />
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    height: 4,
+                    width: 48,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#FFD700",
+                  }}
+                />
+              )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Extrato"
+        component={Extrato}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <Article size={24} color={focused ? "#FFD700" : color} />
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    height: 4,
+                    width: 48,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#FFD700",
+                  }}
+                />
+              )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Pontos"
+        component={Pontos}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <StarFour size={32} color={focused ? "#FFD700" : color} />
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    height: 4,
+                    width: 48,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#FFD700",
+                  }}
+                />
+              )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Lojas"
+        component={Lojas}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <Storefront size={24} color={focused ? "#FFD700" : color} />
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    height: 4,
+                    width: 48,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#FFD700",
+                  }}
+                />
+              )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={Menu}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <List size={24} color={focused ? "#FFD700" : color} />
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    height: 4,
+                    width: 48,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#FFD700",
+                  }}
+                />
+              )}
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
