@@ -2,6 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useCallback, useReducer } from 'react';
 import { Platform } from 'react-native';
 
+
 // Custom hook to manage async state
 function useAsyncState(initialValue = [true, null]) {
   return useReducer(

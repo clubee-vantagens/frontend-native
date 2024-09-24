@@ -1,7 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Image } from "expo-image";
-import { MaterialIcons } from "@expo/vector-icons";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import CustomButtonTwo from "./CustomButtonTwo";
 import CustomText from "./CustomText";
 
