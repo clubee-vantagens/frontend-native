@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useSession } from "../../context/ctx";
 import {
   Bell,
@@ -23,8 +23,10 @@ import { User } from "../../components/UserData/UserData";
 import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
 import { Hightlight } from "../../components/Carousels/HightLight";
+import NotificationsModal from "./screens/notifications";
 export default function Home() {
   const [user, setUser] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(false);
 
   const { signOut, refreshAccessToken } = useSession();
@@ -69,7 +71,10 @@ export default function Home() {
                 </CustomText>
               </View>
 
-              <Pressable style={styles.btnNotification}>
+              <Pressable
+                style={styles.btnNotification}
+                onPress={() => setModalVisible(true)}
+              >
                 <Bell size={25} color="#fff" />
                 {user.notification > 0 && (
                   <View style={styles.notificationBadge}>
@@ -89,7 +94,7 @@ export default function Home() {
                   Pontos Disponíveis
                 </CustomText>
                 <CustomText style={styles.points}>
-                  {viewPoints ? `${user.points} pts` : "****"}
+                  {viewPoints ? `${user.points} pts` : "**** pts"}
                 </CustomText>
               </View>
 
@@ -157,6 +162,10 @@ export default function Home() {
           <Hightlight />
         </ScrollView>
       </SafeAreaView>
+      <NotificationsModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)} // Fechar o modal
+      />
     </>
   );
 }

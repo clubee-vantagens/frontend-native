@@ -7,12 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import CustomText from "../../components/CustomText";
-import CustomButtonTwo from "../../components/CustomButtonTwo";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import CustomText from "../components/CustomText";
+import CustomButtonTwo from "../components/CustomButtonTwo";
+import ConfirmationModal from "../components/ConfirmationModal";
 import { router } from "expo-router";
-import { useSession } from "../../context/ctx";
-import { useEditUser } from "../../hooks/useEditUser";
+import { useSession } from "../context/ctx";
+import { useEditUser } from "../hooks/useEditUser";
 
 const options = [
   "Alimentação",
