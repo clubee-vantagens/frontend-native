@@ -43,7 +43,7 @@ const OnboardingScreen = () => {
   const resetStorage = async () =>
     await AsyncStorage.removeItem("hasSeenOnboarding");
 
-  resetStorage()
+  // resetStorage()
 
   const pages = [
     {
