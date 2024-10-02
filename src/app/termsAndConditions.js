@@ -9,13 +9,14 @@ import {
 import CustomText from "../components/CustomText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export default function TermsAndConditionsScreen({ handleHideTerms }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Pressable onPress={handleHideTerms}>
-          <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
+          <CaretLeft  size={30} color="black" />
         </Pressable>
         <Text style={styles.title}>Termos e Condições</Text>
       </View>

@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from 'axios'
 import { api_url } from "../constants/constants";
 
-const fetchUsers = async () => {
-    const res = await axios.get(`${api_url}/users/client/all`, {
+const fetchUsers = async (session) => {
+    const res = await axios.get(`${api_url}/users/client`, {
         headers: {
-            Authorization: 'd'
+            Authorization: `Bearer ${session}`
         }
     })
     return res?.data

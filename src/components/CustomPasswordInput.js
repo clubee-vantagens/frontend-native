@@ -1,6 +1,7 @@
 import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
+import {Eye,  EyeClosed } from '@phosphor-icons/react'
 import { useState } from "react";
 
 export default function CustomPasswordInput({
@@ -35,9 +36,9 @@ export default function CustomPasswordInput({
       />
       <Pressable style={styles.icon} onPress={handleShowPassword}>
         {isPasswordHidden ? (
-          <Ionicons name="eye-off" size={15} color="gray" />
+          <EyeClosed size={15} color="gray" />
         ) : (
-          <Ionicons name="eye" size={15} color="gray" />
+          <Eye size={15} color="gray" />
         )}
       </Pressable>
     </View>
@@ -52,6 +53,14 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
     elevation: 5,
     margin: 10,
     height: 50,

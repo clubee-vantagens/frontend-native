@@ -80,6 +80,31 @@ export function maskCnpj(cnpj) {
   return masked.slice(0, 18);
 }
 
+export function maskCep (cep) {
+  const digits = cep.replace(/\D/g, "")
+
+  let masked = digits;
+  if(digits.length > 5) {
+    masked = digits.slice(0,5) + "-" + masked.slice(5)
+  }
+  return masked.slice(0, 9)
+}
+
+export function maskDate(date) {
+  const digits = date.replace(/\D/g, ""); // Remove all non-digit characters
+
+  let masked = digits;
+  if (digits.length > 2) {
+    masked = digits.slice(0, 2) + "/" + digits.slice(2);
+  }
+  if (digits.length > 4) {
+    masked = masked.slice(0, 5) + "/" + digits.slice(4);
+  }
+
+  // Ensure the output is always at most 10 characters (including the slashes)
+  return masked.slice(0, 10);
+}
+
 export function validaCNPJ(cnpj) {
 	cnpj = cnpj.replace(/[^\d]+/g,'');
 	if(cnpj == '' || cnpj.length != 14 || /^(\d)\1{13}$/.test(cnpj)) return false;

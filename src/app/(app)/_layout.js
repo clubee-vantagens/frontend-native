@@ -2,6 +2,7 @@ import { Redirect } from "expo-router";
 import { useSession } from "../../context/ctx";
 import LoadingScreen from "../../components/LoadingScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   House,
   List,
@@ -16,21 +17,16 @@ import Menu from "./screens/Menu.js";
 import Pontos from "./screens/Pontos.js";
 import Extrato from "./screens/Extrato.js";
 import { View, Text } from "react-native";
+import Preferences from "./preferences.js";
+import HelpCenter from "./helpCenter.js";
+import Faq from './faq.js'
+import EditProfile from "./editProfile.js";
 
-export default function AppLayout() {
-  const Tab = createBottomTabNavigator();
-  const { session, isLoading } = useSession();
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-  if (!session) {
-    // On web, static rendering will stop here as the user is not authenticated
-    // in the headless Node process that the pages are rendered in.
-    return <Redirect href="/onboardingScreen" />;
-  }
-
+function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -179,5 +175,31 @@ export default function AppLayout() {
         }}
       />
     </Tab.Navigator>
+  )
+}
+
+export default function AppLayout() {
+  
+  const { session, isLoading } = useSession();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!session) {
+    // On web, static rendering will stop here as the user is not authenticated
+    // in the headless Node process that the pages are rendered in.
+    return <Redirect href="/onboardingScreen" />;
+  }
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name='MainTabs' component={TabNavigator} options={{headerShown: false}} />
+      <Stack.Screen name='preferences' component={Preferences} options={{headerShown: false}} />
+      <Stack.Screen name='/' component={Home} options={{headerShown: false}} />
+      <Stack.Screen name='helpCenter' component={HelpCenter} options={{headerShown: false}}/>
+      <Stack.Screen name='faq' component={Faq} options={{headerShown: false}} />
+      <Stack.Screen name="editProfile" component={EditProfile} options={{headerShown: false}} />
+    </Stack.Navigator>
   );
 }
