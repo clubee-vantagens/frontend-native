@@ -1,11 +1,11 @@
 import { TextInput, StyleSheet } from "react-native";
 import { Controller } from "react-hook-form";
 
-export default function CustomInput({ control, name, placeholder, type, rules }) {
+export default function CustomInput({ control, name, placeholder, type, rules, editable }) {
   return (
     <Controller
       control={control}
-      rules={rules}
+      rules={rules || undefined}
       render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
           value={value}
@@ -15,6 +15,7 @@ export default function CustomInput({ control, name, placeholder, type, rules })
           onChangeText={onChange}
           autoCapitalize="none"
           inputMode={type}
+          editable={editable}
         />
       )}
       name={name}
@@ -29,7 +30,15 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",
-    elevation: 5,
+    shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 1.41,
+
+      elevation: 5,
     margin: 10,
     textAlign: "left",
     paddingLeft: 25,
