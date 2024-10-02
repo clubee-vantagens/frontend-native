@@ -1,6 +1,5 @@
 export const hightlightData = [
   {
-    // title: "lorem ipsum xxx",
     imageStore:
       "https://images.pexels.com/photos/1290141/pexels-photo-1290141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     nameStore: "Livraria do ivo",
