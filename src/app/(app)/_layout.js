@@ -17,7 +17,7 @@ import Menu from "./screens/Menu.js";
 import Pontos from "./screens/Pontos.js";
 import Extrato from "./screens/Extrato.js";
 import { View, Text } from "react-native";
-import Preferences from "./preferences.js";
+import Preferences from "../preferences.js";
 import HelpCenter from "./helpCenter.js";
 import Faq from './faq.js'
 import EditProfile from "./editProfile.js";
@@ -195,8 +195,8 @@ export default function AppLayout() {
   return (
     <Stack.Navigator>
       <Stack.Screen name='MainTabs' component={TabNavigator} options={{headerShown: false}} />
-      <Stack.Screen name='preferences' component={Preferences} options={{headerShown: false}} />
       <Stack.Screen name='/' component={Home} options={{headerShown: false}} />
+      <Stack.Screen name='preferences' component={Preferences} options={{headerShown: false}} />
       <Stack.Screen name='helpCenter' component={HelpCenter} options={{headerShown: false}}/>
       <Stack.Screen name='faq' component={Faq} options={{headerShown: false}} />
       <Stack.Screen name="editProfile" component={EditProfile} options={{headerShown: false}} />

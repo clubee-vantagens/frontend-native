@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Pressable, ScrollView } from "react-native";
 import { CaretDown, CaretUp } from "@phosphor-icons/react"; // Importing icons from Expo (you can replace this with your icon library)
+import CustomText from "./CustomText";
 
 const FAQAccordion = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -14,14 +15,14 @@ const FAQAccordion = ({ data }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <>
       {data.map((item, index) => (
         <View key={index}>
           <Pressable
             style={styles.button}
             onPress={() => toggleAccordion(index)}
           >
-            <Text style={styles.title}>{item.question}</Text>
+            <CustomText style={styles.title}>{item.question}</CustomText>
             {activeIndex === index ? (
               <CaretUp size={24} color="black" />
             ) : (
@@ -30,12 +31,12 @@ const FAQAccordion = ({ data }) => {
           </Pressable>
           {activeIndex === index && (
             <View style={styles.content}>
-              <Text>{item.answer}</Text>
+              <CustomText>{item.answer}</CustomText>
             </View>
           )}
         </View>
       ))}
-    </View>
+    </> 
   );
 };
 
@@ -43,6 +44,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 20,
+    borderWidth:1,
+    borderColor: 'red'
   },
   button: {
     backgroundColor: "#FFEAAD",

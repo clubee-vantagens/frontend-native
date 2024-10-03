@@ -13,7 +13,11 @@ export default function HelpCenter(second) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => router.navigate("/")}>
+      <Pressable onPress={() => {
+        console.log('pressed');
+        router.navigate('/')
+        
+      }}>
         <CaretLeft size={30} color="black" />
       </Pressable>
       <CustomText style={{marginTop: 20}} variant="bold">Central de Ajuda</CustomText>
@@ -65,5 +69,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-between'
-    }
+    },
+    modalContainer: {
+      flex: 1
+    },
+    scrollViewContent: {
+      flexGrow: 1,
+    },
 })
