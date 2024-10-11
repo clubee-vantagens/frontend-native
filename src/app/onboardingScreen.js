@@ -1,4 +1,4 @@
-import { Image, View, StyleSheet, Pressable } from "react-native";
+import { Image, View, StyleSheet, Pressable, Button } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Onboarding from "react-native-onboarding-swiper";
 import CustomText from "../components/CustomText";
@@ -43,7 +43,28 @@ const OnboardingScreen = () => {
   const resetStorage = async () =>
     await AsyncStorage.removeItem("hasSeenOnboarding");
 
-  // resetStorage()
+  // resetStorage();
+
+  const dotComponent = () => {
+    return null
+  }
+
+  const Skip = ({ onPress, isLight, skipLabel, ...props }) => (
+    <Pressable
+      title={'Pular'}
+      containerViewStyle={{
+        marginVertical: 10,
+        width: 70,
+      }}
+      // textStyle={{ color: color(isLight) }}
+      style={{marginLeft: 50 }}
+      {...props}
+      onPress={onPress}
+    >
+      <CustomText variant="semiBold" style={{textDecorationLine: 'underline'}}>{skipLabel}</CustomText>
+      
+    </Pressable>
+  );
 
   const pages = [
     {
@@ -64,6 +85,11 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
+          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Acumule vantagens exclusivas em suas compras.
           </CustomText>
@@ -97,6 +123,11 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
+          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Apoie e impulsione o comercio na sua comunidade.
           </CustomText>
@@ -136,6 +167,11 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
+          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 126 }}></View>
+            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
+            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
+          </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Conheça novas lojas e produtos desenvolvidos por comerciantes
             locais.
@@ -174,6 +210,8 @@ const OnboardingScreen = () => {
       showNext={false}
       pages={pages}
       bottomBarColor="#fff"
+      DotComponent={dotComponent}
+      SkipButtonComponent={Skip}
     />
   );
 };

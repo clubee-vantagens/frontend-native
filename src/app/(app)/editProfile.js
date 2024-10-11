@@ -230,7 +230,7 @@ export default function EditProfile(second) {
       </Pressable>
       {deleteModalOpen && (
         <ConfirmationModal
-          text={`Tem certeza que deseja deletar sua conta no clubee ?`}
+          text={`Tem certeza que deseja deletar sua conta no Clubee?`}
           onPress={() => {
             handleDeleteUser(session)
             setSaveModalOpen(false)
