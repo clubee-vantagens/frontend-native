@@ -24,29 +24,30 @@ import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
 import { Hightlight } from "../../components/Carousels/HightLight";
 import NotificationsModal from "./screens/notifications";
+import { useUserData } from "../../hooks/useUserData";
 export default function Home() {
-  const [user, setUser] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(false);
-
-  const { signOut, refreshAccessToken } = useSession();
+  const { signOut, refreshAccessToken, session } = useSession();
+  const { data: user, isLoading, error } = useUserData(session);
 
   // useEffect para simular a requisição de dados
-  useEffect(() => {
-    // Simulando um fetch do backend, usando o dado mocado por enquanto
-    const fetchUserData = async () => {
-      // Aqui futuramente será a requisição para o backend
-      // const response = await api.get('/user');
-      // const data = response.data;
+  // useEffect(() => {
+  //   // Simulando um fetch do backend, usando o dado mocado por enquanto
+  //   const fetchUserData = async () => {
+  //     // Aqui futuramente será a requisição para o backend
+  //     // const response = await api.get('/user');
+  //     // const data = response.data;
 
-      // Simulando atraso de requisição
-      setTimeout(() => {
-        setUser(User[0]); // Definindo o usuário mocado
-      }, 1000);
-    };
+  //     // Simulando atraso de requisição
+  //     setTimeout(() => {
+  //       setUser(User[0]); // Definindo o usuário mocado
+  //     }, 1000);
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();    
+  // }, []);
+  console.log(user)
 
   if (!user) {
     return (
@@ -65,7 +66,7 @@ export default function Home() {
           <View style={styles.containerHeader}>
             <View style={styles.profileNotification}>
               <View style={styles.profile}>
-                <Image style={styles.imageProfile} source={user.imagem} />
+                <Image style={styles.imageProfile} source={user?.photo || 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png'} />
                 <CustomText style={styles.textProfile}>
                   Olá, {user.name}
                 </CustomText>
@@ -94,7 +95,7 @@ export default function Home() {
                   Pontos Disponíveis
                 </CustomText>
                 <CustomText style={styles.points}>
-                  {viewPoints ? `${user.points} pts` : "**** pts"}
+                  {viewPoints ? `${user.points || 1000} pts` : "**** pts"}
                 </CustomText>
               </View>
 
@@ -104,11 +105,11 @@ export default function Home() {
                     style={styles.eyeButton}
                     onPress={() => setViewPoints(!viewPoints)}
                   >
-                    {/* {viewPoints ? (
+                    {viewPoints ? (
                       <EyeClosed size={32} weight="bold" />
                     ) : (
                       <Eye size={32} weight="bold" />
-                    )} */}
+                    )}
                   </Pressable>
                   <View style={styles.circleContainer}>
                     <StarFour size={26} weight="fill" />

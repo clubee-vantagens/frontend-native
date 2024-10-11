@@ -3,7 +3,7 @@ import { api_url } from "../constants/constants";
 import axios from "axios";
 
 // Function to handle deleting a user
-const deleteUser = async (userId, session) => {
+const deleteUser = async (session) => {
   try {
     // Perform the delete request
     const res = await axios.delete(`${api_url}/users/client`, {
@@ -29,7 +29,7 @@ const deleteUser = async (userId, session) => {
 export function useDeleteUser() {
   const mutation = useMutation({
     // Mutation function for deleting user data
-    mutationFn: ({ userId, session }) => deleteUser(userId, session),
+    mutationFn: ( session ) => deleteUser(session),
     // Error callback for mutation failure
     onError: (error) => {
       console.error("Delete mutation error:", error);

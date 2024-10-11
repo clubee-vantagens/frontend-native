@@ -1,50 +1,47 @@
-import { Button, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import { CaretLeft, Camera } from "phosphor-react-native";
 import { Image } from "expo-image";
-import ProfileImage from "../../../assets/images/perfil.jpg";
-import Placeholder from "../../../assets/images/placeholder.jpg";
-import { Form, useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import CustomInput from "../../components/CustomInput";
-import CustomOption from "../../components/CustomOption";
 import CustomButton from "../../components/CustomButton";
 import { useEffect, useState } from "react";
-import { User } from "../../components/UserData/UserData";
 import DropdownComponent from "../../components/DropdownComponent";
 import { useEditUser } from "../../hooks/useEditUser";
-import { maskCep, maskDate } from "../../utils/utils";
+import { maskDate, convertToISOString, maskPhone, convertToDDMMYYYY } from "../../utils/utils";
 import axios from "axios";
 import { useSession } from "../../context/ctx";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
-import { Try } from "expo-router/build/views/Try";
+import { useUserData } from "../../hooks/useUserData";
 
 export default function EditProfile(second) {
+  const { session, signOut } = useSession();
+  const { mutate, status, isSuccess } = useEditUser();
+  const {mutate: userDeletion, status: deletionStatus, isSuccess: deleteSuccess } = useDeleteUser(session)
+  const {data: user} = useUserData(session)
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  // const {data} = useUserData()
-  // console.log(data);
-  const { mutate, status, isSuccess } = useEditUser();
-  const {mutate: userDeletion, status: deletionStatus, isSuccess: deleteSuccess } = useDeleteUser()
-  const { session, signOut } = useSession();
 
+  console.log(isSuccess);
+  
   // useEffect para simular a requisição de dados
-  useEffect(() => {
-    // Simulando um fetch do backend, usando o dado mocado por enquanto
-    const fetchUserData = async () => {
-      // Aqui futuramente será a requisição para o backend
-      // const response = await api.get('/user');
-      // const data = response.data;
+  // useEffect(() => {
+  //   // Simulando um fetch do backend, usando o dado mocado por enquanto
+  //   const fetchUserData = async () => {
+  //     // Aqui futuramente será a requisição para o backend
+  //     // const response = await api.get('/user');
+  //     // const data = response.data;
 
-      // Simulando atraso de requisição
-      setTimeout(() => {
-        setUser(User[0]); // Definindo o usuário mocado
-      }, 1000);
-    };
+  //     // Simulando atraso de requisição
+  //     setTimeout(() => {
+  //       setUser(User[0]); // Definindo o usuário mocado
+  //     }, 1000);
+  //   };
 
-    fetchUserData();
-  }, []);
-  const [user, setUser] = useState(null);
+  //   fetchUserData();
+  // }, []);
+  
 
   const {
     control,
@@ -68,6 +65,10 @@ export default function EditProfile(second) {
       nascimento: "",
     },
   });
+  const phoneValue = watch("phoneNumber")
+  useEffect(() => {
+    setValue("phoneNumber", maskPhone(phoneValue))
+  }, [phoneValue])
 
   const handleDeleteUser = async () => {
     try {
@@ -104,13 +105,13 @@ export default function EditProfile(second) {
         socialName: data.socialName || user.socialName,
         phoneNumber: data.phoneNumber || user.phoneNumber,
         cep: data.cep || user.cep,
-        nascimento: data.nascimento || user.nascimento,
+        nascimento: convertToISOString(data.nascimento) || user.nascimento,
+        endereco: data.endereco || user.endereco,
         cidade: data.cidade || user.cidade,
         estado: data.estado || user.estado,
       };
       mutate({ userData: dataToPost, session });
-      console.log(status);
-      console.log(dataToPost);
+      setSaveModalOpen(true)
       if (status === "idle") {
         console.log("idle");
       }
@@ -126,7 +127,7 @@ export default function EditProfile(second) {
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
         <CaretLeft style={{ alignSelf: "start" }} size={24} />
-        <Image source={ProfileImage} style={styles.image} />
+        <Image source={user?.photo || 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png'} style={styles.image} />
         <View style={styles.cameraContainer}>
           <Camera color={"white"} size={16} />
         </View>
@@ -141,7 +142,7 @@ export default function EditProfile(second) {
         <CustomInput
           control={control}
           name="socialName"
-          placeholder="Nome Social"
+          placeholder={user?.socialName || "Nome Social"}
         />
         <CustomInput
           control={control}
@@ -158,14 +159,14 @@ export default function EditProfile(second) {
         <CustomInput
           control={control}
           name="phoneNumber"
-          placeholder="Telefone"
+          placeholder={user?.phoneNumber || "Telefone"}
         />
         <View style={{ flexDirection: "row" }}>
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                placeholder="DD/MM/AAAA"
+                placeholder={convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"}
                 onChangeText={onChange}
                 value={maskDate(value)}
                 style={styles.smallInput}
@@ -177,7 +178,7 @@ export default function EditProfile(second) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
-                placeholder="CEP"
+                placeholder={user?.cep || "CEP"}
                 onChangeText={(text) => {
                   onChange(text);
                   if (text.length === 8) {
@@ -191,14 +192,14 @@ export default function EditProfile(second) {
             name="cep"
           />
         </View>
-        <CustomInput control={control} name="endereco" placeholder="Endereco" />
+        <CustomInput control={control} name="endereco" placeholder={user?.endereco || "Endereco"} />
         <View style={{ flexDirection: "row" }}>
           <DropdownComponent control={control} name="estado" />
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                placeholder="Cidade"
+                placeholder={user?.cidade || "Cidade"}
                 onChangeText={onChange}
                 value={value}
                 style={styles.smallInput}
@@ -213,7 +214,7 @@ export default function EditProfile(second) {
       >
         Salvar
       </CustomButton>
-      {isSuccess && saveModalOpen && (
+      {saveModalOpen && (
         <ConfirmationModal
           text={`Cadastro${"\n"} atualizado!`}
           onPress={() => setSaveModalOpen(false)}
