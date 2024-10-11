@@ -104,11 +104,11 @@ export default function Home() {
                     style={styles.eyeButton}
                     onPress={() => setViewPoints(!viewPoints)}
                   >
-                    {viewPoints ? (
+                    {/* {viewPoints ? (
                       <EyeClosed size={32} weight="bold" />
                     ) : (
                       <Eye size={32} weight="bold" />
-                    )}
+                    )} */}
                   </Pressable>
                   <View style={styles.circleContainer}>
                     <StarFour size={26} weight="fill" />

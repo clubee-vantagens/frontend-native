@@ -68,7 +68,7 @@ export default function Index() {
       >
         <View style={styles.containerImage}>
           <Image
-            source={require("@/assets/images/novoLogo.png")}
+            source={require("@/assets/images/novoLogo.avif")}
             style={styles.image}
           />
         </View>
@@ -120,7 +120,7 @@ export default function Index() {
           />
 
           {errors.email && (
-            <ErrorMessageComponent style={styles.errorText}>
+            <ErrorMessageComponent>
               {errors.email.message}
             </ErrorMessageComponent>
           )}

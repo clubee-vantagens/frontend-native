@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable, Modal, ScrollView } from "react-native";
+import { View, StyleSheet, Pressable, Modal, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Link, router } from "expo-router";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -300,12 +300,13 @@ export default function UserSignUpScreen() {
         Cadastre-se
       </CustomButton>
 
-      <CustomText style={{ fontSize: 20, color: "#757575" }}>
-        Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
-          Acessar!
-        </Link>
-      </CustomText>
+          <CustomText style={{ fontSize: 20, color: "#757575" }}>
+            Já tem uma conta?{" "}
+            <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
+              Acessar!
+            </Link>
+          </CustomText>
+
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
