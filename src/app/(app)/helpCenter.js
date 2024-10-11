@@ -1,7 +1,7 @@
 import { View, Pressable, Button, StyleSheet, Modal, ScrollView } from "react-native";
 import CustomText from "../../components/CustomText";
 import { router } from "expo-router";
-import { CaretRight, CaretLeft } from "@phosphor-icons/react";
+import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
 import TermsAndConditionsScreen from '../termsAndConditions'
 

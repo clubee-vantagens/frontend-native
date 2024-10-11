@@ -1,7 +1,7 @@
 import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
-import {Eye,  EyeClosed } from '@phosphor-icons/react'
+import {Eye,  EyeClosed, Horse } from 'phosphor-react-native'
 import { useState } from "react";
 
 export default function CustomPasswordInput({
@@ -35,11 +35,11 @@ export default function CustomPasswordInput({
         name={name}
       />
       <Pressable style={styles.icon} onPress={handleShowPassword}>
-        {/* {isPasswordHidden ? (
-          <EyeClosed size={15} color="gray" />
-        ) : (
+        {isPasswordHidden ? (
           <Eye size={15} color="gray" />
-        )} */}
+        ) : (
+          <EyeClosed size={15} color="gray" />
+        )}
       </Pressable>
     </View>
   );

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { hightlightData } from "./HightlightData";
 import CustomText from "../CustomText";
-import { StarFour } from "@phosphor-icons/react";
+import { StarFour } from "phosphor-react-native";
 import points from "../../../assets/images/points.png";
 export const Hightlight = () => {
   const { width } = Dimensions.get("window");

@@ -8,9 +8,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Image
 } from "react-native";
 import Constants from "expo-constants";
-import { Image } from "expo-image";
 import { Link, router } from "expo-router";
 import { useSession } from "../context/ctx";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
@@ -68,7 +68,7 @@ export default function Index() {
       >
         <View style={styles.containerImage}>
           <Image
-            source={require("@/assets/images/novoLogo.avif")}
+            source={require('../../assets/images/novoLogo.png')}
             style={styles.image}
           />
         </View>
@@ -182,12 +182,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F7F7",
   },
   containerImage: {
-    width: "100%",
+    width: 350,
     alignItems: "center",
   },
   image: {
-    width: "90%",
-    height: 250,
+    height: 130,
     marginTop: 50,
     resizeMode: "contain",
   },

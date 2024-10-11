@@ -9,7 +9,7 @@ import {
   StarFour,
   Storefront,
   Article,
-} from "@phosphor-icons/react";
+} from "phosphor-react-native";
 // Páginas para tabBar
 import Lojas from "./screens/Lojas.js";
 import Home from "./index.js";

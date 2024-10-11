@@ -1,4 +1,4 @@
-import { CaretLeft } from "@phosphor-icons/react";
+import { CaretLeft } from "phosphor-react-native";
 import { Pressable, StyleSheet, ScrollView, View } from "react-native";
 import { router } from "expo-router";
 import FAQAccordion from "../../components/FaqAccordion";

@@ -1,4 +1,4 @@
-import { Dog, Flower, PaintBrush , DotsThree } from "@phosphor-icons/react";
+import { Dog, Flower, PaintBrush , DotsThree } from "phosphor-react-native";
 export const MenuList = [
   {
     title: "PetShop",
