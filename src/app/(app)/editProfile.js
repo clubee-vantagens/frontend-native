@@ -1,6 +1,6 @@
 import { Button, Pressable, StyleSheet, TextInput, View } from "react-native";
 import CustomText from "../../components/CustomText";
-import { CaretLeft, Camera } from "@phosphor-icons/react";
+import { CaretLeft, Camera } from "phosphor-react-native";
 import { Image } from "expo-image";
 import ProfileImage from "../../../assets/images/perfil.jpg";
 import Placeholder from "../../../assets/images/placeholder.jpg";

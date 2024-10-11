@@ -9,7 +9,7 @@ import {
 import CustomText from "../components/CustomText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { CaretLeft } from "@phosphor-icons/react";
+import { CaretLeft } from "phosphor-react-native";
 
 export default function TermsAndConditionsScreen({ handleHideTerms }) {
   return (

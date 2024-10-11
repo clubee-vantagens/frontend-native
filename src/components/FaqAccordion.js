@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Pressable, ScrollView } from "react-native";
-import { CaretDown, CaretUp } from "@phosphor-icons/react"; // Importing icons from Expo (you can replace this with your icon library)
+import { CaretDown, CaretUp } from "phosphor-react-native"; // Importing icons from Expo (you can replace this with your icon library)
 import CustomText from "./CustomText";
 
 const FAQAccordion = ({ data }) => {

@@ -8,7 +8,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { X, CaretRight } from "@phosphor-icons/react";
+import { X, CaretRight } from "phosphor-react-native";
 import NoNotification from "../../../../assets/images/noNotification.png";
 import CustomText from "../../../components/CustomText";
 import { notifications } from "../../../components/UserData/Notifications"; // Certifique-se de que o caminho está correto.

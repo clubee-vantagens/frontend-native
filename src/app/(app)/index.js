@@ -18,7 +18,7 @@ import {
   EyeClosed,
   StarFour,
   MagnifyingGlass,
-} from "@phosphor-icons/react";
+} from "phosphor-react-native";
 import { User } from "../../components/UserData/UserData";
 import { MenuList } from "../../components/MenuData/MenuList";
 import CustomText from "../../components/CustomText";
