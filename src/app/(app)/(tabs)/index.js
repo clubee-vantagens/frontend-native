@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Link, router } from "expo-router";
-import { useSession } from "../../context/ctx";
+import { useSession } from "../../../context/ctx";
 import {
   Bell,
   Eye,
@@ -19,12 +19,12 @@ import {
   StarFour,
   MagnifyingGlass,
 } from "phosphor-react-native";
-import { User } from "../../components/UserData/UserData";
-import { MenuList } from "../../components/MenuData/MenuList";
-import CustomText from "../../components/CustomText";
-import { Hightlight } from "../../components/Carousels/HightLight";
-import NotificationsModal from "./screens/notifications";
-import { useUserData } from "../../hooks/useUserData";
+import { User } from "../../../components/UserData/UserData";
+import { MenuList } from "../../../components/MenuData/MenuList";
+import CustomText from "../../../components/CustomText";
+import { Hightlight } from "../../../components/Carousels/HightLight";
+import NotificationsModal from "../notifications";
+import { useUserData } from "../../../hooks/useUserData";
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(false);

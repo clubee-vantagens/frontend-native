@@ -9,10 +9,10 @@ import {
   Image,
 } from "react-native";
 import { X, CaretRight } from "phosphor-react-native";
-import NoNotification from "../../../../assets/images/noNotification.png";
-import CustomText from "../../../components/CustomText";
-import { notifications } from "../../../components/UserData/Notifications"; // Certifique-se de que o caminho está correto.
-
+import NoNotification from "../../../assets/images/noNotification.png";
+import CustomText from "../../components/CustomText";
+import { notifications } from "../../components/UserData/Notifications"; // Certifique-se de que o caminho está correto.
+import Constants from 'expo-constants'
 const NotificationsModal = ({ visible, onClose }) => {
   const today = new Date().toISOString().split("T")[0];
 
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    marginTop: Constants.statusBarHeight
   },
   header: {
     flexDirection: "row",

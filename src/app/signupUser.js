@@ -18,6 +18,7 @@ import Checkbox from "expo-checkbox";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { useSession } from "../context/ctx";
 import TermsAndConditionsScreen from "./termsAndConditions";
+import { scale } from "react-native-size-matters";
 export default function UserSignUpScreen() {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
 
@@ -353,6 +354,7 @@ const styles = StyleSheet.create({
     gap: 3,
     marginTop: 5,
     paddingLeft: 5,
+    width: scale(310),
   },
   errorText: {
     color: "red",
@@ -400,6 +402,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollViewContent: {
-    flexGrow: 1,
+    flex: 1,
   },
 });

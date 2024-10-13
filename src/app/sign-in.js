@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import CustomText from "../components/CustomText";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { useFocusEffect } from "@react-navigation/native";
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
@@ -159,10 +160,10 @@ export default function Index() {
         </Pressable>
 
         <View style={styles.containerFooter}>
-          <CustomText style={{ fontSize: 18, color: "#000" }}>
+          <CustomText style={{ fontSize: 16, color: "#000" }}>
             Não tem cadastro?{" "}
             <Link href="/signup">
-              <CustomText style={{ fontWeight: "bold", color: "black" }}>
+              <CustomText variant="bold">
                 Se cadastre agora!
               </CustomText>
             </Link>
@@ -232,6 +233,9 @@ const styles = StyleSheet.create({
   },
   containerFooter: {
     marginTop: 180,
+    width: scale(350),
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   errorText: {
     color: "blue",

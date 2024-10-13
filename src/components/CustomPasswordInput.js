@@ -2,7 +2,8 @@ import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import {Eye,  EyeClosed, Horse } from 'phosphor-react-native'
-import { useState } from "react";
+import { useState } from "react"; 
+import { scale } from "react-native-size-matters";
 
 export default function CustomPasswordInput({
   control,
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: scale(300),
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",

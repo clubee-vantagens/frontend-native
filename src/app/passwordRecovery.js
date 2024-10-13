@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import CustomButtonTwo from "../components/CustomButtonTwo";
 import LoadingScreen from "../components/LoadingScreen";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 export default function PasswordRecoveryScreen() {
   const {
@@ -75,7 +76,7 @@ export default function PasswordRecoveryScreen() {
         <CustomText
           style={{
             textAlign: "center",
-            width: "70%",
+            width: scale(300),
             fontSize: "18",
             marginTop: 60,
           }}

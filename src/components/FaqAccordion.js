@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Pressable, ScrollView } from "react-native";
 import { CaretDown, CaretUp } from "phosphor-react-native"; // Importing icons from Expo (you can replace this with your icon library)
 import CustomText from "./CustomText";
+import { scale, verticalScale } from "react-native-size-matters";
 
 const FAQAccordion = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -31,7 +32,7 @@ const FAQAccordion = ({ data }) => {
           </Pressable>
           {activeIndex === index && (
             <View style={styles.content}>
-              <CustomText>{item.answer}</CustomText>
+              <CustomText style={{fontSize: 12}}>{item.answer}</CustomText>
             </View>
           )}
         </View>
@@ -44,13 +45,11 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 20,
-    borderWidth:1,
-    borderColor: 'red'
   },
   button: {
     backgroundColor: "#FFEAAD",
-    width: 350,
-    height: 71,
+    width: scale(310),
+    height: verticalScale(70),
     borderRadius: 8,
     alignItems: "center",
     padding: 15,
@@ -59,13 +58,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    fontSize: 14,
+    fontSize: 12,
+    width: scale(250),
+    flex:1
   },
   content: {
     padding: 15,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 8,
-    marginVertical: 10,
+    backgroundColor: "#FFEAAD",
+    marginVertical: -5,
+    width: scale(310),
   },
 });
 

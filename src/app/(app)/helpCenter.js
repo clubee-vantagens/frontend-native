@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
 import TermsAndConditionsScreen from '../termsAndConditions'
+import Constants from 'expo-constants'
 
 export default function HelpCenter(second) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'start',
         padding: 20,
+        marginTop: Constants.statusBarHeight
     },
     button: {
         backgroundColor: '#FFEAAD',
@@ -74,6 +76,6 @@ const styles = StyleSheet.create({
       flex: 1
     },
     scrollViewContent: {
-      flexGrow: 1,
+      flex: 1,
     },
 })

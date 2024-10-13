@@ -14,6 +14,9 @@ import { useSession } from "../../context/ctx";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useUserData } from "../../hooks/useUserData";
+import { scale } from "react-native-size-matters";
+import Constants from 'expo-constants'
+import { router } from "expo-router";
 
 export default function EditProfile(second) {
   const { session, signOut } = useSession();
@@ -126,7 +129,8 @@ export default function EditProfile(second) {
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
-        <CaretLeft style={{ alignSelf: "start" }} size={24} />
+        <Pressable style={{ alignSelf: "start" }} onPress={() => router.navigate('/')}><CaretLeft  size={24} /></Pressable>
+        
         <Image source={user?.photo || 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png'} style={styles.image} />
         <View style={styles.cameraContainer}>
           <Camera color={"white"} size={16} />
@@ -250,6 +254,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop: Constants.statusBarHeight
   },
   image: {
     borderRadius: "50%",
