@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Link, router } from "expo-router";
-import { useSession } from "../../context/ctx";
+import { useSession } from "../../../context/ctx";
 import {
   Bell,
   Eye,
@@ -19,17 +19,27 @@ import {
   StarFour,
   MagnifyingGlass,
 } from "phosphor-react-native";
-import { User } from "../../components/UserData/UserData";
-import { MenuList } from "../../components/MenuData/MenuList";
-import CustomText from "../../components/CustomText";
-import { Hightlight } from "../../components/Carousels/HightLight";
-import NotificationsModal from "./screens/notifications";
-import { useUserData } from "../../hooks/useUserData";
+import { User } from "../../../components/UserData/UserData";
+import { MenuList } from "../../../components/MenuData/MenuList";
+import CustomText from "../../../components/CustomText";
+import { Hightlight } from "../../../components/Carousels/HightLight";
+import NotificationsModal from "../notifications";
+import LoadingScreen from "../../../components/LoadingScreen";
+import { useUserData } from "../../../hooks/useUserData";
+import { notifications } from "../../../components/UserData/Notifications";
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [viewPoints, setViewPoints] = useState(false);
+  const [viewPoints, setViewPoints] = useState(true);
   const { signOut, refreshAccessToken, session } = useSession();
   const { data: user, isLoading, error } = useUserData(session);
+
+  // Pegar o total de notificações
+
+  const getTotalNotifications = () => {
+    return notifications.reduce((total, notif) => total + notif.qntdNotif, 0);
+  };
+
+  const totalNotifications = getTotalNotifications();
 
   // useEffect para simular a requisição de dados
   // useEffect(() => {
@@ -45,16 +55,14 @@ export default function Home() {
   //     }, 1000);
   //   };
 
-  //   fetchUserData();    
+  //   fetchUserData();
   // }, []);
-  console.log(user)
+  console.log(user);
 
   if (!user) {
     return (
       <SafeAreaView style={styles.container}>
-        <CustomText style={styles.textProfile}>
-          <ActivityIndicator color={"#FCD562"} size={"large"} />
-        </CustomText>
+        <LoadingScreen />
       </SafeAreaView>
     );
   }
@@ -66,9 +74,16 @@ export default function Home() {
           <View style={styles.containerHeader}>
             <View style={styles.profileNotification}>
               <View style={styles.profile}>
-                <Image style={styles.imageProfile} source={user?.photo || 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png'} />
-                <CustomText style={styles.textProfile}>
-                  Olá, {user.name}
+                <Image
+                  style={styles.imageProfile}
+                  source={
+                    user?.photo ||
+                    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
+                  }
+                />
+                <CustomText style={styles.textProfile} variant="bold">
+                  Olá, {"\n"}
+                  {user.name}
                 </CustomText>
               </View>
 
@@ -77,10 +92,10 @@ export default function Home() {
                 onPress={() => setModalVisible(true)}
               >
                 <Bell size={25} color="#fff" />
-                {user.notification > 0 && (
+                {totalNotifications > 0 && (
                   <View style={styles.notificationBadge}>
                     <CustomText style={styles.notificationText}>
-                      {user.notification}
+                      {totalNotifications}
                     </CustomText>
                   </View>
                 )}
@@ -105,11 +120,7 @@ export default function Home() {
                     style={styles.eyeButton}
                     onPress={() => setViewPoints(!viewPoints)}
                   >
-                    {viewPoints ? (
-                      <EyeClosed size={32} weight="bold" />
-                    ) : (
-                      <Eye size={32} weight="bold" />
-                    )}
+                    {viewPoints ? <Eye size={32} /> : <EyeClosed size={32} />}
                   </Pressable>
                   <View style={styles.circleContainer}>
                     <StarFour size={26} weight="fill" />
@@ -148,11 +159,13 @@ export default function Home() {
             </View>
           </View>
 
-          <CustomText style={styles.sectionNew}>Novidades no clubee</CustomText>
+          <View >
+            <CustomText style={styles.sectionNew}>
+              Novidades no clubee
+            </CustomText>
 
-          {/* Carrossel das novidades */}
-          <Hightlight />
-          {/* <CarouselNews /> */}
+            <Hightlight />
+          </View>
 
           <CustomText style={styles.sectionNew}>Destaques</CustomText>
           <View style={styles.containerNews}>
@@ -165,7 +178,7 @@ export default function Home() {
       </SafeAreaView>
       <NotificationsModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)} // Fechar o modal
+        onClose={() => setModalVisible(false)}
       />
     </>
   );
@@ -177,8 +190,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   containerHeader: {
+    paddingTop: 50,
     backgroundColor: "#000",
-    // height: 459,
+
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     marginBottom: 30,
@@ -261,6 +275,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
+    backgroundColor: "#F1F1EF",
+    width: 35,
+    height: 35,
+    borderRadius: 50,
+    padding: 2,
   },
   circleContainer: {
     width: 40,

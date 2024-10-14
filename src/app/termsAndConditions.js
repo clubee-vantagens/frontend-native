@@ -16,7 +16,7 @@ export default function TermsAndConditionsScreen({ handleHideTerms }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Pressable onPress={handleHideTerms}>
-          <CaretLeft  size={30} color="black" />
+          <CaretLeft  size={22} color="black" />
         </Pressable>
         <Text style={styles.title}>Termos e Condições</Text>
       </View>
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 22,
   },
   text: {
     textAlign: "justify",

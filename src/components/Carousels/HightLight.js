@@ -25,7 +25,7 @@ export const Hightlight = () => {
         snapToInterval={width * 0.7 + 20}
         decelerationRate="fast"
         pagingEnabled
-        contentContainerStyle={{ paddingHorizontal: 20 }}
+        contentContainerStyle={{ paddingHorizontal: 1 }}
       />
     </View>
   );

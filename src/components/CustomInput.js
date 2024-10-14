@@ -1,6 +1,8 @@
 import { TextInput, StyleSheet } from "react-native";
 import { Controller } from "react-hook-form";
 
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+
 export default function CustomInput({ control, name, placeholder, type, rules, editable }) {
   return (
     <Controller
@@ -26,7 +28,7 @@ export default function CustomInput({ control, name, placeholder, type, rules, e
 const styles = StyleSheet.create({
   input: {
     height: 50,
-    width: 359,
+    width: scale(300),
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",

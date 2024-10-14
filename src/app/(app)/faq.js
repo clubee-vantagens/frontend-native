@@ -2,6 +2,7 @@ import { CaretLeft } from "phosphor-react-native";
 import { Pressable, StyleSheet, ScrollView, View } from "react-native";
 import { router } from "expo-router";
 import FAQAccordion from "../../components/FaqAccordion";
+import Constants from 'expo-constants'
 
 export default function Faq() {
   const faqData = [
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop: Constants.statusBarHeight
   },
   backButton: {
     alignSelf: 'flex-start', // Make sure the back button is aligned to the left

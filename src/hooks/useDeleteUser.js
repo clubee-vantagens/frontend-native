@@ -13,7 +13,7 @@ const deleteUser = async (session) => {
     });
 
     // Log the response for debugging
-    console.log("Response from delete:", res.data);
+    console.log("Response from delete:", res);
 
     // Return the response data
     return res?.data;
