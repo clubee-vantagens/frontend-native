@@ -11,6 +11,7 @@ import { hightlightData } from "./HightlightData";
 import CustomText from "../CustomText";
 import { StarFour } from "phosphor-react-native";
 import points from "../../../assets/images/points.png";
+import PointsStores from "../icons/PointsStores";
 export const Hightlight = () => {
   const { width } = Dimensions.get("window");
 
@@ -38,10 +39,7 @@ const SliderItem = ({ item }) => {
 
       <View style={styles.pointsContainer}>
         <Text style={styles.pointsText}>{item.points} pontos</Text>
-        <Image
-          style={styles.imgPoint}
-          source={require("../../../assets/images/points.png")}
-        />
+        <PointsStores size={15} />
       </View>
 
       <View style={styles.infoContainer}>
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    width: 100,
+    width: 83,
     height: 25,
     backgroundColor: "#F7F5F5",
     borderRadius: 20,

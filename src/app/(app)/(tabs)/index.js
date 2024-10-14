@@ -23,10 +23,11 @@ import { User } from "../../../components/UserData/UserData";
 import { MenuList } from "../../../components/MenuData/MenuList";
 import CustomText from "../../../components/CustomText";
 import { Hightlight } from "../../../components/Carousels/HightLight";
-import NotificationsModal from "../notifications";
-import LoadingScreen from "../../../components/LoadingScreen";
 import { useUserData } from "../../../hooks/useUserData";
 import { notifications } from "../../../components/UserData/Notifications";
+import NotificationsModal from "../notifications";
+import LoadingScreen from "../../../components/LoadingScreen";
+import PointsIcon from "../../../components/icons/PointsIcon";
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
@@ -41,22 +42,6 @@ export default function Home() {
 
   const totalNotifications = getTotalNotifications();
 
-  // useEffect para simular a requisição de dados
-  // useEffect(() => {
-  //   // Simulando um fetch do backend, usando o dado mocado por enquanto
-  //   const fetchUserData = async () => {
-  //     // Aqui futuramente será a requisição para o backend
-  //     // const response = await api.get('/user');
-  //     // const data = response.data;
-
-  //     // Simulando atraso de requisição
-  //     setTimeout(() => {
-  //       setUser(User[0]); // Definindo o usuário mocado
-  //     }, 1000);
-  //   };
-
-  //   fetchUserData();
-  // }, []);
   console.log(user);
 
   if (!user) {
@@ -120,10 +105,10 @@ export default function Home() {
                     style={styles.eyeButton}
                     onPress={() => setViewPoints(!viewPoints)}
                   >
-                    {viewPoints ? <Eye size={32} /> : <EyeClosed size={32} />}
+                    {viewPoints ? <Eye size={24} /> : <EyeClosed size={24} />}
                   </Pressable>
                   <View style={styles.circleContainer}>
-                    <StarFour size={26} weight="fill" />
+                    <PointsIcon />
                   </View>
                 </View>
               </View>
@@ -159,7 +144,7 @@ export default function Home() {
             </View>
           </View>
 
-          <View >
+          <View>
             <CustomText style={styles.sectionNew}>
               Novidades no clubee
             </CustomText>
@@ -280,13 +265,13 @@ const styles = StyleSheet.create({
     height: 35,
     borderRadius: 50,
     padding: 2,
+    alignItems: "center",
+    justifyContent: "center",
   },
   circleContainer: {
-    width: 40,
-    height: 40,
-    borderWidth: 2,
-    borderRadius: 50,
-    borderColor: "#000",
+    // width: 50,
+    // height: 50,
+
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",

@@ -15,15 +15,14 @@ import Lojas from "./(tabs)/Lojas.js";
 import Home from "./(tabs)/index.js";
 import Menu from "./(tabs)/Menu.js";
 import Pontos from "./(tabs)/Pontos.js";
-import Extrato from "./(tabs)/Extrato.js";
+import Resgates from "./(tabs)/Resgates.js";
 import { View, Text } from "react-native";
 import Preferences from "../preferences.js";
 import HelpCenter from "./helpCenter.js";
-import Faq from './faq.js'
+import Faq from "./faq.js";
 import EditProfile from "./editProfile.js";
-import {Stack} from 'expo-router'
+import { Stack } from "expo-router";
 import TabLayout from "./(tabs)/_layout.js";
-
 
 // const Tab = createBottomTabNavigator();
 // const Stack = createStackNavigator();
@@ -181,7 +180,6 @@ import TabLayout from "./(tabs)/_layout.js";
 // }
 
 export default function AppLayout() {
-  
   const { session, isLoading } = useSession();
 
   if (isLoading) {
@@ -198,10 +196,9 @@ export default function AppLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
 
-       <Stack.Screen name='helpCenter' />
-      <Stack.Screen name='faq' />
+      <Stack.Screen name="helpCenter" />
+      <Stack.Screen name="faq" />
       <Stack.Screen name="editProfile" />
-    
     </Stack>
     // <Stack.Navigator>
     //   <Stack.Screen name='MainTabs' component={TabNavigator} options={{headerShown: false}} />

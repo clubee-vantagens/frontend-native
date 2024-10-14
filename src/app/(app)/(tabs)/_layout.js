@@ -9,6 +9,8 @@ import {
 } from "phosphor-react-native";
 import CustomText from "../../../components/CustomText";
 import { View } from "react-native";
+import PointsIcon from "../../../components/icons/PointsIcon";
+import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 
 export default function TabLayout() {
   return (
@@ -51,7 +53,7 @@ export default function TabLayout() {
                 <View
                   style={{
                     position: "absolute",
-                    top: -28,
+                    top: -29,
                     height: 4,
                     width: 48,
                     borderBottomLeftRadius: 10,
@@ -65,17 +67,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="Extrato"
+        name="Resgates"
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: "center" }}>
-              <Article size={24} color={focused ? "#FFD700" : color} />
+              <Ticket size={24} color={focused ? "#FFD700" : color} />
               {focused && (
                 <View
                   style={{
                     position: "absolute",
-                    top: -28,
+                    top: -29,
                     height: 4,
                     width: 48,
                     borderBottomLeftRadius: 10,
@@ -94,7 +96,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: "center" }}>
-              <StarFour size={32} color={focused ? "#FFD700" : color} />
+              <MenuIconPoints color="#fff" size={30} />
               {focused && (
                 <View
                   style={{
@@ -123,7 +125,7 @@ export default function TabLayout() {
                 <View
                   style={{
                     position: "absolute",
-                    top: -28,
+                    top: -29,
                     height: 4,
                     width: 48,
                     borderBottomLeftRadius: 10,
@@ -147,7 +149,7 @@ export default function TabLayout() {
                 <View
                   style={{
                     position: "absolute",
-                    top: -28,
+                    top: -29,
                     height: 4,
                     width: 48,
                     borderBottomLeftRadius: 10,
