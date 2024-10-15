@@ -1,9 +1,21 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Pressable,
+} from "react-native";
 import CustomButtonTwo from "./CustomButtonTwo";
 import CustomText from "./CustomText";
 
-export default function ConfirmationModal({ text, onPress, iconClose, style, type, back }) {
+export default function ConfirmationModal({
+  text,
+  onPress,
+  iconClose,
+  style,
+  type,
+  back,
+}) {
   return (
     <View style={styles.mainContainer}>
       <TouchableWithoutFeedback>
@@ -22,8 +34,14 @@ export default function ConfirmationModal({ text, onPress, iconClose, style, typ
           style={styles.image}
         /> */}
         <CustomText style={[styles.modalText, style]}>{text}</CustomText>
-        <CustomButtonTwo onPress={onPress}>Continuar!</CustomButtonTwo>
-        {type === 'delete' ? <Pressable onPress={back}><CustomText variant="semiBold" style={{ color: "#A92525" }}>Voltar</CustomText></Pressable> : null}
+        <CustomButtonTwo onPress={onPress}>Continuar</CustomButtonTwo>
+        {type === "delete" ? (
+          <Pressable onPress={back}>
+            <CustomText variant="semiBold" style={{ color: "#A92525" }}>
+              Voltar
+            </CustomText>
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );

@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import CustomText from "../../components/CustomText";
 import { CaretLeft, Camera } from "phosphor-react-native";
 import { Image } from "expo-image";
@@ -8,26 +15,35 @@ import CustomButton from "../../components/CustomButton";
 import { useEffect, useState } from "react";
 import DropdownComponent from "../../components/DropdownComponent";
 import { useEditUser } from "../../hooks/useEditUser";
-import { maskDate, convertToISOString, maskPhone, convertToDDMMYYYY } from "../../utils/utils";
+import {
+  maskDate,
+  convertToISOString,
+  maskPhone,
+  convertToDDMMYYYY,
+} from "../../utils/utils";
 import axios from "axios";
 import { useSession } from "../../context/ctx";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useUserData } from "../../hooks/useUserData";
 import { scale } from "react-native-size-matters";
-import Constants from 'expo-constants'
+import Constants from "expo-constants";
 import { router } from "expo-router";
 
 export default function EditProfile(second) {
   const { session, signOut } = useSession();
   const { mutate, status, isSuccess } = useEditUser();
-  const {mutate: userDeletion, status: deletionStatus, isSuccess: deleteSuccess } = useDeleteUser(session)
-  const {data: user} = useUserData(session)
+  const {
+    mutate: userDeletion,
+    status: deletionStatus,
+    isSuccess: deleteSuccess,
+  } = useDeleteUser(session);
+  const { data: user } = useUserData(session);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   console.log(isSuccess);
-  
+
   // useEffect para simular a requisição de dados
   // useEffect(() => {
   //   // Simulando um fetch do backend, usando o dado mocado por enquanto
@@ -44,7 +60,6 @@ export default function EditProfile(second) {
 
   //   fetchUserData();
   // }, []);
-  
 
   const {
     control,
@@ -68,19 +83,18 @@ export default function EditProfile(second) {
       nascimento: "",
     },
   });
-  const phoneValue = watch("phoneNumber")
+  const phoneValue = watch("phoneNumber");
   useEffect(() => {
-    setValue("phoneNumber", maskPhone(phoneValue))
-  }, [phoneValue])
+    setValue("phoneNumber", maskPhone(phoneValue));
+  }, [phoneValue]);
 
   const handleDeleteUser = async () => {
     try {
-        userDeletion(session)
+      userDeletion(session);
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
     }
-  }
+  };
 
   const fetchAddressFromCep = async (cep) => {
     try {
@@ -114,7 +128,7 @@ export default function EditProfile(second) {
         estado: data.estado || user.estado,
       };
       mutate({ userData: dataToPost, session });
-      setSaveModalOpen(true)
+      setSaveModalOpen(true);
       if (status === "idle") {
         console.log("idle");
       }
@@ -127,126 +141,157 @@ export default function EditProfile(second) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ alignItems: "center" }}>
-        <Pressable style={{ alignSelf: "start" }} onPress={() => router.navigate('/')}><CaretLeft  size={24} /></Pressable>
-        
-        <Image source={user?.photo || 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png'} style={styles.image} />
-        <View style={styles.cameraContainer}>
-          <Camera color={"white"} size={16} />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View
+          style={{
+            justifyContent: "flex-start",
+            marginRight: 30,
+          }}
+        >
+          <Pressable
+            style={{ alignSelf: "start" }}
+            onPress={() => router.navigate("/")}
+          >
+            <CaretLeft size={24} />
+          </Pressable>
         </View>
-        <CustomText style={{ marginTop: 20 }}>Editar Dados</CustomText>
-      </View>
-      <View>
-        <CustomInput
-          control={control}
-          name="name"
-          placeholder={user?.name || "Nome"}
-        />
-        <CustomInput
-          control={control}
-          name="socialName"
-          placeholder={user?.socialName || "Nome Social"}
-        />
-        <CustomInput
-          control={control}
-          name="cpf"
-          placeholder={user?.cpf || "CPF"}
-          editable={false}
-        />
-        <CustomInput
-          control={control}
-          name="email"
-          placeholder={user?.email || "E-mail"}
-          editable={false}
-        />
-        <CustomInput
-          control={control}
-          name="phoneNumber"
-          placeholder={user?.phoneNumber || "Telefone"}
-        />
-        <View style={{ flexDirection: "row" }}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder={convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"}
-                onChangeText={onChange}
-                value={maskDate(value)}
-                style={styles.smallInput}
-              />
-            )}
-            name="nascimento"
-          />
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                placeholder={user?.cep || "CEP"}
-                onChangeText={(text) => {
-                  onChange(text);
-                  if (text.length === 8) {
-                    fetchAddressFromCep(text);
+        <View style={{ alignItems: "center" }}>
+          <View style={styles.imageContainer}>
+            {user?.photo ? (
+              <Image source={{ uri: user.photo }} style={styles.image} />
+            ) : (
+              <View style={styles.defaultImage}>
+                <Image
+                  source={
+                    user?.photo ||
+                    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
                   }
-                }}
-                value={value}
-                style={styles.smallInput}
-              />
+                  style={styles.image}
+                />
+              </View>
             )}
-            name="cep"
-          />
+          </View>
+          <View style={styles.cameraContainer}>
+            <Camera color={"white"} size={16} />
+          </View>
+          <CustomText style={{ marginTop: 20 }}>Editar Dados</CustomText>
         </View>
-        <CustomInput control={control} name="endereco" placeholder={user?.endereco || "Endereco"} />
-        <View style={{ flexDirection: "row" }}>
-          <DropdownComponent control={control} name="estado" />
-          <Controller
+        <View>
+          <CustomInput
             control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder={user?.cidade || "Cidade"}
-                onChangeText={onChange}
-                value={value}
-                style={styles.smallInput}
-              />
-            )}
-            name="cidade"
+            name="name"
+            placeholder={user?.name || "Nome"}
           />
+          <CustomInput
+            control={control}
+            name="socialName"
+            placeholder={user?.socialName || "Nome Social"}
+          />
+          <CustomInput
+            control={control}
+            name="cpf"
+            placeholder={user?.cpf || "CPF"}
+            editable={false}
+          />
+          <CustomInput
+            control={control}
+            name="email"
+            placeholder={user?.email || "E-mail"}
+            editable={false}
+          />
+          <CustomInput
+            control={control}
+            name="phoneNumber"
+            placeholder={user?.phoneNumber || "Telefone"}
+          />
+          <View style={{ flexDirection: "row" }}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder={
+                    convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
+                  }
+                  onChangeText={onChange}
+                  value={maskDate(value)}
+                  style={styles.smallInput}
+                />
+              )}
+              name="nascimento"
+            />
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  placeholder={user?.cep || "CEP"}
+                  onChangeText={(text) => {
+                    onChange(text);
+                    if (text.length === 8) {
+                      fetchAddressFromCep(text);
+                    }
+                  }}
+                  value={value}
+                  style={styles.smallInput}
+                />
+              )}
+              name="cep"
+            />
+          </View>
+          <CustomInput
+            control={control}
+            name="endereco"
+            placeholder={user?.endereco || "Endereco"}
+          />
+          <View style={{ flexDirection: "row" }}>
+            <DropdownComponent control={control} name="estado" />
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder={user?.cidade || "Cidade"}
+                  onChangeText={onChange}
+                  value={value}
+                  style={styles.smallInput}
+                />
+              )}
+              name="cidade"
+            />
+          </View>
         </View>
-      </View>
-      <CustomButton
-        onPress={handleSubmit(handleEditUser)}
-      >
-        Salvar
-      </CustomButton>
-      {saveModalOpen && (
-        <ConfirmationModal
-          text={`Cadastro${"\n"} atualizado!`}
-          onPress={() => setSaveModalOpen(false)}
-          style={{fontSize: 30}}
-        />
-      )}
-      <Pressable
-        style={{ alignSelf: "center", marginTop: 18, color: "red" }}
-        onPress={() => setDeleteModalOpen(true)}
-      >
-        <CustomText variant="semiBold" style={{ color: "#A92525" }}>
-          Deletar conta
-        </CustomText>
-      </Pressable>
-      {deleteModalOpen && (
-        <ConfirmationModal
-          text={`Tem certeza que deseja deletar sua conta no Clubee?`}
-          onPress={() => {
-            handleDeleteUser(session)
-            setSaveModalOpen(false)
-            signOut()
-        }}
-          style={{fontSize: 30}}
-          type={'delete'}
-          back={() => setDeleteModalOpen(false)}
-        />
-      )}
-    </View>
+        <CustomButton onPress={handleSubmit(handleEditUser)}>
+          Salvar
+        </CustomButton>
+        {saveModalOpen && (
+          <ConfirmationModal
+            text={`Cadastro${"\n"} atualizado!`}
+            onPress={() => setSaveModalOpen(false)}
+            style={{ fontSize: 30 }}
+          />
+        )}
+        <Pressable
+          style={{ alignSelf: "center", marginTop: 18, color: "red" }}
+          onPress={() => setDeleteModalOpen(true)}
+        >
+          <CustomText variant="semiBold" style={{ color: "#A92525" }}>
+            Deletar conta
+          </CustomText>
+        </Pressable>
+        {deleteModalOpen && (
+          <ConfirmationModal
+            text={`Tem certeza que deseja deletar sua conta no Clubee?`}
+            onPress={() => {
+              handleDeleteUser(session);
+              setSaveModalOpen(false);
+              signOut();
+            }}
+            style={{ fontSize: 30 }}
+            type={"delete"}
+            back={() => setDeleteModalOpen(false)}
+          />
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -254,12 +299,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
+  },
+  imageContainer: {
+    borderRadius: 60, // Metade do valor da largura e altura para circular
+    overflow: "hidden",
+    width: 120,
+    height: 120,
   },
   image: {
     borderRadius: "50%",
     height: 120,
     width: 120,
+    // backgroundColor: "#019295",
+  },
+  defaultImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000",
   },
   cameraContainer: {
     borderRadius: 50,
@@ -269,8 +328,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: 120,
-    left: 208,
+    top: 90,
+    left: 200,
   },
   smallInput: {
     height: 50,

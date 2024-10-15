@@ -1,4 +1,4 @@
-import { Dog, Flower, PaintBrush , DotsThree } from "phosphor-react-native";
+import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
 export const MenuList = [
   {
     title: "PetShop",
@@ -10,7 +10,7 @@ export const MenuList = [
   },
   {
     title: "Papelaria",
-    icon: <PaintBrush  size={24} />,
+    icon: <BookOpenText size={24} />,
   },
   {
     title: "",
