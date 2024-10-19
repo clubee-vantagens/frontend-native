@@ -39,7 +39,6 @@ Exemplo: `Isa Bolos`
 ## Stacks Utilizadas
 
 **Front-end:** ReactNative, JavaScript
-
 **Back-End:** Java, PostgreSQL
 
 ## Autores

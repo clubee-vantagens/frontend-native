@@ -178,12 +178,18 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto",
   },
   optionButton: {
-    backgroundColor: "#FAF9F6",
-    borderRadius: 30,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginVertical: 5,
-    boxShadow: "0px 4px 3px rgba(0,0,0,0.2)",
+    marginVertical: 2,
+    borderRadius: 30,
+    padding: 10,
+    backgroundColor: "#fff",
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 10,
+      height: 1,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1.41,
   },
   optionButtonSelected: {
     backgroundColor: "#FCD562",
