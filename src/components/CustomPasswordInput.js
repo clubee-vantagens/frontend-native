@@ -1,7 +1,9 @@
 import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
-import { Octicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import {Eye,  EyeClosed, Horse } from 'phosphor-react-native'
+import { useState } from "react"; 
+import { scale } from "react-native-size-matters";
 
 export default function CustomPasswordInput({
   control,
@@ -35,9 +37,9 @@ export default function CustomPasswordInput({
       />
       <Pressable style={styles.icon} onPress={handleShowPassword}>
         {isPasswordHidden ? (
-          <Octicons name="eye" size={15} color="black" />
+          <Eye size={15} color="gray" />
         ) : (
-          <Octicons name="eye-closed" size={15} color="black" />
+          <EyeClosed size={15} color="gray" />
         )}
       </Pressable>
     </View>
@@ -49,20 +51,33 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: scale(300),
     borderRadius: 7,
     padding: 10,
     backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
     elevation: 5,
     margin: 10,
     height: 50,
   },
   input: {
     flex: 1,
-    textAlign: "center",
+    paddingLeft: 15,
+    color: '#757575',
+    fontSize: 18
+    // textAlign: "center",
   },
   icon: {
+    fontSize: 18,
     padding: 5,
     position: "absolute",
-    right: 0,
+    right: 30,
   },
 });

@@ -1,30 +1,47 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Image } from "expo-image";
-import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Pressable,
+} from "react-native";
 import CustomButtonTwo from "./CustomButtonTwo";
-import CustomText from './CustomText';
+import CustomText from "./CustomText";
 
-export default function ConfirmationModal({ text, onPress, iconClose }) {
+export default function ConfirmationModal({
+  text,
+  onPress,
+  iconClose,
+  style,
+  type,
+  back,
+}) {
   return (
     <View style={styles.mainContainer}>
       <TouchableWithoutFeedback>
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
       <View style={styles.modalContainer}>
-        <MaterialIcons
+        {/* <MaterialIcons
           name="close"
           size={30}
           color="black"
           style={styles.closeIcon}
           onPress={iconClose}
-        />
-        <Image
+        /> */}
+        {/* <Image
           source={require("@/assets/images/Clubee_logo_only_bee.png")}
           style={styles.image}
-        />
-        <CustomText style={styles.modalText}>{text}</CustomText>
-        <CustomButtonTwo onPress={onPress}>Continuar!</CustomButtonTwo>
+        /> */}
+        <CustomText style={[styles.modalText, style]}>{text}</CustomText>
+        <CustomButtonTwo onPress={onPress}>Continuar</CustomButtonTwo>
+        {type === "delete" ? (
+          <Pressable onPress={back}>
+            <CustomText variant="semiBold" style={{ color: "#A92525" }}>
+              Voltar
+            </CustomText>
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );
@@ -47,14 +64,15 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalContainer: {
-    width: 398,
-    height: 464,
+    width: 359,
+    height: 320,
     borderRadius: 38,
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#FAF9F6",
     elevation: 10,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: 24,
     padding: 20,
   },
   image: {
@@ -68,5 +86,7 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 20,
     textAlign: "center",
+    color: "#150F02",
+    fontWeight: "bold",
   },
 });

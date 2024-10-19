@@ -1,4 +1,5 @@
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
+import { SessionProvider } from "../context/ctx";
 import { Query, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
@@ -27,12 +28,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientProvider client={queryClient}>
-        <Stack>
-          <Stack.Screen options={{ headerShown: false }} name="index" />
-          <Stack.Screen options={{ headerShown: false }} name="signup" />
-          <Stack.Screen options={{ headerShown: false }} name="signupUser" />
-          <Stack.Screen options={{ headerShown: false }} name="home" />
-        </Stack>
+        <SessionProvider>
+          <Slot />
+        </SessionProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );

@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+%ProgramData%
 
 # macOS
 .DS_Store
@@ -18,3 +19,7 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+# Docker Compose files
+docker-compose.yml
+docker-compose.override.yml

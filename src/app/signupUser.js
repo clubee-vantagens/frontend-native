@@ -1,25 +1,37 @@
-import { View, StyleSheet, Pressable } from "react-native";
-import Constants from "expo-constants";
+import { useEffect, useState } from "react";
+import { View, StyleSheet, Pressable, Modal, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Link, router } from "expo-router";
-import Checkbox from "expo-checkbox";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
+import { useMutateUsers } from "../hooks/useMutateUsers";
+import { maskCpf, validateCpf } from "../utils/utils";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { useEffect, useState } from "react";
-import { maskCpf, validateCpf } from "../utils/utils";
 import CustomPasswordInput from "../components/CustomPasswordInput";
-import { useMutateUsers } from "../hooks/useMutateUser";
+import Constants from "expo-constants";
 import ConfirmationModal from "../components/ConfirmationModal";
 import CustomText from "../components/CustomText";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
 import LoadingScreen from "../components/LoadingScreen";
-
+import Checkbox from "expo-checkbox";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import { useSession } from "../context/ctx";
+import TermsAndConditionsScreen from "./termsAndConditions";
+import { scale } from "react-native-size-matters";
 export default function UserSignUpScreen() {
+  const [isTermsVisible, setIsTermsVisible] = useState(false);
+
+  const handleShowTerms = () => setIsTermsVisible(true);
+  const handleHideTerms = () => setIsTermsVisible(false);
+
   const [isChecked, setChecked] = useState(false);
   const [isConfirmationModal, setIsConfirmationModal] = useState(false);
+  const [cpfError, setCpfError] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
   const date = new Date();
   const { mutate, isError, error, isSuccess, status } = useMutateUsers();
+  const { signIn } = useSession();
   const {
     control,
     handleSubmit,
@@ -30,6 +42,7 @@ export default function UserSignUpScreen() {
   } = useForm({
     defaultValues: {
       name: "",
+      socialName: "",
       email: "",
       password: "",
       cpf: "",
@@ -40,30 +53,70 @@ export default function UserSignUpScreen() {
   const cpfValue = watch("cpf");
   const passwordValue = watch("password");
   const termsOfUse = watch("termsOfUse", false);
+
   useEffect(() => {
     if (isSuccess) {
       reset();
       setIsConfirmationModal(true);
     }
   }, [isSuccess]);
+
   useEffect(() => {
-    setValue("cpf", maskCpf(cpfValue));
+    setValue("cpf", maskCpf(cpfValue)); // Aplica a máscara ao CPF enquanto o usuário digita
   }, [cpfValue]);
 
-  const onSubmit = (data) => {
-    const dataToPost = {
-      ...data,
+  // Enquanto o usuário digita o CPF ele vai validando
+  useEffect(() => {
+    if (cpfValue.length === 0) {
+      // Se o campo estiver vazio, não exibe erro
+      setCpfError("");
+    } else if (cpfValue.length < 14) {
+      // Se o CPF tiver menos de 14 caracteres (com máscara), exibe "CPF inválido"
+      setCpfError("CPF inválido");
+    } else {
+      const isValid = validateCpf(cpfValue);
+      if (!isValid) {
+        setCpfError("CPF inválido");
+      } else {
+        setCpfError("");
+      }
+    }
+  }, [cpfValue]);
+
+  const handleRegister = async (data) => {
+    const userData = {
+      name: data.name,
+      socialName: data.socialName,
+      email: data.email,
+      password: data.password,
+      cpf: data.cpf,
       termsOfUse: data.termsOfUse,
       dateTermsOfUse: date.toISOString(),
-      cnpj: null,
-      roles: [],
+      preferences: "",
     };
-    mutate(dataToPost);
+
+    mutate(userData, {
+      onSuccess: (data) => {
+        console.log("User registered successfully:", data);
+        signIn(userData.email, userData.password);
+      },
+      onError: (error) => {
+        if (error.response?.status === 400) {
+          setErrorMessage("Usuário já cadastrado");
+        } else {
+          setErrorMessage(
+            error.response?.data?.message || "Ocorreu um erro desconhecido."
+          );
+        }
+        console.log("Erro ao armazenar os dados do usuário", error);
+      },
+    });
   };
 
   if (status === "pending") {
     return <LoadingScreen />;
   }
+
   return (
     <View style={styles.container}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
@@ -75,6 +128,28 @@ export default function UserSignUpScreen() {
         Sou Cliente
       </CustomText>
       <View>
+        {errorMessage && (
+          <View style={styles.containerError}>
+            <View style={styles.contentError}>
+              <Fontisto
+                name="close"
+                size={25}
+                color="#A92525"
+                style={styles.icon}
+              />
+              <ErrorMessageComponent style={styles.errorMessage}>
+                {errorMessage} Retorne para o
+                <Link href={"sign-in"} style={styles.link}>
+                  Login
+                </Link>
+                ou
+                <Link href={"passwordRecovery"} style={styles.link}>
+                  Recuperar senha
+                </Link>
+              </ErrorMessageComponent>
+            </View>
+          </View>
+        )}
         <CustomInput
           control={control}
           name="name"
@@ -83,16 +158,38 @@ export default function UserSignUpScreen() {
             required: "Campo Obrigatório",
             maxLength: {
               value: 256,
-              message: "O nome fantasia não pode exceder 256 caracteres",
+              message: "O nome não pode exceder 256 caracteres",
             },
             pattern: {
-              value: /^[a-zA-Z\s]+$/,
+              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
               message: "Nome deve conter somente letras",
             },
           }}
         />
+
         {errors.name && (
           <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
+        )}
+        <CustomInput
+          control={control}
+          name="socialName"
+          placeholder="Nome social"
+          rules={{
+            // required: "Campo Obrigatório",
+            maxLength: {
+              value: 256,
+              message: "O nome não pode exceder 256 caracteres",
+            },
+            pattern: {
+              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
+              message: "Nome deve conter somente letras",
+            },
+          }}
+        />
+        {errors.socialName && (
+          <ErrorMessageComponent>
+            {errors.socialName.message}
+          </ErrorMessageComponent>
         )}
         <CustomInput
           control={control}
@@ -115,12 +212,13 @@ export default function UserSignUpScreen() {
           placeholder="CPF"
           rules={{
             required: "Campo Obrigatório",
-            minLength: { value: 14, message: "CPF invalido" },
-            validate: cpfValue => validateCpf(cpfValue) || "CPF invalido"
+            minLength: { value: 14, message: "CPF inválido" },
           }}
         />
-        {errors.cpf && (
-          <ErrorMessageComponent>{errors.cpf.message}</ErrorMessageComponent>
+        {(errors.cpf || cpfError) && (
+          <ErrorMessageComponent>
+            {errors.cpf?.message || cpfError}
+          </ErrorMessageComponent>
         )}
         <CustomPasswordInput
           control={control}
@@ -161,58 +259,81 @@ export default function UserSignUpScreen() {
           </ErrorMessageComponent>
         )}
         <Controller
-            control={control}
-            rules={{ required: "Deve aceitar termos e condicoes" }}
-            name="termsOfUse"
-            render={({ field: { onChange, value } }) => (
-              <View style={styles.checkBoxContainer}>
-                <Checkbox
-                  value={value}
-                  onValueChange={(newValue) => {
-                    setChecked(newValue);
-                    onChange(newValue);
-                  }}
-                  color={isChecked ? "#4630EB" : undefined}
-                />
-                <CustomText style={{ fontSize: 16, color: "gray" }}>
-                  Concordo com os
-                </CustomText>
+          control={control}
+          rules={{ required: "Deve aceitar termos e condicoes" }}
+          name="termsOfUse"
+          render={({ field: { onChange, value } }) => (
+            <View style={styles.checkBoxContainer}>
+              <Checkbox
+                value={value}
+                onValueChange={(newValue) => {
+                  setChecked(newValue);
+                  onChange(newValue);
+                }}
+                color={isChecked ? "#4630EB" : undefined}
+              />
+              <CustomText style={{ fontSize: 16, color: "#757575" }}>
+                Concordo com os
+              </CustomText>
+              <Pressable onPress={handleShowTerms}>
                 <CustomText
-                  style={{ fontSize: 16, textDecorationLine: "underline" }}
+                  style={{
+                    fontSize: 16,
+                    textDecorationLine: "underline",
+                    color: "#757575",
+                  }}
                 >
                   Termos e Condições
                 </CustomText>
-              </View>
-            )}
-          />
-          {errors.termsOfUse && (
-            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+              </Pressable>
+            </View>
           )}
+        />
+        {errors.termsOfUse && (
+          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+        )}
       </View>
-      <CustomButton onPress={handleSubmit(onSubmit)} disabled={!termsOfUse}>Cadastrar-se</CustomButton>
-      <CustomText style={{ fontSize: 20, color: "gray" }}>
-        Já tem uma conta?{" "}
-        <Link style={{ fontWeight: "bold", color: "black" }} href="/">
-          Acessar!
-        </Link>
-      </CustomText>
+      <CustomButton
+        onPress={handleSubmit(handleRegister)}
+        type="black"
+        disabled={!termsOfUse}
+      >
+        Cadastre-se
+      </CustomButton>
+
+          <CustomText style={{ fontSize: 20, color: "#757575" }}>
+            Já tem uma conta?{" "}
+            <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
+              Acessar!
+            </Link>
+          </CustomText>
+
       {isConfirmationModal && (
         <ConfirmationModal
           text="Cadastro realizado com sucesso!"
-          onPress={() => router.navigate("/home")}
+          onPress={() => {
+            router.navigate("preferences");
+          }}
           iconClose={() => setIsConfirmationModal(false)}
+          style={{ fontSize: 30 }}
         />
       )}
-      {isError && (
-        <ConfirmationModal
-          onPress={() => setIsConfirmationModal(false)}
-          iconClose={() => setIsConfirmationModal(false)}
-          text={
-            error?.response?.data ||
-            "Nao foi possivel realizar o cadastro no momento, tente novamente!"
-          }
-        />
-      )}
+
+      <Modal
+        visible={isTermsVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={handleHideTerms}
+      >
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <TermsAndConditionsScreen handleHideTerms={handleHideTerms} />
+          </ScrollView>
+          {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
+            <MaterialIcons name="close" size={30} color="black" />
+          </Pressable> */}
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -221,21 +342,66 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    backgroundColor: "#FFFAEB",
+    backgroundColor: "#F7F7F7",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
   },
   checkBoxContainer: {
     flexDirection: "row",
-    justifyContent: "start",
-    gap: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 3,
     marginTop: 5,
     paddingLeft: 5,
+    width: scale(310),
   },
   errorText: {
     color: "red",
     fontSize: 12,
     marginTop: 5,
+  },
+  containerError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: "auto",
+    width: 359,
+    height: 88,
+    borderRadius: 10,
+    backgroundColor: "rgba(251, 80, 80, 0.25)",
+    padding: 10,
+  },
+  contentError: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    fontSize: 14,
+  },
+  icon: {
+    marginRight: 10,
+    fontWeight: "bold",
+    width: 25,
+    height: 25,
+  },
+  errorMessage: {
+    flex: 1,
+    fontSize: 14,
+    // fontWeight: "500",
+  },
+
+  link: {
+    // backgroundColor: "blue",
+    fontWeight: "bold",
+    // color: "#A92525",
+    textDecorationLine: "underline",
+    marginHorizontal: 3,
+  },
+  modalContainer: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    flex: 1,
   },
 });

@@ -80,6 +80,39 @@ export function maskCnpj(cnpj) {
   return masked.slice(0, 18);
 }
 
+export function maskCep (cep) {
+  const digits = cep.replace(/\D/g, "")
+
+  let masked = digits;
+  if(digits.length > 5) {
+    masked = digits.slice(0,5) + "-" + masked.slice(5)
+  }
+  return masked.slice(0, 9)
+}
+
+export function maskDate(date) {
+  const digits = date.replace(/\D/g, ""); // Remove all non-digit characters
+
+  let masked = digits;
+  if (digits.length > 2) {
+    masked = digits.slice(0, 2) + "/" + digits.slice(2);
+  }
+  if (digits.length > 4) {
+    masked = masked.slice(0, 5) + "/" + digits.slice(4);
+  }
+
+  // Ensure the output is always at most 10 characters (including the slashes)
+  return masked.slice(0, 10);
+}
+
+export const maskPhone = (value) => {
+  if (!value) return ""
+  value = value.replace(/\D/g,'')
+  value = value.replace(/(\d{2})(\d)/,"($1) $2")
+  value = value.replace(/(\d)(\d{4})$/,"$1-$2")
+  return value
+}
+
 export function validaCNPJ(cnpj) {
 	cnpj = cnpj.replace(/[^\d]+/g,'');
 	if(cnpj == '' || cnpj.length != 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
@@ -108,4 +141,20 @@ export function validaCNPJ(cnpj) {
 	resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
 	if (resultado != digitos.charAt(1)) return false;
 	return true;
+}
+
+export function convertToISOString(dateStr) {
+  const [day, month, year] = dateStr.split("/"); // Split the string into day, month, year
+  const isoString = new Date(`${year}-${month}-${day}`).toISOString();
+  return isoString;
+}
+
+export function convertToDDMMYYYY(isoString) {
+  const date = new Date(isoString); // Create a Date object from the ISO string
+
+  const day = String(date.getDate()).padStart(2, '0'); // Get the day and pad with leading zero
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed, so add 1
+  const year = date.getFullYear(); // Get the full year
+
+  return `${day}/${month}/${year}`; // Return in DD/MM/YYYY format
 }
