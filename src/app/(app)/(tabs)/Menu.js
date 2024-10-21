@@ -6,8 +6,8 @@ import {
   Text,
   View,
   Switch,
-  Modal, 
-  Dimensions, 
+  Modal,
+  Dimensions,
   Animated,
 } from "react-native";
 import {
@@ -30,7 +30,7 @@ import CustomText from "../../../components/CustomText";
 import theme from "../../../themes/themes";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 import PointsIcon from "../../../components/icons/PointsIcon";
-
+import { useFocusEffect } from '@react-navigation/native';
 const { width } = Dimensions.get("window");
 
 const MenuProfile = ({ setIsModalVisible }) => {
@@ -47,13 +47,13 @@ const MenuProfile = ({ setIsModalVisible }) => {
       name: "Favoritos",
       icon: Heart,
       route: "FavoritesScreen",
-      hasCounter: true, 
+      hasCounter: true,
     },
     {
       name: "Notificações",
       icon: Bell,
       route: "NotificationsScreen",
-      hasSwitch: true, 
+      hasSwitch: true,
     },
     { name: "Meus Resgates", icon: ArrowUUpLeft, route: "MyResgatesScreen" },
     {
@@ -65,9 +65,10 @@ const MenuProfile = ({ setIsModalVisible }) => {
     { name: "Avaliações", icon: Star, route: "ReviewsScreen" },
     { name: "Configurações", icon: Gear, route: "SettingsScreen" },
     { name: "Segurança", icon: Shield, route: "SecurityScreen" },
-    { name: "Central de Ajuda", icon: Headset, route: "HelpCenterScreen" },
+    { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
   ];
 
+  
   useEffect(() => {
     // Animação de entrada
     Animated.timing(slideAnim, {
@@ -78,13 +79,12 @@ const MenuProfile = ({ setIsModalVisible }) => {
   }, []);
 
   const closeModal = () => {
-    
     Animated.timing(slideAnim, {
       toValue: width,
       duration: 500,
       useNativeDriver: true,
     }).start(() => {
-      setIsModalVisible(false); 
+      setIsModalVisible(false);
     });
   };
 
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   emailUse: {
-    color: theme.colors.text,
+    color: theme.colors.details,
     fontSize: 14,
   },
   menuContainer: {
