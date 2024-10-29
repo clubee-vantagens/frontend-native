@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
-export default function CustomInput({ control, name, placeholder, type, rules, editable }) {
+export default function CustomInput({ control, name, placeholder, type, rules, editable, autoCapitalize }) {
   return (
     <Controller
       control={control}
@@ -14,8 +14,9 @@ export default function CustomInput({ control, name, placeholder, type, rules, e
           style={styles.input}
           onBlur={onBlur}
           placeholder={placeholder}
+          placeholderTextColor="#838383"
           onChangeText={onChange}
-          autoCapitalize="none"
+          autoCapitalize={autoCapitalize}
           inputMode={type}
           editable={editable}
         />
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.2,
       shadowRadius: 1.41,
 
-      elevation: 5,
+    elevation: 5,
     margin: 10,
     textAlign: "left",
     paddingLeft: 25,
