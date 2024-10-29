@@ -23,6 +23,8 @@ import {
   convertToISOString,
   maskPhone,
   convertToDDMMYYYY,
+  maskCep,
+  isValidDate
 } from "../../utils/utils";
 import axios from "axios";
 import { useSession } from "../../context/ctx";
@@ -33,6 +35,7 @@ import { scale, verticalScale } from "react-native-size-matters";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import CameraModalComponent from "../../components/CameraModalComponent";
+import ErrorMessageComponent from "../../components/ErrorMessageComponent";
 
 export default function EditProfile(second) {
   const { session, signOut } = useSession();
@@ -71,9 +74,11 @@ export default function EditProfile(second) {
     },
   });
   const phoneValue = watch("phoneNumber");
+  const cepValue = watch('cep')
   useEffect(() => {
     setValue("phoneNumber", maskPhone(phoneValue));
-  }, [phoneValue]);
+    setValue('cep', maskCep(cepValue))
+  }, [phoneValue, cepValue]);
 
   const handleDeleteUser = async () => {
     try {
@@ -84,6 +89,8 @@ export default function EditProfile(second) {
   };
 
   const fetchAddressFromCep = async (cep) => {
+    console.log(cep);
+    
     try {
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
       const data = response.data;
@@ -109,7 +116,9 @@ export default function EditProfile(second) {
         socialName: data.socialName || user.socialName,
         phoneNumber: data.phoneNumber || user.phoneNumber,
         cep: data.cep || user.cep,
-        nascimento: convertToISOString(data.nascimento) || user.nascimento,
+        nascimento: data.nascimento 
+        ? convertToISOString(data.nascimento) 
+        : user.nascimento,
         endereco: data.endereco || user.endereco,
         cidade: data.cidade || user.cidade,
         estado: data.estado || user.estado,
@@ -217,23 +226,38 @@ export default function EditProfile(second) {
             control={control}
             name="phoneNumber"
             placeholder={user?.phoneNumber || "Telefone"}
+            rules={{
+              minLength: {
+                value: 15,
+                message: 'O numero de telefone esta incorreto'
+              }
+            }}
           />
+          {errors.phoneNumber && <ErrorMessageComponent>{errors.phoneNumber.message}</ErrorMessageComponent>}
           <View style={{ flexDirection: "row" }}>
-            <Controller
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder={
-                    convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
-                  }
-                  placeholderTextColor="#838383"
-                  onChangeText={onChange}
-                  value={maskDate(value)}
-                  style={styles.smallInput}
-                />
-              )}
-              name="nascimento"
-            />
+            <View>
+
+              <Controller
+                control={control}
+                rules={{
+                  validate: (value) => isValidDate(value) || "Data invalida, tente novamente"
+                  
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder={
+                      convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
+                    }
+                    placeholderTextColor="#838383"
+                    onChangeText={onChange}
+                    value={maskDate(value)}
+                    style={styles.smallInput}
+                  />
+                )}
+                name="nascimento"
+              />
+              {errors.nascimento && <ErrorMessageComponent>{errors.nascimento.message}</ErrorMessageComponent>}
+            </View>
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -242,8 +266,8 @@ export default function EditProfile(second) {
                   placeholderTextColor="#838383"
                   onChangeText={(text) => {
                     onChange(text);
-                    if (text.length === 8) {
-                      fetchAddressFromCep(text);
+                    if (text.length === 9) {
+                      fetchAddressFromCep(text.replace("-", ""));
                     }
                   }}
                   value={value}
@@ -269,6 +293,7 @@ export default function EditProfile(second) {
                   onChangeText={onChange}
                   value={value}
                   style={styles.smallInput}
+                  editable={false}
                 />
               )}
               name="cidade"

@@ -107,6 +107,7 @@ export function maskDate(date) {
 
 export const maskPhone = (value) => {
   if (!value) return ""
+  value = value.slice(0, 15);
   value = value.replace(/\D/g,'')
   value = value.replace(/(\d{2})(\d)/,"($1) $2")
   value = value.replace(/(\d)(\d{4})$/,"$1-$2")
@@ -157,4 +158,24 @@ export function convertToDDMMYYYY(isoString) {
   const year = date.getFullYear(); // Get the full year
 
   return `${day}/${month}/${year}`; // Return in DD/MM/YYYY format
+}
+
+export function isValidDate(dateStr) {
+  // Regular expression to match the DD/MM/YYYY format
+  const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  const match = dateStr.match(regex);
+
+  if (!match) return false;
+
+  const day = parseInt(match[1], 10);
+  const month = parseInt(match[2], 10);
+  const year = parseInt(match[3], 10);
+
+  // Check if the date is logically correct
+  const date = new Date(year, month - 1, day);
+  return (
+    date.getDate() === day &&
+    date.getMonth() === month - 1 &&
+    date.getFullYear() === year
+  );
 }
