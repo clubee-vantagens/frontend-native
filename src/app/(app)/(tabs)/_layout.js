@@ -11,6 +11,7 @@ import CustomText from "../../../components/CustomText";
 import { View } from "react-native";
 import PointsIcon from "../../../components/icons/PointsIcon";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
+import {moderateVerticalScale, scale, verticalScale} from 'react-native-size-matters'
 
 export default function TabLayout() {
   return (
@@ -21,8 +22,8 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "#050505",
           borderTopWidth: 0,
-          height: 80,
-          padding: 20,
+          height: verticalScale(80),
+          padding: moderateVerticalScale(25),
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -41,13 +42,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarLabel: "Home",
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: "center" }}>
               {focused ? (
                 <House size={24} weight="fill" color="#FFD700" />
               ) : (
-                <House size={24} weight="thin" color={color} />
+                <House size={24} weight="bold" color={color} />
               )}
               {focused && (
                 <View
@@ -95,8 +97,8 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <View style={{ alignItems: "center" }}>
-              <MenuIconPoints color="#fff" size={30} />
+            <View style={{ alignItems: "center", justifyContent: "space-between" }}>
+              <MenuIconPoints color={focused ? "#FFD700" : "#fff"} size={28} />
               {focused && (
                 <View
                   style={{

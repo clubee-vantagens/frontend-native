@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/novoLogo.png",
-      "contentFit": "contain",
+      "resizeMode": "contain",
       "backgroundColor": "#FFEAAD"
     },
     "ios": {

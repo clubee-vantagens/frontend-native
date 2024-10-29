@@ -5,6 +5,7 @@ import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
 import TermsAndConditionsScreen from '../termsAndConditions'
 import Constants from 'expo-constants'
+import { scale, verticalScale } from "react-native-size-matters";
 
 export default function HelpCenter(second) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
@@ -63,8 +64,8 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#FFEAAD',
-        width: 350,
-        height: 71,
+        width: scale(310),
+        height: verticalScale(71),
         borderRadius: 8,
         alignItems: 'center',
         padding: 15,

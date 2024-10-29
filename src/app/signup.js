@@ -1,10 +1,10 @@
 import { router, Link } from "expo-router";
-import { Pressable, StyleSheet, View } from "react-native";
-import { Image } from "expo-image";
+import { Pressable, StyleSheet, View, Image } from "react-native";
 import CustomText from "../components/CustomText";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
+import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
 
 export default function Signup() {
   return (
@@ -16,7 +16,7 @@ export default function Signup() {
       </View>
       <View style={styles.container}>
         <Image
-          source={require("@/assets/images/novoLogo.png")}
+          source={require('../../assets/images/novoLogo.png')}
           style={styles.image}
         />
         <Pressable
@@ -46,17 +46,17 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     marginLeft: 30,
   },
-  image: { width: 297, height: 225, resizeMode: "contain", marginBottom: 50 },
+  image: { width: moderateScale(297), height: verticalScale(125), resizeMode: "contain", marginBottom: 50 },
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
     // justifyContent: "center",
-    paddingTop: 150,
+    paddingTop: moderateVerticalScale(100),
     alignItems: "center",
   },
   indexBtn: {
-    width: 359,
-    height: 50,
+    width: moderateScale(300),
+    height: verticalScale(50),
     borderRadius: 50,
     backgroundColor: "#150F02",
 

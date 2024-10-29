@@ -1,4 +1,7 @@
 import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -26,9 +29,10 @@ import { useSession } from "../../context/ctx";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
 import { useUserData } from "../../hooks/useUserData";
-import { scale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 import Constants from "expo-constants";
 import { router } from "expo-router";
+import CameraModalComponent from "../../components/CameraModalComponent";
 
 export default function EditProfile(second) {
   const { session, signOut } = useSession();
@@ -38,29 +42,12 @@ export default function EditProfile(second) {
     status: deletionStatus,
     isSuccess: deleteSuccess,
   } = useDeleteUser(session);
-  const { data: user } = useUserData(session);
+  const { data: user, refetch } = useUserData(session);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-  console.log(isSuccess);
-
-  // useEffect para simular a requisição de dados
-  // useEffect(() => {
-  //   // Simulando um fetch do backend, usando o dado mocado por enquanto
-  //   const fetchUserData = async () => {
-  //     // Aqui futuramente será a requisição para o backend
-  //     // const response = await api.get('/user');
-  //     // const data = response.data;
-
-  //     // Simulando atraso de requisição
-  //     setTimeout(() => {
-  //       setUser(User[0]); // Definindo o usuário mocado
-  //     }, 1000);
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
+  const [camerModalOpen, setCameraModalOpen] = useState(false)
+  const [profileImage, setProfileImage] = useState(user?.photo || null);
+  
   const {
     control,
     handleSubmit,
@@ -140,22 +127,40 @@ export default function EditProfile(second) {
     }
   };
 
+
+  const close = () => {
+    setCameraModalOpen(false)
+  }
+
+  const handleImageSelect = (image) => {
+     
+    setProfileImage(image); // Update the state with the new image
+    setCameraModalOpen(false); // Close the modal
+  };
+
+  useEffect(() => {
+    refetch()
+  }, [profileImage])
+
   return (
     <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} >
+
+      
       <ScrollView>
+        <Pressable
+          style={{ alignSelf: "start" }}
+          onPress={() => router.navigate("/")}
+        >
+          <CaretLeft size={24} />
+        </Pressable>
         <View
           style={{
-            justifyContent: "flex-start",
+            justifyContent: "center",
             marginRight: 30,
+            alignItems: "center",
           }}
-        >
-          <Pressable
-            style={{ alignSelf: "start" }}
-            onPress={() => router.navigate("/")}
-          >
-            <CaretLeft size={24} />
-          </Pressable>
-        </View>
+        ></View>
         <View style={{ alignItems: "center" }}>
           <View style={styles.imageContainer}>
             {user?.photo ? (
@@ -163,17 +168,25 @@ export default function EditProfile(second) {
             ) : (
               <View style={styles.defaultImage}>
                 <Image
-                  source={
-                    user?.photo ||
-                    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
-                  }
+                  source={{
+                    uri:
+                      profileImage ||
+                      "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
+                  }}
                   style={styles.image}
                 />
               </View>
             )}
           </View>
           <View style={styles.cameraContainer}>
-            <Camera color={"white"} size={16} />
+            <Pressable onPress={() => {
+              console.log('pressed')
+              setCameraModalOpen(true)
+            }
+            }>
+
+              <Camera color={"white"} size={16} />
+            </Pressable>
           </View>
           <CustomText style={{ marginTop: 20 }}>Editar Dados</CustomText>
         </View>
@@ -213,6 +226,7 @@ export default function EditProfile(second) {
                   placeholder={
                     convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
                   }
+                  placeholderTextColor="#838383"
                   onChangeText={onChange}
                   value={maskDate(value)}
                   style={styles.smallInput}
@@ -225,6 +239,7 @@ export default function EditProfile(second) {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   placeholder={user?.cep || "CEP"}
+                  placeholderTextColor="#838383"
                   onChangeText={(text) => {
                     onChange(text);
                     if (text.length === 8) {
@@ -250,6 +265,7 @@ export default function EditProfile(second) {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   placeholder={user?.cidade || "Cidade"}
+                  placeholderTextColor="#838383"
                   onChangeText={onChange}
                   value={value}
                   style={styles.smallInput}
@@ -291,6 +307,8 @@ export default function EditProfile(second) {
           />
         )}
       </ScrollView>
+      </KeyboardAvoidingView>
+      {camerModalOpen && <CameraModalComponent close={close} onImageSelect={handleImageSelect}/>}
     </SafeAreaView>
   );
 }
@@ -300,6 +318,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     marginTop: Constants.statusBarHeight,
+    alignItems: "center",
   },
   imageContainer: {
     borderRadius: 60, // Metade do valor da largura e altura para circular
@@ -328,14 +347,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: 90,
-    left: 200,
+    top: verticalScale(85),
+    left: scale(190),
   },
   smallInput: {
     height: 50,
-    width: 170,
+    width: scale(140),
     borderRadius: 7,
-    padding: 10,
+    padding: 5,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: {

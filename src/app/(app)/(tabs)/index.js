@@ -28,11 +28,23 @@ import { notifications } from "../../../components/UserData/Notifications";
 import NotificationsModal from "../notifications";
 import LoadingScreen from "../../../components/LoadingScreen";
 import PointsIcon from "../../../components/icons/PointsIcon";
+import Constants from 'expo-constants'
+
+
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
   const { signOut, refreshAccessToken, session } = useSession();
-  const { data: user, isLoading, error } = useUserData(session);
+  const { data: user, isLoading, error, refetch } = useUserData(session);
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+        refetch();
+    }, 2000); // Adjust interval as needed (e.g., every 2 seconds)
+
+    return () => clearInterval(interval); // Clean up interval on unmount
+}, [refetch]);
 
   // Pegar o total de notificações
 
@@ -42,7 +54,7 @@ export default function Home() {
 
   const totalNotifications = getTotalNotifications();
 
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     return (
@@ -61,14 +73,15 @@ export default function Home() {
               <View style={styles.profile}>
                 <Image
                   style={styles.imageProfile}
-                  source={
-                    user?.photo ||
-                    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
-                  }
+                  source={{
+                    uri:
+                      user?.photo ||
+                      "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
+                  }}
                 />
                 <CustomText style={styles.textProfile} variant="bold">
                   Olá, {"\n"}
-                  {user.name}
+                  {user?.name}
                 </CustomText>
               </View>
 
@@ -173,6 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
+    marginTop: Constants.statusBarHeight
   },
   containerHeader: {
     paddingTop: 50,
@@ -186,8 +200,8 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 50,
-    backgroundColor: "#ccc",
     marginRight: 5,
+    backgroundColor: 'lightgreen'
   },
   profileNotification: {
     color: "#fff",
