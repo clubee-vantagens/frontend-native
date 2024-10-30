@@ -12,6 +12,7 @@ import CustomText from "../CustomText";
 import { StarFour } from "phosphor-react-native";
 import points from "../../../assets/images/points.png";
 import PointsStores from "../icons/PointsStores";
+import {scale, verticalScale, moderateScale, moderateVerticalScale} from 'react-native-size-matters'
 export const Hightlight = () => {
   const { width } = Dimensions.get("window");
 
@@ -65,8 +66,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   card: {
-    width: 193,
-    height: 229,
+    width: moderateScale(193),
+    height: moderateVerticalScale(229),
     borderRadius: 4,
     marginHorizontal: 4,
     overflow: "hidden",
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    width: 83,
-    height: 25,
+    width: moderateScale(83),
+    height: verticalScale(25),
     backgroundColor: "#F7F5F5",
     borderRadius: 20,
     borderColor: "#9A791A",
@@ -118,8 +119,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageUser: {
-    width: 32,
-    height: 32,
+    width: moderateScale(32),
+    height: moderateVerticalScale(32),
     borderWidth: 2,
     borderColor: "#F5C330",
     borderRadius: 16,

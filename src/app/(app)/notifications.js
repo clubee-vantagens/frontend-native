@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,14 +7,24 @@ import {
   Modal,
   ScrollView,
   Image,
+  PanResponder,
+  Animated,
 } from "react-native";
 import { X, CaretRight } from "phosphor-react-native";
 import NoNotification from "../../../assets/images/noNotification.png";
 import CustomText from "../../components/CustomText";
 import { notifications } from "../../components/UserData/Notifications";
 import Constants from "expo-constants";
+import {
+  moderateScale,
+  moderateVerticalScale,
+  scale,
+  verticalScale,
+} from "react-native-size-matters";
+import DragHandleComponent from "../../components/DragHandleComponent";
 
 const NotificationsModal = ({ visible, onClose }) => {
+  // const [translateY] = useState(new Animated.Value(0));
   const today = new Date().toISOString().split("T")[0];
 
   const formatDate = (dateString) => {
@@ -22,7 +32,6 @@ const NotificationsModal = ({ visible, onClose }) => {
     return `${day}/${month}/${year}`;
   };
 
-  // Filtrando notificações para "hoje" e "mais antigas"
   const todayNotifications = notifications.filter(
     (notif) => notif.date === today
   );
@@ -30,26 +39,80 @@ const NotificationsModal = ({ visible, onClose }) => {
     (notif) => notif.date !== today
   );
 
-  // Verificando se há notificações
   const hasNotifications =
     todayNotifications.length > 0 || oldNotifications.length > 0;
 
+  // const translateY = useRef(new Animated.Value(0)).current;
+
+  // const panResponder = PanResponder.create({
+  //   onStartShouldSetPanResponder: (_, gestureState) => {
+  //     // Only set the responder if the gesture is near the top of the modal
+  //     return gestureState.dy > 0 && translateY._value === 0;
+  //   },
+  //   onMoveShouldSetPanResponder: (_, gestureState) =>
+  //     gestureState.dy > 0 && Math.abs(gestureState.dy) > Math.abs(gestureState.dx),
+  //   onPanResponderMove: (_, gestureState) => {
+  //     if (gestureState.dy > 0) {
+  //       translateY.setValue(gestureState.dy);
+  //     }
+  //   },
+  //   onPanResponderRelease: (_, gestureState) => {
+  //     if (gestureState.dy > 100) {
+  //       onClose();
+  //     } else {
+  //       Animated.spring(translateY, {
+  //         toValue: 0,
+  //         useNativeDriver: true,
+  //       }).start();
+  //     }
+  //   },
+  // });
+
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
-      <View style={styles.modalContainer}>
+      <View
+        style={[
+          styles.modalContainer, { width: scale(350) }]}
+        //   ,
+        //   { transform: [{ translateY }] },
+        // ]}
+        // {...panResponder.panHandlers}
+      >
         <View style={styles.header}>
-          <Pressable onPress={onClose}>
-            <X size={24} color="#000" />
-          </Pressable>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <DragHandleComponent />
+            <Pressable
+              onPress={onClose}
+              style={{
+                position: "absolute",
+                right: scale(10),
+                bottom: verticalScale(5),
+              }}
+            >
+              <X size={24} color="#000" />
+            </Pressable>
+          </View>
+          <CustomText style={styles.headerText} variant="semiBold">
+            Notificações
+          </CustomText>
         </View>
-        <View>
-          <CustomText style={styles.headerText}>Notificações</CustomText>
-        </View>
+        <View></View>
 
-        {/* Se houver notificações, exibe as seções "Hoje" e "Mais Antigas", caso contrário, exibe mensagem e imagem */}
         {hasNotifications ? (
-          <ScrollView style={styles.body}>
-            {/* Seção de notificações de hoje */}
+          <ScrollView
+            style={styles.body}
+            contentContainerStyle={{
+              paddingVertical: 10,
+              flexGrow: 1, // Ensure it expands based on content
+            }}
+            showsVerticalScrollIndicator={false} // Optional: Hide scroll indicator
+          >
             {todayNotifications.length > 0 && (
               <View style={styles.section}>
                 <CustomText style={styles.sectionTitle}>Hoje</CustomText>
@@ -62,15 +125,12 @@ const NotificationsModal = ({ visible, onClose }) => {
                       />
                     </View>
                     <View style={styles.textContainer}>
-                      {/* Linha com remetente e data */}
                       <View style={styles.headerRow}>
                         <CustomText variant="bold">{notif.sender}</CustomText>
                         <CustomText color="#7F7F7F">
                           {formatDate(notif.date)}
                         </CustomText>
                       </View>
-
-                      {/* Conteúdo da notificação */}
                       <View style={styles.containerText}>
                         <CustomText style={styles.contentText}>
                           {notif.content}
@@ -93,7 +153,6 @@ const NotificationsModal = ({ visible, onClose }) => {
               </View>
             )}
 
-            {/* Seção de notificações antigas */}
             {oldNotifications.length > 0 && (
               <View style={styles.section}>
                 <CustomText style={styles.sectionTitle}>
@@ -108,15 +167,12 @@ const NotificationsModal = ({ visible, onClose }) => {
                       />
                     </View>
                     <View style={styles.textContainer}>
-                      {/* Linha com remetente e data */}
                       <View style={styles.headerRow}>
                         <CustomText variant="bold">{notif.sender}</CustomText>
                         <CustomText color="#6B6B6B">
                           {formatDate(notif.date)}
                         </CustomText>
                       </View>
-
-                      {/* Conteúdo da notificação */}
                       <View style={styles.containerText}>
                         <CustomText style={styles.contentText} color="#6B6B6B">
                           {notif.content}
@@ -160,19 +216,18 @@ export default NotificationsModal;
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1,
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     marginTop: Constants.statusBarHeight,
+    position: "absolute",
+    bottom: 0,
+    maxHeight: "80%", // Set a maximum height for the modal
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-evenly",
     alignItems: "center",
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
   },
   headerText: {
     fontSize: 16,
@@ -242,7 +297,6 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     textAlign: "center",
-    // padding: 3,
   },
   notificationCountOld: {
     backgroundColor: "#7F7F7F",
@@ -268,21 +322,13 @@ const styles = StyleSheet.create({
     width: "79%",
     color: "#6B6B6B",
   },
-  oldNotifications: {
-    backgroundColor: "#BDBDBD",
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    borderWidth: 0.5,
-    borderRadius: 5,
-  },
   noNotificationsContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   noNotificationImage: {
-    width: 400,
-    height: 265,
+    width: moderateScale(265),
+    height: moderateVerticalScale(165),
   },
 });

@@ -1,5 +1,11 @@
 import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import CustomText from "../components/CustomText";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
@@ -10,7 +16,7 @@ import { useEffect, useState } from "react";
 import CustomButtonTwo from "../components/CustomButtonTwo";
 import LoadingScreen from "../components/LoadingScreen";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { scale, verticalScale, moderateScale, moderateVerticalScale } from "react-native-size-matters";
 
 export default function PasswordRecoveryScreen() {
   const {
@@ -69,7 +75,7 @@ export default function PasswordRecoveryScreen() {
         </View>
       )}
 
-      <View style={{ alignItems: "center", marginTop: 350 }}>
+      <View style={{ alignItems: "center", marginTop: moderateVerticalScale(250) }}>
         <CustomText variant="bold" style={styles.text}>
           Redefina sua senha
         </CustomText>
@@ -77,8 +83,7 @@ export default function PasswordRecoveryScreen() {
           style={{
             textAlign: "center",
             width: scale(300),
-            fontSize: "18",
-            marginTop: 60,
+            marginTop: moderateVerticalScale(50),
           }}
           variant="semiBold"
         >

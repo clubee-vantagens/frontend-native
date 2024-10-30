@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable, Modal, ScrollView, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Modal,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Link, router } from "expo-router";
-
-import { MaterialIcons } from "@expo/vector-icons";
+import { CaretLeft } from "phosphor-react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useMutateUsers } from "../hooks/useMutateUsers";
 import { maskCpf, validateCpf } from "../utils/utils";
@@ -118,234 +125,252 @@ export default function UserSignUpScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-        <Pressable onPress={() => router.navigate("/")}>
-          <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
-        </Pressable>
-      </View>
-      <CustomText style={{ fontSize: 30 }} variant="semiBold">
-        Sou Cliente
-      </CustomText>
-      <View>
-        {errorMessage && (
-          <View style={styles.containerError}>
-            <View style={styles.contentError}>
-              <Fontisto
-                name="close"
-                size={25}
-                color="#A92525"
-                style={styles.icon}
-              />
-              <ErrorMessageComponent style={styles.errorMessage}>
-                {errorMessage} Retorne para o
-                <Link href={"sign-in"} style={styles.link}>
-                  Login
-                </Link>
-                ou
-                <Link href={"passwordRecovery"} style={styles.link}>
-                  Recuperar senha
-                </Link>
-              </ErrorMessageComponent>
-            </View>
-          </View>
-        )}
-        <CustomInput
-          control={control}
-          name="name"
-          placeholder="Nome"
-          rules={{
-            required: "Campo Obrigatório",
-            maxLength: {
-              value: 256,
-              message: "O nome não pode exceder 256 caracteres",
-            },
-            pattern: {
-              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
-              message: "Nome deve conter somente letras",
-            },
-          }}
-        />
-
-        {errors.name && (
-          <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
-        )}
-        <CustomInput
-          control={control}
-          name="socialName"
-          placeholder="Nome social"
-          rules={{
-            // required: "Campo Obrigatório",
-            maxLength: {
-              value: 256,
-              message: "O nome não pode exceder 256 caracteres",
-            },
-            pattern: {
-              value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
-              message: "Nome deve conter somente letras",
-            },
-          }}
-        />
-        {errors.socialName && (
-          <ErrorMessageComponent>
-            {errors.socialName.message}
-          </ErrorMessageComponent>
-        )}
-        <CustomInput
-          control={control}
-          name="email"
-          placeholder="E-mail"
-          rules={{
-            required: "Campo Obrigatório",
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "O e-mail inserido é inválido",
-            },
-          }}
-        />
-        {errors.email && (
-          <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
-        )}
-        <CustomInput
-          control={control}
-          name="cpf"
-          placeholder="CPF"
-          rules={{
-            required: "Campo Obrigatório",
-            minLength: { value: 14, message: "CPF inválido" },
-          }}
-        />
-        {(errors.cpf || cpfError) && (
-          <ErrorMessageComponent>
-            {errors.cpf?.message || cpfError}
-          </ErrorMessageComponent>
-        )}
-        <CustomPasswordInput
-          control={control}
-          name="password"
-          placeholder="Senha"
-          secureTextEntry={true}
-          type="password"
-          rules={{
-            required: true,
-            pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-              message:
-                "Sua senha precisa conter 8 a 20 caracteres incluindo números, letras maiúsculas e minúsculas e caracteres especiais.",
-            },
-          }}
-        />
-        {errors.password && (
-          <ErrorMessageComponent>
-            {errors.password.message || "Campo Obrigatório"}
-          </ErrorMessageComponent>
-        )}
-        <CustomPasswordInput
-          control={control}
-          name="confirmPassword"
-          placeholder="Confirmar Senha"
-          secureTextEntry={true}
-          type="password"
-          rules={{
-            required: "Campo Obrigatório",
-            validate: (value) =>
-              value === passwordValue || "As senhas não coincidem",
-          }}
-        />
-        {errors.confirmPassword && (
-          <ErrorMessageComponent>
-            {errors.confirmPassword.message}
-          </ErrorMessageComponent>
-        )}
-        <Controller
-          control={control}
-          rules={{ required: "Deve aceitar termos e condicoes" }}
-          name="termsOfUse"
-          render={({ field: { onChange, value } }) => (
-            <View style={styles.checkBoxContainer}>
-              <Checkbox
-                value={value}
-                onValueChange={(newValue) => {
-                  setChecked(newValue);
-                  onChange(newValue);
-                }}
-                color={isChecked ? "#4630EB" : undefined}
-              />
-              <CustomText style={{ fontSize: 16, color: "#757575" }}>
-                Concordo com os
-              </CustomText>
-              <Pressable onPress={handleShowTerms}>
-                <CustomText
-                  style={{
-                    fontSize: 16,
-                    textDecorationLine: "underline",
-                    color: "#757575",
-                  }}
-                >
-                  Termos e Condições
-                </CustomText>
-              </Pressable>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // Adjusts for different platforms
+      style={{ flex: 1 }}
+    >
+      <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <View style={{ alignSelf: "flex-start", marginLeft: 25, }}>
+          <Pressable onPress={() => router.navigate("/")}>
+            <CaretLeft size={scale(30)} color="black" />
+          </Pressable>
+        </View>
+        <CustomText style={{ fontSize: scale(30) }} variant="semiBold">
+          Sou Cliente
+        </CustomText>
+        <View>
+          {errorMessage && (
+            <View style={styles.containerError}>
+              <View style={styles.contentError}>
+                <Fontisto
+                  name="close"
+                  size={25}
+                  color="#A92525"
+                  style={styles.icon}
+                />
+                <ErrorMessageComponent style={styles.errorMessage}>
+                  {errorMessage} Retorne para o
+                  <Link href={"sign-in"} style={styles.link}>
+                    Login
+                  </Link>
+                  ou
+                  <Link href={"passwordRecovery"} style={styles.link}>
+                    Recuperar senha
+                  </Link>
+                </ErrorMessageComponent>
+              </View>
             </View>
           )}
-        />
-        {errors.termsOfUse && (
-          <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
-        )}
-      </View>
-      <CustomButton
-        onPress={handleSubmit(handleRegister)}
-        type="black"
-        disabled={!termsOfUse}
-      >
-        Cadastre-se
-      </CustomButton>
+          <CustomInput
+            autoCapitalize={true}
+            control={control}
+            name="name"
+            placeholder="Nome"
+            rules={{
+              required: "Campo Obrigatório",
+              maxLength: {
+                value: 256,
+                message: "O nome não pode exceder 256 caracteres",
+              },
+              pattern: {
+                value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
+                message: "Nome deve conter somente letras",
+              },
+            }}
+          />
 
-          <CustomText style={{ fontSize: 20, color: "#757575" }}>
-            Já tem uma conta?{" "}
-            <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
-              Acessar!
-            </Link>
-          </CustomText>
-
-      {isConfirmationModal && (
-        <ConfirmationModal
-          text="Cadastro realizado com sucesso!"
-          onPress={() => {
-            router.navigate("preferences");
-          }}
-          iconClose={() => setIsConfirmationModal(false)}
-          style={{ fontSize: 30 }}
-        />
-      )}
-
-      <Modal
-        visible={isTermsVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={handleHideTerms}
-      >
-        <View style={styles.modalContainer}>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <TermsAndConditionsScreen handleHideTerms={handleHideTerms} />
-          </ScrollView>
-          {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
-            <MaterialIcons name="close" size={30} color="black" />
-          </Pressable> */}
+          {errors.name && (
+            <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
+          )}
+          <CustomInput
+            autoCapitalize={true}
+            control={control}
+            name="socialName"
+            placeholder="Nome social"
+            rules={{
+              // required: "Campo Obrigatório",
+              maxLength: {
+                value: 256,
+                message: "O nome não pode exceder 256 caracteres",
+              },
+              pattern: {
+                value: /^[a-zA-Zà-úÀ-Ú\s~^´`¨]+$/,
+                message: "Nome deve conter somente letras",
+              },
+            }}
+          />
+          {errors.socialName && (
+            <ErrorMessageComponent>
+              {errors.socialName.message}
+            </ErrorMessageComponent>
+          )}
+          <CustomInput
+            autoCapitalize={false}
+            control={control}
+            name="email"
+            placeholder="E-mail"
+            rules={{
+              required: "Campo Obrigatório",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "O e-mail inserido é inválido",
+              },
+            }}
+          />
+          {errors.email && (
+            <ErrorMessageComponent>
+              {errors.email.message}
+            </ErrorMessageComponent>
+          )}
+          <CustomInput
+            control={control}
+            name="cpf"
+            placeholder="CPF"
+            rules={{
+              required: "Campo Obrigatório",
+              minLength: { value: 14, message: "CPF inválido" },
+            }}
+          />
+          {(errors.cpf || cpfError) && (
+            <ErrorMessageComponent>
+              {errors.cpf?.message || cpfError}
+            </ErrorMessageComponent>
+          )}
+          <CustomPasswordInput
+            control={control}
+            name="password"
+            placeholder="Senha"
+            secureTextEntry={true}
+            type="password"
+            rules={{
+              required: true,
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                message:
+                  "Sua senha precisa conter 8 a 20 caracteres incluindo números, letras maiúsculas e minúsculas e caracteres especiais.",
+              },
+            }}
+          />
+          {errors.password && (
+            <ErrorMessageComponent>
+              {errors.password.message || "Campo Obrigatório"}
+            </ErrorMessageComponent>
+          )}
+          <CustomPasswordInput
+            control={control}
+            name="confirmPassword"
+            placeholder="Confirmar Senha"
+            secureTextEntry={true}
+            type="password"
+            rules={{
+              required: "Campo Obrigatório",
+              validate: (value) =>
+                value === passwordValue || "As senhas não coincidem",
+            }}
+          />
+          {errors.confirmPassword && (
+            <ErrorMessageComponent>
+              {errors.confirmPassword.message}
+            </ErrorMessageComponent>
+          )}
+          <Controller
+            control={control}
+            rules={{ required: "Deve aceitar termos e condicoes" }}
+            name="termsOfUse"
+            render={({ field: { onChange, value } }) => (
+              <View style={styles.checkBoxContainer}>
+                <Checkbox
+                  value={value}
+                  onValueChange={(newValue) => {
+                    setChecked(newValue);
+                    onChange(newValue);
+                  }}
+                  color={isChecked ? "#F5C330" : undefined}
+                />
+                <CustomText style={{ fontSize: 16, color: "#757575" }}>
+                  Concordo com os
+                </CustomText>
+                <Pressable onPress={handleShowTerms}>
+                  <CustomText
+                    style={{
+                      fontSize: 16,
+                      textDecorationLine: "underline",
+                      color: "#757575",
+                    }}
+                  >
+                    Termos e Condições
+                  </CustomText>
+                </Pressable>
+              </View>
+            )}
+          />
+          {errors.termsOfUse && (
+            <ErrorMessageComponent>Campo Obrigatório</ErrorMessageComponent>
+          )}
         </View>
-      </Modal>
-    </View>
+        <CustomButton
+          onPress={handleSubmit(handleRegister)}
+          type="black"
+          disabled={!termsOfUse}
+        >
+          Cadastre-se
+        </CustomButton>
+
+        <CustomText style={{ fontSize: 20, color: "#757575" }}>
+          Já tem uma conta?{" "}
+          <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/">
+            Acessar!
+          </Link>
+        </CustomText>
+
+        {isConfirmationModal && (
+          <ConfirmationModal
+            text="Cadastro realizado com sucesso!"
+            onPress={() => {
+              router.navigate("preferences");
+            }}
+            iconClose={() => setIsConfirmationModal(false)}
+            style={{ fontSize: 30 }}
+          />
+        )}
+
+        <Modal
+          visible={isTermsVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={handleHideTerms}
+        >
+          <View style={styles.modalContainer}>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              <TermsAndConditionsScreen handleHideTerms={handleHideTerms} />
+            </ScrollView>
+            {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
+            <MaterialIcons name="close" size={30} color="black" />
+            </Pressable> */}
+          </View>
+        </Modal>
+      </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: scale(700),
     marginTop: Constants.statusBarHeight,
     backgroundColor: "#F7F7F7",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#F7F7F7",
+
   },
   checkBoxContainer: {
     flexDirection: "row",

@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 20,
+    
   },
   button: {
     backgroundColor: "#FFEAAD",
@@ -52,15 +53,15 @@ const styles = StyleSheet.create({
     height: verticalScale(70),
     borderRadius: 8,
     alignItems: "center",
-    padding: 15,
+    padding: scale(15),
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   title: {
-    fontSize: 12,
+    fontSize: scale(9),
     width: scale(250),
-    flex:1
+    flex:1,
   },
   content: {
     padding: 15,

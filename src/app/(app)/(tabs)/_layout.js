@@ -13,9 +13,12 @@ import { View, Modal, Pressable } from "react-native";
 import PointsIcon from "../../../components/icons/PointsIcon";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 import MenuProfile from "./Menu";
+import {moderateVerticalScale, scale, verticalScale} from 'react-native-size-matters'
+
 export default function TabLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
+
     <>
       <Modal
         visible={isModalVisible}
