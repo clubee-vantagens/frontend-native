@@ -38,7 +38,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
 
   const [favoriteCount, setFavoriteCount] = useState(2);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const slideAnim = useRef(new Animated.Value(width)).current; 
+  const slideAnim = useRef(new Animated.Value(width)).current;
 
   const menuOptions = [
     {
@@ -61,7 +61,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
       color: "#000",
     },
     { name: "Avaliações", icon: Star, route: "ReviewsScreen" },
-    { name: "Configurações", icon: Gear, route: "SettingsScreen" },
+    { name: "Configurações", icon: Gear, route: "editProfile" },
     { name: "Segurança", icon: Shield, route: "SecurityScreen" },
     { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
   ];
@@ -119,7 +119,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
                   "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
               }}
             />
-            <View style={styles.usercontent}>
+            <View>
               <CustomText variant="bold" style={styles.userName}>
                 {user?.name || "Nome não disponível"}
               </CustomText>

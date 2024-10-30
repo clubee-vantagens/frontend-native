@@ -87,8 +87,8 @@ export default function Preferences() {
   }
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <View style={styles.containerHeader}>
           <CustomText variant="bold" style={styles.title}>
             Bem Vindo!
@@ -148,16 +148,16 @@ export default function Preferences() {
             style={{ fontSize: 30 }}
           />
         )}
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#FAF9F6",
     marginTop: Constants.statusBarHeight,
+    flex: 1,
   },
   containerHeader: {
     alignItems: "center",
@@ -184,20 +184,20 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   optionButton: {
-    paddingVertical: 10,
-    marginVertical: 2,
+    backgroundColor: "#FAF9F6",
     borderRadius: 30,
-    padding: 10,
-    backgroundColor: "#fff",
-    shadowColor: '#000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 5,
+    shadowColor: "#000",
     shadowOffset: {
-      width: 10,
+      width: 0,
       height: 1,
     },
-    shadowOpacity: 1,
+    shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 5,
 
+    elevation: 5,
   },
   optionButtonSelected: {
     backgroundColor: "#FCD562",

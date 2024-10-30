@@ -7,11 +7,13 @@ import {
   TextInput,
   Modal,
 } from "react-native";
+import Constants from 'expo-constants'
 import { CaretLeft } from "phosphor-react-native";
 import { Picker } from "@react-native-picker/picker";
 import CustomText from "../../components/CustomText";
 import CustomButtonTwo from "../../components/CustomButtonTwo";
 import { router } from "expo-router";
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 
 const FaleConosco = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -41,8 +43,73 @@ const FaleConosco = () => {
     }
   };
 
+  const Header = () => (
+    <View style={styles.header}>
+      <Pressable onPress={() => router.back()}>
+        <CaretLeft size={30} color="black" />
+      </Pressable>
+    </View>
+  );
+  
+  const RadioButtons = ({ options, selectedRadio, setSelectedRadio }) => (
+    <>
+      {options.map((option, index) => (
+        <Pressable
+          key={index}
+          style={styles.radioContainer}
+          onPress={() => setSelectedRadio(option)}
+        >
+          <View
+            style={[
+              styles.radioCircle,
+              selectedRadio === option && styles.selectedCircle,
+            ]}
+          />
+          <CustomText style={styles.radioText} variant="semibold">
+            {option}
+          </CustomText>
+        </Pressable>
+      ))}
+    </>
+  );
+  
+  const CustomPicker = ({ selectedOption, setSelectedOption }) => (
+    <View style={styles.pickerContainer}>
+      <Picker
+        selectedValue={selectedOption}
+        onValueChange={(itemValue) => setSelectedOption(itemValue)}
+        style={styles.select}
+      >
+        <Picker.Item label="Assunto" value="assunto" />
+        <Picker.Item label="Assunto 1" value="Assunto1" />
+        <Picker.Item label="Assunto 2" value="Assunto2" />
+        <Picker.Item label="Assunto 3" value="Assunto3" />
+      </Picker>
+    </View>
+  );
+  
+  const MessageInput = ({ textAreaValue, setTextAreaValue, error }) => (
+    <View style={styles.textAreaContainer}>
+      {error ? <CustomText style={styles.errorText}>{error}</CustomText> : null}
+  
+      <TextInput
+        style={styles.textArea}
+        multiline
+        placeholder="Escreva sua mensagem aqui..."
+        value={textAreaValue}
+        onChangeText={setTextAreaValue}
+        maxLength={1000}
+        textAlignVertical="top"
+      />
+  
+      <CustomText style={styles.charCounter}>
+        {textAreaValue.length}/1000
+      </CustomText>
+    </View>
+  );
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header />
       <View>
         <CustomText style={styles.title}>Fale Conosco</CustomText>
@@ -92,83 +159,22 @@ const FaleConosco = () => {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
-const Header = () => (
-  <View style={styles.header}>
-    <Pressable onPress={() => router.back()}>
-      <CaretLeft size={30} color="black" />
-    </Pressable>
-  </View>
-);
 
-const RadioButtons = ({ options, selectedRadio, setSelectedRadio }) => (
-  <>
-    {options.map((option, index) => (
-      <Pressable
-        key={index}
-        style={styles.radioContainer}
-        onPress={() => setSelectedRadio(option)}
-      >
-        <View
-          style={[
-            styles.radioCircle,
-            selectedRadio === option && styles.selectedCircle,
-          ]}
-        />
-        <CustomText style={styles.radioText} variant="semibold">
-          {option}
-        </CustomText>
-      </Pressable>
-    ))}
-  </>
-);
-
-const CustomPicker = ({ selectedOption, setSelectedOption }) => (
-  <View style={styles.pickerContainer}>
-    <Picker
-      selectedValue={selectedOption}
-      onValueChange={(itemValue) => setSelectedOption(itemValue)}
-      style={styles.select}
-    >
-      <Picker.Item label="Assunto" value="assunto" />
-      <Picker.Item label="Assunto 1" value="Assunto1" />
-      <Picker.Item label="Assunto 2" value="Assunto2" />
-      <Picker.Item label="Assunto 3" value="Assunto3" />
-    </Picker>
-  </View>
-);
-
-const MessageInput = ({ textAreaValue, setTextAreaValue, error }) => (
-  <View style={styles.textAreaContainer}>
-    {error ? <CustomText style={styles.errorText}>{error}</CustomText> : null}
-
-    <TextInput
-      style={styles.textArea}
-      multiline
-      placeholder="Escreva sua mensagem aqui..."
-      value={textAreaValue}
-      onChangeText={setTextAreaValue}
-      maxLength={1000}
-      textAlignVertical="top"
-    />
-
-    <CustomText style={styles.charCounter}>
-      {textAreaValue.length}/1000
-    </CustomText>
-  </View>
-);
 
 export default FaleConosco;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    paddingTop: 70,
     backgroundColor: "#fff",
+    padding: scale(16),
+    marginTop: Constants.statusBarHeight,
+    borderWidth: 1,
+    borderColor: 'red'
   },
   header: {
     flexDirection: "row",
@@ -177,10 +183,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 16,
+    marginTop: verticalScale(16),
   },
   form: {
-    marginTop: 20,
+    marginTop: verticalScale(20),
   },
   label: {
     fontSize: 16,
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#000",
-    marginRight: 8,
+    marginRight: scale(8),
   },
   selectedCircle: {
     backgroundColor: "#000",
@@ -211,7 +217,7 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderRadius: 8,
     overflow: "hidden",
-    marginTop: 15,
+    marginTop: moderateVerticalScale(15),
   },
   select: {
     height: 50,
@@ -222,7 +228,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   textArea: {
-    height: 300,
+    height: moderateVerticalScale(300),
     borderColor: "#000",
     borderWidth: 1,
     padding: 10,
@@ -255,7 +261,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: 300,
+    width: moderateScale(300),
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 8,
