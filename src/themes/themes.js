@@ -7,8 +7,7 @@ const theme = {
     // tons de amarelos
     bgYellowPrimary: "##FCD562",
     bgYellowSecondary: "#f5c330",
-    bgYellowTertiary: "#f5c330",
-    bgYellowGolden: "#f5c330",
+
 
     //cores complementares
     textOne: "#150f02",

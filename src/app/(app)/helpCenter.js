@@ -1,28 +1,39 @@
-import { View, Pressable, Button, StyleSheet, Modal, ScrollView } from "react-native";
+import {
+  View,
+  Pressable,
+  Button,
+  StyleSheet,
+  Modal,
+  ScrollView,
+} from "react-native";
 import CustomText from "../../components/CustomText";
 import { router } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
-import TermsAndConditionsScreen from '../termsAndConditions'
-import Constants from 'expo-constants'
+import { useNavigation } from "@react-navigation/native";
+import TermsAndConditionsScreen from "../termsAndConditions";
+import Constants from "expo-constants";
 
 export default function HelpCenter(second) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
-
+  const navigation = useNavigation();
   const handleShowTerms = () => setIsTermsVisible(true);
   const handleHideTerms = () => setIsTermsVisible(false);
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => {
-        console.log('pressed');
-        router.navigate('/')
-        
-      }}>
+      <Pressable
+        onPress={() => {
+          console.log("pressed");
+          router.navigate("/");
+        }}
+      >
         <CaretLeft size={30} color="black" />
       </Pressable>
-      <CustomText style={{marginTop: 20}} variant="bold">Central de Ajuda</CustomText>
-      <Pressable style={styles.button} onPress={() => router.navigate('/faq')}>
+      <CustomText style={{ marginTop: 20 }} variant="bold">
+        Central de Ajuda
+      </CustomText>
+      <Pressable style={styles.button} onPress={() => router.navigate("/faq")}>
         <CustomText variant="semiBold">FAQ</CustomText>
         <CaretRight size={20} />
       </Pressable>
@@ -30,7 +41,12 @@ export default function HelpCenter(second) {
         <CustomText variant="semiBold">Termos de Uso</CustomText>
         <CaretRight size={20} />
       </Pressable>
-      <Pressable style={styles.button}>
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate("faleConosco");
+        }}
+      >
         <CustomText variant="semiBold">Fale Conosco</CustomText>
         <CaretRight size={20} />
       </Pressable>
@@ -55,27 +71,27 @@ export default function HelpCenter(second) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'start',
-        padding: 20,
-        marginTop: Constants.statusBarHeight
-    },
-    button: {
-        backgroundColor: '#FFEAAD',
-        width: 350,
-        height: 71,
-        borderRadius: 8,
-        alignItems: 'center',
-        padding: 15,
-        marginTop: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    modalContainer: {
-      flex: 1
-    },
-    scrollViewContent: {
-      flex: 1,
-    },
-})
+  container: {
+    flex: 1,
+    alignItems: "start",
+    padding: 20,
+    marginTop: Constants.statusBarHeight,
+  },
+  button: {
+    backgroundColor: "#FFEAAD",
+    width: 350,
+    height: 71,
+    borderRadius: 8,
+    alignItems: "center",
+    padding: 15,
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  modalContainer: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    flex: 1,
+  },
+});

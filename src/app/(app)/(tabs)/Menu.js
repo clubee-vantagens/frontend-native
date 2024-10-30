@@ -29,8 +29,6 @@ import LoadingScreen from "../../../components/LoadingScreen";
 import CustomText from "../../../components/CustomText";
 import theme from "../../../themes/themes";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
-import PointsIcon from "../../../components/icons/PointsIcon";
-import { useFocusEffect } from '@react-navigation/native';
 const { width } = Dimensions.get("window");
 
 const MenuProfile = ({ setIsModalVisible }) => {
@@ -40,7 +38,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
 
   const [favoriteCount, setFavoriteCount] = useState(2);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const slideAnim = useRef(new Animated.Value(width)).current; // Controla a animação da entrada do modal
+  const slideAnim = useRef(new Animated.Value(width)).current; 
 
   const menuOptions = [
     {
@@ -68,7 +66,6 @@ const MenuProfile = ({ setIsModalVisible }) => {
     { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
   ];
 
-  
   useEffect(() => {
     // Animação de entrada
     Animated.timing(slideAnim, {
@@ -141,7 +138,11 @@ const MenuProfile = ({ setIsModalVisible }) => {
             <View key={index} style={styles.menuItem}>
               <Pressable
                 style={styles.menuItemPressable}
-                onPress={() => navigation.navigate(option.route)}
+                // onPress={() => navigation.navigate(option.route)}
+                onPress={() => {
+                  closeModal();
+                  navigation.navigate(option.route);
+                }}
               >
                 <option.icon size={24} color={option.color} />
                 <CustomText variant="bold" style={styles.menuText}>

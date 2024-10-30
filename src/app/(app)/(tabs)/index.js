@@ -28,6 +28,7 @@ import { notifications } from "../../../components/UserData/Notifications";
 import NotificationsModal from "../notifications";
 import LoadingScreen from "../../../components/LoadingScreen";
 import PointsIcon from "../../../components/icons/PointsIcon";
+
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
