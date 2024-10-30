@@ -184,20 +184,20 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   optionButton: {
-    backgroundColor: "#FAF9F6",
-    borderRadius: 30,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginVertical: 5,
-    shadowColor: "#000",
+    marginVertical: 2,
+    borderRadius: 30,
+    padding: 10,
+    backgroundColor: "#fff",
+    shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 10,
       height: 1,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 1,
     shadowRadius: 1.41,
-
     elevation: 5,
+
   },
   optionButtonSelected: {
     backgroundColor: "#FCD562",

@@ -31,6 +31,7 @@ import PointsIcon from "../../../components/icons/PointsIcon";
 import Constants from 'expo-constants'
 
 
+
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
