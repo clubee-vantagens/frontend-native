@@ -1,13 +1,15 @@
 // Exemplo de uso:
 //  color: theme.colors.details,
 
-
 const theme = {
   colors: {
     // tons de amarelos
     bgYellowPrimary: "##FCD562",
     bgYellowSecondary: "#f5c330",
+    bgYellowLight: "#FFEAAD",
 
+    // bg white geral
+    bgWhite: "#F7F7F7",
 
     //cores complementares
     textOne: "#150f02",
@@ -40,7 +42,7 @@ const theme = {
     small: 8,
     medium: 16,
     large: 24,
-    extraLarge: 32,
+    extraLarge: 50,
   },
   radii: {
     small: 5,

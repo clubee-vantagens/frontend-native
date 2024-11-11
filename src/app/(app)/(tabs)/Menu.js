@@ -38,7 +38,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
 
   const [favoriteCount, setFavoriteCount] = useState(2);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const slideAnim = useRef(new Animated.Value(width)).current; 
+  const slideAnim = useRef(new Animated.Value(width)).current;
 
   const menuOptions = [
     {
@@ -62,7 +62,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
     },
     { name: "Avaliações", icon: Star, route: "ReviewsScreen" },
     { name: "Configurações", icon: Gear, route: "SettingsScreen" },
-    { name: "Segurança", icon: Shield, route: "SecurityScreen" },
+    { name: "Segurança", icon: Shield, route: "security" },
     { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
   ];
 
