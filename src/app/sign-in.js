@@ -98,6 +98,7 @@ export default function Index() {
             control={control}
             name="email"
             placeholder="Informe seu e-mail"
+            autoCapitalize={false}
             rules={{
               required: "Campo Obrigatório",
               maxLength: {

@@ -9,7 +9,7 @@ import {
   Ticket,
 } from "phosphor-react-native";
 import CustomText from "../../../components/CustomText";
-import { View, Modal, Pressable } from "react-native";
+import { View, Modal, Pressable, Platform, SafeAreaView } from "react-native";
 import PointsIcon from "../../../components/icons/PointsIcon";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 import MenuProfile from "./Menu";
@@ -35,8 +35,8 @@ export default function TabLayout() {
           tabBarStyle: {
             backgroundColor: "#050505",
             borderTopWidth: 0,
-            height: verticalScale(80),
-            padding: moderateVerticalScale(25),
+            height: Platform.OS === 'ios' ? verticalScale(80) : verticalScale(65),
+            padding: Platform.OS === 'ios' ? moderateVerticalScale(25) : moderateVerticalScale(5)
           },
           tabBarLabelStyle: {
             fontSize: 12,
@@ -55,9 +55,10 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Home",
+            tabBarLabel: "Home",
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
-              <View style={{ alignItems: "center" }}>
+              <SafeAreaView style={{ alignItems: "center" }}>
                 {focused ? (
                   <House size={24} weight="fill" color="#FFD700" />
                 ) : (
@@ -76,7 +77,7 @@ export default function TabLayout() {
                     }}
                   />
                 )}
-              </View>
+              </SafeAreaView>
             ),
           }}
         />
@@ -85,7 +86,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
-              <View style={{ alignItems: "center" }}>
+              <SafeAreaView style={{ alignItems: "center" }}>
                 <Ticket size={24} color={focused ? "#FFD700" : color} />
                 {focused && (
                   <View
@@ -100,7 +101,7 @@ export default function TabLayout() {
                     }}
                   />
                 )}
-              </View>
+              </SafeAreaView>
             ),
           }}
         />
@@ -109,7 +110,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
-              <View style={{ alignItems: "center" }}>
+              <SafeAreaView style={{ alignItems: "center" }}>
                 <MenuIconPoints color="#fff" size={30} />
                 {focused && (
                   <View
@@ -124,7 +125,7 @@ export default function TabLayout() {
                     }}
                   />
                 )}
-              </View>
+              </SafeAreaView>
             ),
           }}
         />
@@ -133,7 +134,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
-              <View style={{ alignItems: "center" }}>
+              <SafeAreaView style={{ alignItems: "center" }}>
                 <Storefront size={24} color={focused ? "#FFD700" : color} />
                 {focused && (
                   <View
@@ -148,7 +149,7 @@ export default function TabLayout() {
                     }}
                   />
                 )}
-              </View>
+              </SafeAreaView>
             ),
           }}
         />
@@ -157,7 +158,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
-              <View style={{ alignItems: "center" }}>
+              <SafeAreaView style={{ alignItems: "center" }}>
                 <List size={24} color={focused ? "#FFD700" : color} />
                 {focused && (
                   <View
@@ -172,7 +173,7 @@ export default function TabLayout() {
                     }}
                   />
                 )}
-              </View>
+              </SafeAreaView>
             ),
             tabBarButton: (props) => (
               <Pressable {...props} onPress={() => setIsModalVisible(true)} />
