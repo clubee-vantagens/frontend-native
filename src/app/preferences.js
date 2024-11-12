@@ -58,7 +58,7 @@ export default function Preferences() {
 
   const isButtonEnabled = selectedOptions.length > 0;
 
-  const handlePreferencies = async (preferences) => {
+  const handlePreferencies = (preferences) => {
     setIsLoading(true);
     try {
       const dataToPost = {

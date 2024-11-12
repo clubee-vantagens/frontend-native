@@ -14,6 +14,13 @@ const theme = {
     textTwo: "#f7f5f5",
     details: "#757575",
     detailsTwo: "#E9E9E9",
+    mainBgColor: '#F7F7F7',
+
+    // cinza
+    placeholdersGray: "#949494",
+
+    // preto
+    logoPreto: '#050505',
 
     // ERROS/AVISO/CONFIRMAÇÃO
 

@@ -90,7 +90,7 @@ export default function UserSignUpScreen() {
     }
   }, [cpfValue]);
 
-  const handleRegister = async (data) => {
+  const handleRegister = (data) => {
     const userData = {
       name: data.name,
       socialName: data.socialName,

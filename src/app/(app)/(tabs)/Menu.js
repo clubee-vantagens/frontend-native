@@ -29,6 +29,7 @@ import LoadingScreen from "../../../components/LoadingScreen";
 import CustomText from "../../../components/CustomText";
 import theme from "../../../themes/themes";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
+import { scale, verticalScale } from "react-native-size-matters";
 const { width } = Dimensions.get("window");
 
 const MenuProfile = ({ setIsModalVisible }) => {
@@ -127,10 +128,10 @@ const MenuProfile = ({ setIsModalVisible }) => {
                 {user?.email || "Email não disponível"}
               </CustomText>
             </View>
+            <Pressable onPress={closeModal} style={{alignSelf: 'flex-start'}}>
+              <X size={scale(22)} />
+            </Pressable>
           </View>
-          <Pressable onPress={closeModal}>
-            <X size={22} />
-          </Pressable>
         </View>
 
         <View style={styles.menuContainer}>
@@ -144,7 +145,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
                   navigation.navigate(option.route);
                 }}
               >
-                <option.icon size={24} color={option.color} />
+                <option.icon size={scale(24)} color={option.color} />
                 <CustomText variant="bold" style={styles.menuText}>
                   {option.name}
                 </CustomText>
@@ -168,7 +169,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
           ))}
         </View>
 
-        <View style={{ borderTopWidth: 1, marginTop: 20 }}></View>
+        <View style={{ borderTopWidth: 1, marginTop: scale(0) }}></View>
         <View style={styles.footer}>
           <Pressable onPress={signOut}>
             <Text style={styles.signOutText}>Sair do aplicativo</Text>
@@ -185,13 +186,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    padding: 16,
   },
   modalContainer: {
     position: "absolute",
     right: 0,
     height: "100%",
-    width: "80%",
+    width: "85%",
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOpacity: 0.25,
@@ -202,34 +202,34 @@ const styles = StyleSheet.create({
   profileHeader: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    margin: 16,
-    marginTop: 40,
+    justifyContent: "center",
+    marginLeft: scale(10),
+    marginTop: verticalScale(40),
   },
   userInfoContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
   imageProfile: {
-    width: 45,
-    height: 45,
+    width: scale(45),
+    height: verticalScale(45),
     borderRadius: 50,
-    marginRight: 5,
+    marginRight: scale(5),
   },
   userName: {
-    fontSize: 16,
+    fontSize: scale(16),
   },
   emailUse: {
     color: theme.colors.details,
-    fontSize: 14,
+    fontSize: scale(14),
   },
   menuContainer: {
-    marginTop: 16,
+    marginTop: scale(16),
   },
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
+    padding: scale(16),
     justifyContent: "space-between",
   },
   menuItemPressable: {
@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   menuText: {
-    marginLeft: 8,
-    fontSize: 16,
+    marginLeft: scale(8),
+    fontSize: scale(16),
   },
   favoriteCount: {
     backgroundColor: "#FCD562",
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: "auto",
-    padding: 16,
+    padding: scale(16),
     borderWidth: 0.8,
     borderRadius: 4,
     borderTopColor: "#150F02",

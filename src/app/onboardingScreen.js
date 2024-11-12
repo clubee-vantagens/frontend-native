@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../components/LoadingScreen";
-import { scale, verticalScale } from "react-native-size-matters";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Constants from 'expo-constants'
 
 const OnboardingScreen = () => {
@@ -87,10 +87,10 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: scale(350), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Acumule vantagens exclusivas em suas compras.
@@ -125,10 +125,10 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 120  }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Apoie e impulsione o comercio na sua comunidade.
@@ -169,10 +169,10 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 126 }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Conheça novas lojas e produtos desenvolvidos por comerciantes

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import CustomText from "./CustomText";
 import { Camera, Image, Trash, X } from "phosphor-react-native";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 import * as ImagePicker from "expo-image-picker";
 import { Camera as CameraExpo } from "expo-camera";
 import axios from "axios";
@@ -164,7 +164,7 @@ export default function CameraModalComponent({ close, onImageSelect }) {
       }
     }
   };
-  const handleImageDeletion = async() => {
+  const handleImageDeletion = () => {
     try {
       setIsPolling(true)
       mutate({ userData: { photo: '' }, session })
@@ -196,21 +196,33 @@ export default function CameraModalComponent({ close, onImageSelect }) {
         </View>
 
         <View style={styles.iconRow}>
-          <Pressable style={styles.iconsContainer} onPress={takePhoto}>
-            <Camera color="white" size={moderateScale(24)} />
-          </Pressable>
-          <Pressable
-            style={styles.iconsContainer}
-            onPress={pickImageFromGallery}
-          >
-            <Image color="white" size={moderateScale(24)} />
-          </Pressable>
-          <Pressable
-            style={styles.iconsContainer}
-            onPress={handleImageDeletion}
-          >
-            <Trash color="white" size={moderateScale(24)} />
-          </Pressable>
+          <View style={styles.pressableView}>
+            <Pressable style={styles.iconsContainer} onPress={takePhoto}>
+              <Camera color="white" size={moderateScale(24)} />
+            </Pressable>
+            <CustomText style={{marginTop: moderateVerticalScale(5)}}>Camera</CustomText>
+
+          </View>
+          <View style={styles.pressableView}>
+            <Pressable
+              style={styles.iconsContainer}
+              onPress={pickImageFromGallery}
+            >
+              <Image color="white" size={moderateScale(24)} />
+            </Pressable>
+            <CustomText style={{marginTop: moderateVerticalScale(5)}}>Galeria</CustomText>
+
+          </View>
+          <View style={styles.pressableView}>
+            <Pressable
+              style={styles.iconsContainer}
+              onPress={handleImageDeletion}
+            >
+              <Trash color="white" size={moderateScale(24)} />
+            </Pressable>
+            <CustomText style={{marginTop: moderateVerticalScale(5)}}>Excluir Foto</CustomText>
+
+          </View>
         </View>
       </Animated.View>
     </View>
@@ -235,7 +247,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    height: verticalScale(158),
+    height: verticalScale(168),
     backgroundColor: "#fff",
     position: "absolute",
     bottom: 0,
@@ -275,4 +287,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  pressableView: {
+    alignItems: 'center'
+  }
 });

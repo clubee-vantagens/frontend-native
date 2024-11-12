@@ -6,13 +6,13 @@ import { jwtDecode } from "jwt-decode";
 
 // Define the shape of the context's value
 const AuthContext = React.createContext({
-  signIn: async (email, password) => null,
-  signOut: async () => null,
+  signIn: (email, password) => null,
+  signOut: () => null,
   session: null,
   isLoading: false,
   error: null,
   setError: () => {},
-  refreshAccessToken: async () => null,
+  refreshAccessToken: () => null,
 });
 
 // Custom hook to use the AuthContext

@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useNavigation } from "expo-router";
 import { useSession } from "../../../context/ctx";
 import {
   Bell,
@@ -29,6 +29,10 @@ import NotificationsModal from "../notifications";
 import LoadingScreen from "../../../components/LoadingScreen";
 import PointsIcon from "../../../components/icons/PointsIcon";
 import Constants from 'expo-constants'
+import CatagoryBubble from "../../../components/CategoriesBubble";
+import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
+import { scale } from "react-native-size-matters";
+
 
 
 
@@ -147,14 +151,10 @@ export default function Home() {
             {/* Menu */}
 
             <View style={styles.menu}>
-              {MenuList.map((item, index) => (
-                <View style={styles.menuItem} key={index}>
-                  <Pressable style={styles.MenuButton}>{item.icon}</Pressable>
-                  {item.title ? (
-                    <Text style={styles.buttonText}>{item.title}</Text>
-                  ) : null}
-                </View>
-              ))}
+              <CatagoryBubble title={'PetShop'} icon={<Dog size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'Flores e plantas'} icon={<Flower size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'Papelaria'} icon={<BookOpenText size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'categories'} icon={<DotsThree size={scale(50)}  />} page='index'/>
             </View>
           </View>
 

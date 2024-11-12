@@ -24,7 +24,7 @@ import {
   maskPhone,
   convertToDDMMYYYY,
   maskCep,
-  isValidDate
+  isValidDate,
 } from "../../utils/utils";
 import axios from "axios";
 import { useSession } from "../../context/ctx";
@@ -48,9 +48,9 @@ export default function EditProfile(second) {
   const { data: user, refetch } = useUserData(session);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [camerModalOpen, setCameraModalOpen] = useState(false)
+  const [camerModalOpen, setCameraModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(user?.photo || null);
-  
+
   const {
     control,
     handleSubmit,
@@ -74,13 +74,13 @@ export default function EditProfile(second) {
     },
   });
   const phoneValue = watch("phoneNumber");
-  const cepValue = watch('cep')
+  const cepValue = watch("cep");
   useEffect(() => {
     setValue("phoneNumber", maskPhone(phoneValue));
-    setValue('cep', maskCep(cepValue))
+    setValue("cep", maskCep(cepValue));
   }, [phoneValue, cepValue]);
 
-  const handleDeleteUser = async () => {
+  const handleDeleteUser = () => {
     try {
       userDeletion(session);
     } catch (error) {
@@ -89,8 +89,6 @@ export default function EditProfile(second) {
   };
 
   const fetchAddressFromCep = async (cep) => {
-    console.log(cep);
-    
     try {
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
       const data = response.data;
@@ -108,7 +106,7 @@ export default function EditProfile(second) {
       console.error("Erro ao buscar o CEP:", error);
     }
   };
-  const handleEditUser = async (data) => {
+  const handleEditUser = (data) => {
     // setIsLoading(true);
     try {
       const dataToPost = {
@@ -116,9 +114,9 @@ export default function EditProfile(second) {
         socialName: data.socialName || user.socialName,
         phoneNumber: data.phoneNumber || user.phoneNumber,
         cep: data.cep || user.cep,
-        nascimento: data.nascimento 
-        ? convertToISOString(data.nascimento) 
-        : user.nascimento,
+        nascimento: data.nascimento
+          ? convertToISOString(data.nascimento)
+          : user.nascimento,
         endereco: data.endereco || user.endereco,
         cidade: data.cidade || user.cidade,
         estado: data.estado || user.estado,
@@ -136,204 +134,245 @@ export default function EditProfile(second) {
     }
   };
 
-
   const close = () => {
-    setCameraModalOpen(false)
-  }
+    setCameraModalOpen(false);
+  };
 
   const handleImageSelect = (image) => {
-     
     setProfileImage(image); // Update the state with the new image
     setCameraModalOpen(false); // Close the modal
   };
 
   useEffect(() => {
-    refetch()
-  }, [profileImage])
+    refetch();
+  }, [profileImage]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} >
-
-      
-      <ScrollView>
-        <Pressable
-          style={{ alignSelf: "start" }}
-          onPress={() => router.navigate("/")}
-        >
-          <CaretLeft size={24} />
-        </Pressable>
-        <View
-          style={{
-            justifyContent: "center",
-            marginRight: 30,
-            alignItems: "center",
-          }}
-        ></View>
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.imageContainer}>
-            {user?.photo ? (
-              <Image source={{ uri: user.photo }} style={styles.image} />
-            ) : (
-              <View style={styles.defaultImage}>
-                <Image
-                  source={{
-                    uri:
-                      profileImage ||
-                      "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
-                  }}
-                  style={styles.image}
-                />
-              </View>
-            )}
-          </View>
-          <View style={styles.cameraContainer}>
-            <Pressable onPress={() => {
-              console.log('pressed')
-              setCameraModalOpen(true)
-            }
-            }>
-
-              <Camera color={"white"} size={16} />
-            </Pressable>
-          </View>
-          <CustomText style={{ marginTop: 20 }}>Editar Dados</CustomText>
-        </View>
-        <View>
-          <CustomInput
-            control={control}
-            name="name"
-            placeholder={user?.name || "Nome"}
-          />
-          <CustomInput
-            control={control}
-            name="socialName"
-            placeholder={user?.socialName || "Nome Social"}
-          />
-          <CustomInput
-            control={control}
-            name="cpf"
-            placeholder={user?.cpf || "CPF"}
-            editable={false}
-          />
-          <CustomInput
-            control={control}
-            name="email"
-            placeholder={user?.email || "E-mail"}
-            editable={false}
-          />
-          <CustomInput
-            control={control}
-            name="phoneNumber"
-            placeholder={user?.phoneNumber || "Telefone"}
-            rules={{
-              minLength: {
-                value: 15,
-                message: 'O numero de telefone esta incorreto'
-              }
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView>
+          <Pressable
+            style={{ alignSelf: "start" }}
+            onPress={() => router.navigate("/")}
+          >
+            <CaretLeft size={24} />
+          </Pressable>
+          <View
+            style={{
+              justifyContent: "center",
+              marginRight: 30,
+              alignItems: "center",
             }}
-          />
-          {errors.phoneNumber && <ErrorMessageComponent>{errors.phoneNumber.message}</ErrorMessageComponent>}
-          <View style={{ flexDirection: "row" }}>
-            <View>
-
+          ></View>
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.imageContainer}>
+              {user?.photo ? (
+                <Image source={{ uri: user.photo }} style={styles.image} />
+              ) : (
+                <View style={styles.defaultImage}>
+                  <Image
+                    source={{
+                      uri:
+                        profileImage ||
+                        "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
+                    }}
+                    style={styles.image}
+                  />
+                </View>
+              )}
+            </View>
+            <View style={styles.cameraContainer}>
+              <Pressable
+                onPress={() => {
+                  console.log("pressed");
+                  setCameraModalOpen(true);
+                }}
+              >
+                <Camera color={"white"} size={16} />
+              </Pressable>
+            </View>
+            <CustomText style={{ marginTop: 20 }}>Editar Dados</CustomText>
+          </View>
+          <View>
+            <CustomInput
+              control={control}
+              name="name"
+              placeholder={user?.name || "Nome"}
+            />
+            <CustomInput
+              control={control}
+              name="socialName"
+              placeholder={user?.socialName || "Nome Social"}
+            />
+            <CustomInput
+              control={control}
+              name="cpf"
+              placeholder={user?.cpf || "CPF"}
+              editable={false}
+            />
+            <CustomInput
+              control={control}
+              name="email"
+              placeholder={user?.email || "E-mail"}
+              editable={false}
+            />
+            <CustomInput
+              control={control}
+              name="phoneNumber"
+              placeholder={user?.phoneNumber || "Telefone"}
+              rules={{
+                minLength: {
+                  value: 15,
+                  message: "O numero de telefone esta incorreto",
+                },
+              }}
+            />
+            {errors.phoneNumber && (
+              <ErrorMessageComponent>
+                {errors.phoneNumber.message}
+              </ErrorMessageComponent>
+            )}
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    validate: (value) =>
+                      isValidDate(value) || "Data invalida, tente novamente",
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder={
+                        convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
+                      }
+                      placeholderTextColor="#838383"
+                      onChangeText={onChange}
+                      value={maskDate(value)}
+                      style={styles.smallInput}
+                    />
+                  )}
+                  name="nascimento"
+                />
+                {errors.nascimento && (
+                  <ErrorMessageComponent>
+                    {errors.nascimento.message}
+                  </ErrorMessageComponent>
+                )}
+              </View>
               <Controller
                 control={control}
-                rules={{
-                  validate: (value) => isValidDate(value) || "Data invalida, tente novamente"
-                  
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({ field: { onChange, value } }) => (
                   <TextInput
-                    placeholder={
-                      convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
-                    }
+                    placeholder={user?.cep || "CEP"}
                     placeholderTextColor="#838383"
-                    onChangeText={onChange}
-                    value={maskDate(value)}
+                    onChangeText={(text) => {
+                      onChange(text);
+                      if (text.length === 9) {
+                        fetchAddressFromCep(text.replace("-", ""));
+                      }
+                    }}
+                    value={value}
                     style={styles.smallInput}
                   />
                 )}
-                name="nascimento"
+                name="cep"
               />
-              {errors.nascimento && <ErrorMessageComponent>{errors.nascimento.message}</ErrorMessageComponent>}
             </View>
-            <Controller
+            <CustomInput
               control={control}
-              render={({ field: { onChange, value } }) => (
-                <TextInput
-                  placeholder={user?.cep || "CEP"}
-                  placeholderTextColor="#838383"
-                  onChangeText={(text) => {
-                    onChange(text);
-                    if (text.length === 9) {
-                      fetchAddressFromCep(text.replace("-", ""));
-                    }
-                  }}
-                  value={value}
-                  style={styles.smallInput}
-                />
-              )}
-              name="cep"
+              name="endereco"
+              placeholder={user?.endereco || "Endereco"}
             />
+            <View style={{ flexDirection: "row" }}>
+              <DropdownComponent
+              type={'sm'}
+                placeholder="Estado"
+                control={control}
+                name="estado"
+                data={[
+                  { label: "AC", value: "AC" },
+                  { label: "AL", value: "AL" },
+                  { label: "AP", value: "AP" },
+                  { label: "AM", value: "AM" },
+                  { label: "BA", value: "BA" },
+                  { label: "CE", value: "CE" },
+                  { label: "DF", value: "DF" },
+                  { label: "ES", value: "ES" },
+                  { label: "GO", value: "GO" },
+                  { label: "MA", value: "MA" },
+                  { label: "MT", value: "MT" },
+                  { label: "MS", value: "MS" },
+                  { label: "MG", value: "MG" },
+                  { label: "PA", value: "PA" },
+                  { label: "PB", value: "PB" },
+                  { label: "PR", value: "PR" },
+                  { label: "PE", value: "PE" },
+                  { label: "PI", value: "PI" },
+                  { label: "RJ", value: "RJ" },
+                  { label: "RN", value: "RN" },
+                  { label: "RS", value: "RS" },
+                  { label: "RO", value: "RO" },
+                  { label: "RR", value: "RR" },
+                  { label: "SC", value: "SC" },
+                  { label: "SP", value: "SP" },
+                  { label: "SE", value: "SE" },
+                  { label: "TO", value: "TO" },
+                ]}
+              />
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder={user?.cidade || "Cidade"}
+                    placeholderTextColor="#838383"
+                    onChangeText={onChange}
+                    value={value}
+                    style={styles.smallInput}
+                    editable={false}
+                  />
+                )}
+                name="cidade"
+              />
+            </View>
           </View>
-          <CustomInput
-            control={control}
-            name="endereco"
-            placeholder={user?.endereco || "Endereco"}
-          />
-          <View style={{ flexDirection: "row" }}>
-            <DropdownComponent control={control} name="estado" />
-            <Controller
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder={user?.cidade || "Cidade"}
-                  placeholderTextColor="#838383"
-                  onChangeText={onChange}
-                  value={value}
-                  style={styles.smallInput}
-                  editable={false}
-                />
-              )}
-              name="cidade"
+          <CustomButton onPress={handleSubmit(handleEditUser)}>
+            Salvar
+          </CustomButton>
+          {saveModalOpen && (
+            <ConfirmationModal
+              text={`Cadastro${"\n"} atualizado!`}
+              onPress={() => setSaveModalOpen(false)}
+              style={{ fontSize: 30 }}
             />
-          </View>
-        </View>
-        <CustomButton onPress={handleSubmit(handleEditUser)}>
-          Salvar
-        </CustomButton>
-        {saveModalOpen && (
-          <ConfirmationModal
-            text={`Cadastro${"\n"} atualizado!`}
-            onPress={() => setSaveModalOpen(false)}
-            style={{ fontSize: 30 }}
-          />
-        )}
-        <Pressable
-          style={{ alignSelf: "center", marginTop: 18, color: "red" }}
-          onPress={() => setDeleteModalOpen(true)}
-        >
-          <CustomText variant="semiBold" style={{ color: "#A92525" }}>
-            Deletar conta
-          </CustomText>
-        </Pressable>
-        {deleteModalOpen && (
-          <ConfirmationModal
-            text={`Tem certeza que deseja deletar sua conta no Clubee?`}
-            onPress={() => {
-              handleDeleteUser(session);
-              setSaveModalOpen(false);
-              signOut();
-            }}
-            style={{ fontSize: 30 }}
-            type={"delete"}
-            back={() => setDeleteModalOpen(false)}
-          />
-        )}
-      </ScrollView>
+          )}
+          <Pressable
+            style={{ alignSelf: "center", marginTop: 18, color: "red" }}
+            onPress={() => setDeleteModalOpen(true)}
+          >
+            <CustomText variant="semiBold" style={{ color: "#A92525" }}>
+              Deletar conta
+            </CustomText>
+          </Pressable>
+          {deleteModalOpen && (
+            <ConfirmationModal
+              text={`Tem certeza que deseja deletar sua conta no Clubee?`}
+              onPress={() => {
+                handleDeleteUser(session);
+                setSaveModalOpen(false);
+                signOut();
+              }}
+              style={{ fontSize: 30 }}
+              type={"delete"}
+              back={() => setDeleteModalOpen(false)}
+            />
+          )}
+        </ScrollView>
       </KeyboardAvoidingView>
-      {camerModalOpen && <CameraModalComponent close={close} onImageSelect={handleImageSelect}/>}
+      {camerModalOpen && (
+        <CameraModalComponent close={close} onImageSelect={handleImageSelect} />
+      )}
     </SafeAreaView>
   );
 }
@@ -372,8 +411,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: verticalScale(85),
-    left: scale(190),
+    top: verticalScale(65),
+    left: scale(180),
   },
   smallInput: {
     height: 50,
