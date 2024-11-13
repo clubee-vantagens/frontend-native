@@ -15,11 +15,16 @@ const CustomText = ({
   style,
   variant = "regular",
   color = "#000",
+  fontSize,
   ...props
 }) => {
   return (
     <Text
-      style={[styles.text, { fontFamily: fontVariants[variant], color }, style]}
+      style={[
+        styles.text,
+        { fontFamily: fontVariants[variant], color, fontSize },
+        style,
+      ]}
       {...props}
     />
   );
