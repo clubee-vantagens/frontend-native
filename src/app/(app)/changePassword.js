@@ -1,14 +1,27 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { CaretLeft } from "phosphor-react-native";
-import React from "react";
+import { useChangePassword } from "../../hooks/useChangePassword";
 import CustomText from "../../components/CustomText";
 import theme from "../../themes/themes";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtonTwo from "../../components/CustomButtonTwo";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import { useSession } from "../../context/ctx";
 
 const ChangePassword = () => {
+  const [isModalConfirm, setIsModalConfirm] = useState(false);
+  const { session } = useSession();
+  const { mutate, isError, error, isSuccess } = useChangePassword();
   const {
     control,
     handleSubmit,
@@ -16,20 +29,31 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm();
 
-
   const navigation = useNavigation();
-
-  // Observa o valor do campo "newPassword" para validação de confirmação
   const newPassword = watch("newPassword");
 
-  // Função de submissão do formulário
   const onSubmit = (data) => {
     if (data.newPassword !== data.confirmPassword) {
-      alert("As senhas não coincidem.");
+      Alert.alert("Erro", "As senhas não coincidem.");
       return;
     }
-    // Lógica para salvar a nova senha
-    alert("Senha alterada com sucesso!");
+
+    console.log("Enviando dados para alteração de senha:", {
+      newPassword: data.newPassword,
+      token: session,
+    });
+
+    mutate(
+      {
+        newPassword: data.newPassword,
+        token: session, 
+      },
+      {
+        onSuccess: () => setIsModalConfirm(true),
+        onError: (error) =>
+          Alert.alert("Erro", error.message || "Erro ao alterar senha"),
+      }
+    );
   };
 
   return (
@@ -53,7 +77,9 @@ const ChangePassword = () => {
           rules={{ required: "Senha antiga é obrigatória" }}
         />
         {errors.oldPassword && (
-          <Text style={styles.errorText}>{errors.oldPassword.message}</Text>
+          <CustomText style={styles.errorText}>
+            {errors.oldPassword.message}
+          </CustomText>
         )}
 
         <CustomPasswordInput
@@ -64,14 +90,15 @@ const ChangePassword = () => {
           rules={{
             required: "Nova senha é obrigatória",
             minLength: {
-              value: 6,
-              message:
-                "A senha deve ter pelo menos 8 caracteres e no máximo 20",
+              value: 8,
+              message: "A senha deve ter pelo menos 8 caracteres",
             },
           }}
         />
         {errors.newPassword && (
-          <Text style={styles.errorText}>{errors.newPassword.message}</Text>
+          <CustomText style={styles.errorText}>
+            {errors.newPassword.message}
+          </CustomText>
         )}
 
         <CustomPasswordInput
@@ -86,10 +113,17 @@ const ChangePassword = () => {
           }}
         />
         {errors.confirmPassword && (
-          <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>
+          <CustomText style={styles.errorText}>
+            {errors.confirmPassword.message}
+          </CustomText>
         )}
       </View>
 
+      {isError && (
+        <CustomText variant="semibold" style={styles.errorText}>
+          {error.message || "Erro ao alterar senha"}
+        </CustomText>
+      )}
       <View style={styles.btnControl}>
         <CustomButtonTwo variant="bold" onPress={handleSubmit(onSubmit)}>
           Salvar
@@ -104,6 +138,16 @@ const ChangePassword = () => {
           </CustomText>
         </Pressable>
       </View>
+      {isModalConfirm && (
+        <ConfirmationModal
+          iconClose={() => {
+            setIsModalConfirm(false);
+            navigation.goBack();
+          }}
+          text="Senha alterada com sucesso!"
+          style={{ fontSize: 30 }}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -128,5 +172,8 @@ const styles = StyleSheet.create({
     color: theme.colors.msgErro,
     fontSize: 14,
     marginBottom: theme.spacing.small,
+  },
+  modalContent: {
+    fontSize: 30,
   },
 });
