@@ -1,4 +1,4 @@
-import { Image, View, StyleSheet, Pressable, Button } from "react-native";
+import {  Image, View, StyleSheet, Pressable, Button } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Onboarding from "react-native-onboarding-swiper";
 import CustomText from "../components/CustomText";
@@ -6,6 +6,8 @@ import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../components/LoadingScreen";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import Constants from 'expo-constants'
 
 const OnboardingScreen = () => {
   const onboardingRef = useRef(null);
@@ -85,16 +87,16 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Acumule vantagens exclusivas em suas compras.
           </CustomText>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image source={require("../../assets/images/onboarding-1.png")} />
+            <Image source={require("../../assets/images/onboarding-1.webp")} />
             <AntDesign
               name="right"
               size={24}
@@ -123,10 +125,10 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 120  }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: 8, width:110, borderRadius: 120  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
+            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Apoie e impulsione o comercio na sua comunidade.
@@ -138,7 +140,7 @@ const OnboardingScreen = () => {
               color="black"
               onPress={() => onboardingRef.current.goToPage(0, true)}
             />
-            <Image source={require("../../assets/images/onboarding-2.png")} />
+            <Image source={require("../../assets/images/onboarding-2.webp")} />
             <AntDesign
               name="right"
               size={24}
@@ -167,10 +169,10 @@ const OnboardingScreen = () => {
       backgroundColor: "#fff",
       image: (
         <View style={{ alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: 350, height: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: 8, width: 110, borderRadius: 126 }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
-            <View style={{ backgroundColor: "#757575", height: 8, width:110, borderRadius: 126  }}></View>
+          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
             Conheça novas lojas e produtos desenvolvidos por comerciantes
@@ -183,7 +185,7 @@ const OnboardingScreen = () => {
               color="black"
               onPress={() => onboardingRef.current.goToPage(1, true)}
             />
-            <Image source={require("../../assets/images/onboarding-3.png")} />
+            <Image source={require("../../assets/images/onboarding-3.webp")} />
           </View>
         </View>
       ),
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
   headerTop: {
     color: "#232323",
     fontSize: 28,
-    marginBottom: 20,
+    marginBottom: verticalScale(20),
   },
   imageContainer: {
     flex: 1,
@@ -234,16 +236,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 300,
-    height: 300,
+    width: scale(300),
+    height: verticalScale(300),
     contentFit: "contain",
-    marginBottom: 30,
+    marginBottom: verticalScale(30),
   },
   buttonBackground: {
     borderWidth: 1,
     borderColor: "#232323",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: verticalScale(10),
+    paddingHorizontal: scale(20),
     borderRadius: 25,
     marginTop: 20,
   },

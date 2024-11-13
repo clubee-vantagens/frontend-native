@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useNavigation } from "expo-router";
 import { useSession } from "../../../context/ctx";
 import {
   Bell,
@@ -28,12 +28,28 @@ import { notifications } from "../../../components/UserData/Notifications";
 import NotificationsModal from "../notifications";
 import LoadingScreen from "../../../components/LoadingScreen";
 import PointsIcon from "../../../components/icons/PointsIcon";
+import Constants from 'expo-constants'
+import CatagoryBubble from "../../../components/CategoriesBubble";
+import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
+import { scale } from "react-native-size-matters";
+
+
+
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
   const { signOut, refreshAccessToken, session } = useSession();
-  const { data: user, isLoading, error } = useUserData(session);
+  const { data: user, isLoading, error, refetch } = useUserData(session);
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+        refetch();
+    }, 2000); // Adjust interval as needed (e.g., every 2 seconds)
+
+    return () => clearInterval(interval); // Clean up interval on unmount
+}, [refetch]);
 
   // Pegar o total de notificações
 
@@ -43,7 +59,7 @@ export default function Home() {
 
   const totalNotifications = getTotalNotifications();
 
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     return (
@@ -62,14 +78,15 @@ export default function Home() {
               <View style={styles.profile}>
                 <Image
                   style={styles.imageProfile}
-                  source={
-                    user?.photo ||
-                    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
-                  }
+                  source={{
+                    uri:
+                      user?.photo ||
+                      "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png",
+                  }}
                 />
                 <CustomText style={styles.textProfile} variant="bold">
                   Olá, {"\n"}
-                  {user.name}
+                  {user?.name}
                 </CustomText>
               </View>
 
@@ -134,14 +151,10 @@ export default function Home() {
             {/* Menu */}
 
             <View style={styles.menu}>
-              {MenuList.map((item, index) => (
-                <View style={styles.menuItem} key={index}>
-                  <Pressable style={styles.MenuButton}>{item.icon}</Pressable>
-                  {item.title ? (
-                    <Text style={styles.buttonText}>{item.title}</Text>
-                  ) : null}
-                </View>
-              ))}
+              <CatagoryBubble title={'PetShop'} icon={<Dog size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'Flores e plantas'} icon={<Flower size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'Papelaria'} icon={<BookOpenText size={scale(24)}  />} page='index'/>
+              <CatagoryBubble title={'categories'} icon={<DotsThree size={scale(50)}  />} page='index'/>
             </View>
           </View>
 
@@ -174,6 +187,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
+    marginTop: Constants.statusBarHeight
   },
   containerHeader: {
     paddingTop: 50,
@@ -187,8 +201,8 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 50,
-    backgroundColor: "#ccc",
     marginRight: 5,
+    backgroundColor: 'lightgreen'
   },
   profileNotification: {
     color: "#fff",

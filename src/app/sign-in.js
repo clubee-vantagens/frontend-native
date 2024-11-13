@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import CustomText from "../components/CustomText";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { useFocusEffect } from "@react-navigation/native";
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { scale, verticalScale, moderateScale, moderateVerticalScale } from 'react-native-size-matters';
 
 export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
@@ -98,6 +98,7 @@ export default function Index() {
             control={control}
             name="email"
             placeholder="Informe seu e-mail"
+            autoCapitalize={false}
             rules={{
               required: "Campo Obrigatório",
               maxLength: {
@@ -177,26 +178,27 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow:1,
     marginTop: Constants.statusBarHeight,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F7F7F7",
   },
   containerImage: {
-    width: 350,
+    width: scale(350),
     alignItems: "center",
   },
   image: {
-    height: 130,
-    marginTop: 50,
+    height: scale(100),
+    marginTop: verticalScale(50),
     resizeMode: "contain",
   },
   containerInput: {
     marginTop: 53,
   },
   input: {
-    width: 359,
-    height: 50,
+    width: scale(300),
+    height: moderateVerticalScale(50),
     borderRadius: 10,
     padding: 10,
     margin: 10,
@@ -218,8 +220,8 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
   },
   btnEntrar: {
-    width: 180,
-    height: 46,
+    width: scale(180),
+    height: moderateVerticalScale(46),
     borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
@@ -232,14 +234,14 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   containerFooter: {
-    marginTop: 180,
+    marginTop: moderateVerticalScale(80),
     width: scale(350),
     alignItems: 'center',
     justifyContent: 'center'
   },
   errorText: {
     color: "blue",
-    fontSize: 10,
+    fontSize: scale(10),
     marginLeft: 10,
     maxWidth: "90%",
   },
@@ -247,8 +249,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: 359,
-    height: 88,
+    width: moderateScale(359),
+    height: moderateVerticalScale(88),
     borderRadius: 10,
     backgroundColor: "rgba(251, 80, 80, 0.25)",
     padding: 10,

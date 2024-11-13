@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import CustomButtonTwo from "./CustomButtonTwo";
 import CustomText from "./CustomText";
+import { scale, verticalScale } from "react-native-size-matters";
 
 export default function ConfirmationModal({
   text,
@@ -64,8 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalContainer: {
-    width: 359,
-    height: 320,
+    width: scale(350),
+    height: verticalScale(320),
     borderRadius: 38,
     backgroundColor: "#FAF9F6",
     elevation: 10,

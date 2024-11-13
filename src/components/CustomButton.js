@@ -1,5 +1,6 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 import CustomText from "./CustomText";
+import { scale, verticalScale } from "react-native-size-matters";
 
 export default function CustomButton({ children, onPress, type }) {
   return (
@@ -16,7 +17,7 @@ export default function CustomButton({ children, onPress, type }) {
 
 const styles = StyleSheet.create({
   baseButton: {
-    width: 359,
+    width: scale(315),
     height: 47,
     borderRadius: 30,
     alignItems: "center",

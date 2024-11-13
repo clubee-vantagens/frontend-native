@@ -9,12 +9,12 @@ const fetchUsers = async ({ queryKey }) => {
             Authorization: `Bearer ${session}`,
         },
     });
-    console.log(res?.data);
+    // console.log(res?.data);
     
     return res?.data;
 };
 
-export function useUserData(session) {
+export function useUserData(session, isPolling) {
     return useQuery({
         queryKey: ["users", session], // Pass the session as part of the queryKey
         queryFn: fetchUsers,
@@ -22,5 +22,6 @@ export function useUserData(session) {
         cacheTime: 1000 * 60 * 10, // Cache data for 10 minutes
         retry: 2, // Retry failed requests twice before showing an error
         enabled: !!session, // Only run query if session is available
+        refetchInterval: isPolling ? 2000 : false
     });
 }

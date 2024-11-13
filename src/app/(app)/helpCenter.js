@@ -10,9 +10,12 @@ import CustomText from "../../components/CustomText";
 import { router } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
+
 import { useNavigation } from "@react-navigation/native";
 import TermsAndConditionsScreen from "../termsAndConditions";
 import Constants from "expo-constants";
+import { scale, verticalScale } from "react-native-size-matters";
+
 
 export default function HelpCenter(second) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
@@ -95,3 +98,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
