@@ -113,7 +113,7 @@ export default function Home() {
                   Pontos Disponíveis
                 </CustomText>
                 <CustomText style={styles.points}>
-                  {viewPoints ? `${user.points || 1000} pts` : "**** pts"}
+                  {viewPoints ? `${user.points || '1'} pts` : "**** pts"}
                 </CustomText>
               </View>
 

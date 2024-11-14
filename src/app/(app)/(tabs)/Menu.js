@@ -62,13 +62,8 @@ const MenuProfile = ({ setIsModalVisible }) => {
       color: "#000",
     },
     { name: "Avaliações", icon: Star, route: "ReviewsScreen" },
-<<<<<<< HEAD
-    { name: "Configurações", icon: Gear, route: "SettingsScreen" },
-    { name: "Segurança", icon: Shield, route: "security" },
-=======
     { name: "Configurações", icon: Gear, route: "editProfile" },
-    { name: "Segurança", icon: Shield, route: "SecurityScreen" },
->>>>>>> 56a3aa91362fc4b2fbc8f084a0fe13282bb626bd
+    { name: "Segurança", icon: Shield, route: "security" },
     { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
   ];
 

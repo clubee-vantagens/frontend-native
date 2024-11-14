@@ -55,15 +55,15 @@ export default function Categories(second) {
           icon={<BookOpenText size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Limpeza de automoveis"}
+          title={"Limpeza de automóveis"}
           icon={<CarProfile size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Informatica e eletronicos"}
+          title={"Informatica e eletrônicos"}
           icon={<DesktopTower size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Alimentacao"}
+          title={"Alimentação"}
           icon={<ForkKnife size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
@@ -72,15 +72,15 @@ export default function Categories(second) {
         />
         <CatagoryBubble page='categories' title={"Livraria"} icon={<Book size={scale(24)} />} />
         <CatagoryBubble page='categories'
-          title={"Beleza e Estetica"}
+          title={"Beleza e Estética"}
           icon={<HairDryer size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Vestuario e calcados"}
+          title={"Vestuário e calçados"}
           icon={<TShirt size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Manutencao de automoveis"}
+          title={"Manutenção de automóveis"}
           icon={<Wrench size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
@@ -100,7 +100,7 @@ const styles = ScaledSheet.create({
   },
   searchContainer: {
     borderWidth: 1,
-    borderRadius: "50%",
+    borderRadius: 50,
     width: '320@s',
     height: '35@vs',
     flexDirection: "row",

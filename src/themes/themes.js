@@ -23,6 +23,7 @@ const theme = {
 
     // preto
     logoPreto: '#050505',
+    textoPreto: '#150F02',
 
     // ERROS/AVISO/CONFIRMAÇÃO
 
