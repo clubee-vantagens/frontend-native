@@ -58,7 +58,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
     {
       name: "Indique Clubee",
       icon: MenuIconPoints,
-      route: "ReferClubScreen",
+      route: "referalPage",
       color: "#000",
     },
     { name: "Avaliações", icon: Star, route: "ReviewsScreen" },

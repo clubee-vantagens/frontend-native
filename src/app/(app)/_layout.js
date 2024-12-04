@@ -24,6 +24,7 @@ export default function AppLayout() {
       <Stack.Screen name="faq" />
       <Stack.Screen name="editProfile" />
       <Stack.Screen name="categories" />
+      <Stack.Screen name="referalPage" />
     </Stack>
   );
 }
