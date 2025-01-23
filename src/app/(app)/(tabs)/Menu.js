@@ -24,18 +24,20 @@ import {
 import { useUserData } from "../../../hooks/useUserData";
 import { useSession } from "../../../context/ctx";
 import { useState, useRef, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import LoadingScreen from "../../../components/LoadingScreen";
 import CustomText from "../../../components/CustomText";
 import theme from "../../../themes/themes";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 import { scale, verticalScale } from "react-native-size-matters";
+
+
 const { width } = Dimensions.get("window");
 
 const MenuProfile = ({ setIsModalVisible }) => {
   const { signOut, session } = useSession();
   const { data: user, isLoading, error } = useUserData(session);
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const [favoriteCount, setFavoriteCount] = useState(2);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -142,7 +144,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
                 // onPress={() => navigation.navigate(option.route)}
                 onPress={() => {
                   closeModal();
-                  navigation.navigate(option.route);
+                  router.push(option.route);
                 }}
               >
                 <option.icon size={scale(24)} color={option.color} />

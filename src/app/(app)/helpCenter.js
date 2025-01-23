@@ -7,11 +7,9 @@ import {
   ScrollView,
 } from "react-native";
 import CustomText from "../../components/CustomText";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
-
-import { useNavigation } from "@react-navigation/native";
 import TermsAndConditionsScreen from "../termsAndConditions";
 import Constants from "expo-constants";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -19,10 +17,9 @@ import { scale, verticalScale } from "react-native-size-matters";
 
 export default function HelpCenter(second) {
   const [isTermsVisible, setIsTermsVisible] = useState(false);
-  const navigation = useNavigation();
   const handleShowTerms = () => setIsTermsVisible(true);
   const handleHideTerms = () => setIsTermsVisible(false);
-
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Pressable
@@ -47,7 +44,7 @@ export default function HelpCenter(second) {
       <Pressable
         style={styles.button}
         onPress={() => {
-          navigation.navigate("faleConosco");
+          router.push("faleConosco");
         }}
       >
         <CustomText variant="semiBold">Fale Conosco</CustomText>

@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { CaretLeft } from "phosphor-react-native";
 import { useChangePassword } from "../../hooks/useChangePassword";
 import CustomText from "../../components/CustomText";
@@ -29,7 +29,7 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm();
 
-  const navigation = useNavigation();
+  const router = useRouter();
   const newPassword = watch("newPassword");
 
   const onSubmit = (data) => {
@@ -58,7 +58,7 @@ const ChangePassword = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable onPress={() => navigation.goBack()}>
+      <Pressable onPress={() => router.back()}>
         <CaretLeft size={32} />
       </Pressable>
 
@@ -128,7 +128,7 @@ const ChangePassword = () => {
         <CustomButtonTwo variant="bold" onPress={handleSubmit(onSubmit)}>
           Salvar
         </CustomButtonTwo>
-        <Pressable onPress={() => navigation.goBack()}>
+        <Pressable onPress={() => router.back()}>
           <CustomText
             variant="bold"
             fontSize={18}
@@ -142,7 +142,7 @@ const ChangePassword = () => {
         <ConfirmationModal
           iconClose={() => {
             setIsModalConfirm(false);
-            navigation.goBack();
+            router.back();
           }}
           text="Senha alterada com sucesso!"
           style={{ fontSize: 30 }}

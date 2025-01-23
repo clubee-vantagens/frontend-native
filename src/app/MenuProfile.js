@@ -6,15 +6,6 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  XArrowUUpLeft,
-  Heart,
-  Bell,
-  Star,
-  Gear,
-  Shield,
-  Headset,
-} from "phosphor-react-native";
 import { User } from "../components/UserData/UserData";
 import { useSession } from "../context/ctx";
 import CustomText from "../components/CustomText";

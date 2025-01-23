@@ -163,7 +163,6 @@ export default function UserSignUpScreen() {
             </View>
           )}
           <CustomInput
-            autoCapitalize={true}
             control={control}
             name="name"
             placeholder="Nome"
@@ -184,7 +183,6 @@ export default function UserSignUpScreen() {
             <ErrorMessageComponent>{errors.name.message}</ErrorMessageComponent>
           )}
           <CustomInput
-            autoCapitalize={true}
             control={control}
             name="socialName"
             placeholder="Nome social"
@@ -206,7 +204,7 @@ export default function UserSignUpScreen() {
             </ErrorMessageComponent>
           )}
           <CustomInput
-            autoCapitalize={false}
+            autoCapitalize='none'
             control={control}
             name="email"
             placeholder="E-mail"

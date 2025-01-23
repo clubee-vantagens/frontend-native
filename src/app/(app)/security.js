@@ -10,14 +10,12 @@ import CustomText from "../../components/CustomText";
 import { router } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import theme from "../../themes/themes";
 import PrivacyNotice from "../privacyNotice";
 
 export default function Security() {
   const [isNoticeVisible, setIsNoticeVisible] = useState(false);
-  const navigation = useNavigation();
   const handleShowNotice = () => setIsNoticeVisible(true);
   const handleHideNotice = () => setIsNoticeVisible(false);
 
@@ -44,7 +42,7 @@ export default function Security() {
       <Pressable
         style={styles.button}
         onPress={() => {
-          navigation.navigate("changePassword");
+          router.push("changePassword");
         }}
       >
         <CustomText variant="bold">Alterar senha</CustomText>
