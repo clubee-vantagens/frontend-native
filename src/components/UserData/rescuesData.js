@@ -1,0 +1,51 @@
+export const MyRescues = [
+  {
+    name: "Livraria Central",
+    status: "Cancelado",
+    date: "17/09/2024",
+    item: "10% de desconto em livros de Suspense",
+    isFavorite: true,
+  },
+  {
+    name: "Loja de Música XYZ",
+    status: "Pendente",
+    date: "17/09/2024",
+    item: "20% de desconto em instrumentos musicais",
+    isFavorite: false,
+  },
+  {
+    name: "Loja de Games",
+    status: "Resgatado",
+    date: "17/09/2024",
+    item: "5% de desconto em acessórios de games",
+    isFavorite: true,
+  },
+  {
+    name: "Loja de Games",
+    status: "Resgatado",
+    date: "17/09/2024",
+    item: "5% de desconto em acessórios de games",
+    isFavorite: true,
+  },
+  {
+    name: "Loja de Games",
+    status: "Resgatado",
+    date: "17/09/2024",
+    item: "5% de desconto em acessórios de games",
+    isFavorite: true,
+  },
+  {
+    name: "Loja de Games",
+    status: "Resgatado",
+    date: "17/09/2024",
+    item: "5% de desconto em acessórios de games",
+    isFavorite: true,
+  },
+  {
+    name: "Loja de Games",
+    status: "Resgatado",
+    date: "17/09/2024",
+    item: "5% de desconto em acessórios de games",
+    isFavorite: true,
+  },
+];

@@ -56,14 +56,14 @@ const MenuProfile = ({ setIsModalVisible }) => {
       route: "NotificationsScreen",
       hasSwitch: true,
     },
-    { name: "Meus Resgates", icon: ArrowUUpLeft, route: "MyResgatesScreen" },
+    { name: "Meus Resgates", icon: ArrowUUpLeft, route: "rescues" },
     {
       name: "Indique Clubee",
       icon: MenuIconPoints,
       route: "referalPage",
       color: "#000",
     },
-    { name: "Avaliações", icon: Star, route: "ReviewsScreen" },
+    { name: "Avaliações", icon: Star, route: "avaliation" },
     { name: "Configurações", icon: Gear, route: "editProfile" },
     { name: "Segurança", icon: Shield, route: "security" },
     { name: "Central de Ajuda", icon: Headset, route: "helpCenter" },
@@ -130,7 +130,7 @@ const MenuProfile = ({ setIsModalVisible }) => {
                 {user?.email || "Email não disponível"}
               </CustomText>
             </View>
-            <Pressable onPress={closeModal} style={{alignSelf: 'flex-start'}}>
+            <Pressable onPress={closeModal} style={{ alignSelf: "flex-start" }}>
               <X size={scale(22)} />
             </Pressable>
           </View>

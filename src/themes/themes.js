@@ -3,6 +3,13 @@
 
 const theme = {
   colors: {
+    statusResgatadoBg: "#4CBB8880",
+    statusResgatadoCircle: "#307555",
+    statusPendenteBg: "#FFEAAD",
+    statusPendenteCircle: "#F5C330",
+    statusCanceladoBg: "#F0C0C0",
+    statusCanceladoCircle: "#A92525",
+
     // tons de amarelos
     bgYellowPrimary: "##FCD562",
     bgYellowSecondary: "#f5c330",
@@ -16,14 +23,14 @@ const theme = {
     textTwo: "#f7f5f5",
     details: "#757575",
     detailsTwo: "#E9E9E9",
-    mainBgColor: '#F7F7F7',
+    mainBgColor: "#F7F7F7",
 
     // cinza
     placeholdersGray: "#949494",
 
     // preto
-    logoPreto: '#050505',
-    textoPreto: '#150F02',
+    logoPreto: "#050505",
+    textoPreto: "#150F02",
 
     // ERROS/AVISO/CONFIRMAÇÃO
 
@@ -38,6 +45,7 @@ const theme = {
     // Aviso
     notice: "#FB7950",
   },
+
   fonts: {
     small: 10,
     medium: 16,
