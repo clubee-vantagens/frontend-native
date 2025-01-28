@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: scale(300),
     borderRadius: 7,
-    padding: 10,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: {
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
     elevation: 5,
     margin: 10,
     height: 50,

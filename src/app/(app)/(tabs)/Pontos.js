@@ -35,9 +35,11 @@ const Pontos = () => {
     { id: "3", category: "Papelaria" },
     { id: "3", category: "Papelaria" }
   ];
-  const [viewPoints, setViewPoints] = useState(true);
+  const [viewPoints, setViewPoints] = useState(false);
   const { signOut, refreshAccessToken, session } = useSession();
   const { data: user, isLoading, error, refetch } = useUserData(session);
+
+
   return (
     <ScrollView style={{ marginTop: statusBarHeight, flex: 1 }}>
       <Pressable>
@@ -55,7 +57,7 @@ const Pontos = () => {
         <View
           style={{ borderWidth: 1, borderColor: "black", borderRadius: 50 }}
         >
-          <Pressable onPress={() => console.log("clicked")}>
+          <Pressable onPress={() => setViewPoints(!viewPoints)}>
             <QuestionMark size={20} />
           </Pressable>
         </View>

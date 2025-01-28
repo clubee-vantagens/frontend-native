@@ -45,7 +45,7 @@ const OnboardingScreen = () => {
   const resetStorage = async () =>
     await AsyncStorage.removeItem("hasSeenOnboarding");
 
-  // resetStorage();
+  resetStorage();
 
   const dotComponent = () => {
     return null

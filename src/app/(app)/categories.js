@@ -59,7 +59,7 @@ export default function Categories(second) {
           icon={<CarProfile size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
-          title={"Informatica e eletrônicos"}
+          title={"Informática e eletrônicos"}
           icon={<DesktopTower size={scale(24)} />}
         />
         <CatagoryBubble page='categories'
@@ -105,8 +105,6 @@ const styles = ScaledSheet.create({
     height: '35@vs',
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: '5@vs',
-    paddingHorizontal: '15@vs',
   },
   searchInput: {
     flex: 1,

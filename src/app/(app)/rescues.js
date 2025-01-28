@@ -11,6 +11,7 @@ import { CaretLeft, ClockClockwise, Heart } from "phosphor-react-native";
 import CustomText from "../../components/CustomText";
 import { MyRescues } from "../../components/UserData/rescuesData";
 import theme from "../../themes/themes";
+import { router } from "expo-router";
 
 export default function Avaliation() {
   const favorites = MyRescues.filter((rescue) => rescue.isFavorite);
@@ -43,7 +44,7 @@ export default function Avaliation() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable>
+      <Pressable onPress={() => router.navigate('/')}>
         <CaretLeft size={24} />
       </Pressable>
       <View style={styles.header}>

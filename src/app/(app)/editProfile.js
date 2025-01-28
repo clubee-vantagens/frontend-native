@@ -50,6 +50,7 @@ export default function EditProfile(second) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [camerModalOpen, setCameraModalOpen] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const [profileImage, setProfileImage] = useState(user?.photo || null);
 
   const {
@@ -249,9 +250,13 @@ export default function EditProfile(second) {
                         convertToDDMMYYYY(user?.nascimento) || "DD/MM/AAAA"
                       }
                       placeholderTextColor="#838383"
-                      onChangeText={onChange}
+                      onChangeText={(text) => {
+                        onChange(text);
+                        setIsEdited(true); // Mark as edited after first change
+                      }}
                       value={maskDate(value)}
                       style={styles.smallInput}
+                      editable={!isEdited}
                     />
                   )}
                   name="nascimento"

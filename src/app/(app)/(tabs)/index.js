@@ -41,6 +41,8 @@ export default function Home() {
   const [viewPoints, setViewPoints] = useState(true);
   const { signOut, refreshAccessToken, session } = useSession();
   const { data: user, isLoading, error, refetch } = useUserData(session);
+  const [searchInput, setSearchInput] = useState('');
+
 
 
   useEffect(() => {
@@ -145,6 +147,8 @@ export default function Home() {
                 style={styles.input}
                 placeholder="Pesquisar lojas"
                 underlineColorAndroid="transparent"
+                value={searchInput}
+                onChangeText={setSearchInput}
               />
             </View>
 
@@ -157,6 +161,13 @@ export default function Home() {
               <CatagoryBubble title={'categories'} icon={<DotsThree size={scale(50)}  />} page='index'/>
             </View>
           </View>
+
+          {searchInput.length >= 3 && (
+            <View>
+              <Text>Busca</Text>
+            </View>
+          )}
+          
 
           <View>
             <CustomText style={styles.sectionNew}>

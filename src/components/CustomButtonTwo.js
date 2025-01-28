@@ -1,10 +1,15 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 import CustomText from "./CustomText";
 
-export default function CustomButtonTwo({ children, onPress, style }) {
+export default function CustomButtonTwo({ children, onPress, style, variant = 'default' }) {
   return (
     <Pressable
-      style={[styles.baseButton, styles.buttonTypeTwo, style]}
+      style={[
+        styles.baseButton, 
+        styles.buttonTypeTwo, 
+        styles[variant], 
+        style
+      ]}
       onPress={onPress}
     >
       <CustomText style={[styles.buttonText]} variant="semiBold">
@@ -16,20 +21,18 @@ export default function CustomButtonTwo({ children, onPress, style }) {
 
 const styles = StyleSheet.create({
   baseButton: {
-    width: 133,
     height: 43,
     borderRadius: 30,
     elevation: 5,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.2,
-      shadowRadius: 1.41,
-
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
     elevation: 5,
   },
   buttonTypeTwo: {
@@ -39,4 +42,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
   },
+  // Size variants
+  default: {
+    width: 133,
+  },
+  wide: {
+    width: 200,
+  },
+  extraWide: {
+    width: '100%',
+  }
 });

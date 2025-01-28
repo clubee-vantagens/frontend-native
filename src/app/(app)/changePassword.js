@@ -17,6 +17,7 @@ import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtonTwo from "../../components/CustomButtonTwo";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useSession } from "../../context/ctx";
+import { statusBarHeight } from "../../constants/constants";
 
 const ChangePassword = () => {
   const [isModalConfirm, setIsModalConfirm] = useState(false);
@@ -46,7 +47,7 @@ const ChangePassword = () => {
     mutate(
       {
         newPassword: data.newPassword,
-        token: session, 
+        token: session,
       },
       {
         onSuccess: () => setIsModalConfirm(true),
@@ -58,17 +59,15 @@ const ChangePassword = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable onPress={() => router.back()}>
-        <CaretLeft size={32} />
-      </Pressable>
-
-      <View style={styles.title}>
-        <CustomText fontSize={24} variant="bold">
-          Alteração de senha
-        </CustomText>
-      </View>
-
       <View>
+        <Pressable onPress={() => router.back()} style={{marginBottom: 20}}>
+          <CaretLeft size={24} />
+        </Pressable>
+        <View style={styles.title}>
+          <CustomText fontSize={24} variant="bold">
+            Alteração de senha
+          </CustomText>
+        </View>
         <CustomPasswordInput
           control={control}
           name="oldPassword"
@@ -125,7 +124,7 @@ const ChangePassword = () => {
         </CustomText>
       )}
       <View style={styles.btnControl}>
-        <CustomButtonTwo variant="bold" onPress={handleSubmit(onSubmit)}>
+        <CustomButtonTwo variant='extraWide' onPress={handleSubmit(onSubmit)}>
           Salvar
         </CustomButtonTwo>
         <Pressable onPress={() => router.back()}>
@@ -157,16 +156,16 @@ export default ChangePassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: theme.spacing.extraLarge,
     backgroundColor: theme.colors.bgWhite,
+    justifyContent: "space-between",
+    padding: 8,
+    marginTop: statusBarHeight
   },
   title: {
-    marginTop: theme.spacing.medium,
+    marginBottom: 20
   },
   btnControl: {
     alignItems: "center",
-    marginTop: theme.spacing.extraLarge,
   },
   errorText: {
     color: theme.colors.msgErro,

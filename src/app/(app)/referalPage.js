@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { statusBarHeight } from "../../constants/constants";
-import { CaretLeft, Copy, StarFour } from "phosphor-react-native";
+import { CaretLeft, Copy, StarFour, Users } from "phosphor-react-native";
 import CustomText from "../../components/CustomText";
 import { scale } from "react-native-size-matters";
 import CustomButton from "../../components/CustomButton";
@@ -18,10 +18,14 @@ import { useState } from "react";
 import { router } from "expo-router";
 import TermsAndConditionsScreen from "../termsAndConditions";
 import * as Clipboard from "expo-clipboard";
+import theme from "../../themes/themes";
+import { Animated } from "react-native";
 
 export default function ReferalPage(second) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isTermsActive, setIsTermsActive] = useState(false);
+  const [showCopyPill, setShowCopyPill] = useState(false);
+  const [fadeAnim] = useState(new Animated.Value(0));
   const shareLink = "https://www.example.com";
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -36,6 +40,23 @@ export default function ReferalPage(second) {
   const copyToClipboard = async () => {
     try {
       await Clipboard.setStringAsync(shareLink);
+      setShowCopyPill(true);
+      // Fade in
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+      // Fade out
+      setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }).start(() => {
+          setShowCopyPill(false);
+        });
+      }, 1700);
       // Optionally add some feedback to show the user it was copied
     } catch (error) {
       console.error("Failed to copy text: ", error);
@@ -45,19 +66,19 @@ export default function ReferalPage(second) {
   const onShare = async () => {
     try {
       const shareContent = {
-        title: 'Clubee',
-        message: 'Compartilhe o Clubee com seus amigos e familiares!',
+        title: "Clubee",
+        message: "Compartilhe o Clubee com seus amigos e familiares!",
         // You can also include a URL
         url: Platform.select({
-          ios: 'https://apps.apple.com/us/app/',
-          android: 'https://play.google.com/store/apps/'
-        })
+          ios: "https://apps.apple.com/us/app/",
+          android: "https://play.google.com/store/apps/",
+        }),
       };
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === "ios") {
         await Share.shareAsync(shareContent.url, {
           dialogTitle: shareContent.title,
-          mimeType: 'text/plain',
-          UTI: 'public.plain-text'
+          mimeType: "text/plain",
+          UTI: "public.plain-text",
         });
       } else {
         // For Android and other platforms
@@ -70,6 +91,11 @@ export default function ReferalPage(second) {
 
   return (
     <ScrollView style={{ flex: 1 }}>
+      {showCopyPill && (
+        <Animated.View style={[styles.pillContainer, { opacity: fadeAnim }]}>
+          <CustomText style={styles.pillText}>Link copiado!</CustomText>
+        </Animated.View>
+      )}
       <View style={styles.container}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <CaretLeft size={24} />
@@ -84,7 +110,7 @@ export default function ReferalPage(second) {
         >
           Indique Clubee
         </CustomText>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center", marginBottom: 15 }}>
           <Image
             source={require("../../../assets/images/referal-image.png")}
             style={styles.image}
@@ -105,7 +131,24 @@ export default function ReferalPage(second) {
             receba 600 pontos para cada amigo que entrar no Clubee!
           </CustomText>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View
+          style={{
+            alignItems: "center",
+            backgroundColor: "#fff",
+            borderRadius: 4,
+            padding: 24,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+
+            elevation: 5,
+            marginBottom: 10,
+          }}
+        >
           <CustomText
             variant="semiBold"
             style={{
@@ -144,22 +187,60 @@ export default function ReferalPage(second) {
             </CustomText>
           </Pressable>
         </View>
-        <View style={{ marginTop: 10 }}>
-          <CustomText style={{ fontSize: scale(16) }}>Meus Ganhos</CustomText>
+        <View
+          style={{
+            marginTop: 10,
+            backgroundColor: "#fff",
+            borderRadius: 4,
+            padding: 24,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+
+            elevation: 5,
+          }}
+        >
+          <CustomText style={{ fontSize: scale(16), marginBottom: 10 }}>Meus Ganhos</CustomText>
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: "column",
               width: scale(300),
               border: 2,
               borderColor: "red",
               justifyContent: "space-between",
             }}
           >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <StarFour size={24} />
-              <CustomText>Pontos Ganhos</CustomText>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <StarFour size={24} />
+                <CustomText style={{marginLeft: 5}}>Pontos Ganhos</CustomText>
+              </View>
+              <CustomText>1200 pontos</CustomText>
             </View>
-            <CustomText>1200 pontos</CustomText>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Users size={24} />
+                <CustomText style={{marginLeft: 5}}>Convites Aceitos</CustomText>
+              </View>
+              <CustomText>2</CustomText>
+            </View>
           </View>
         </View>
         {/* Sharing Modal */}
@@ -197,9 +278,9 @@ const styles = StyleSheet.create({
   smallInput: {
     height: 50,
     width: scale(320),
-    borderRadius: 7,
-    border: 1,
-    borderColor: "#FAFAFA",
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#BDBDBD",
     padding: 5,
     backgroundColor: "#fff",
     margin: 20,
@@ -208,5 +289,18 @@ const styles = StyleSheet.create({
     color: "#757575",
     fontSize: 18,
     fontWeight: "semibold",
+  },
+  pillContainer: {
+    position: "absolute",
+    top: 60,
+    backgroundColor: theme.colors.textoPreto,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    alignSelf: "center",
+  },
+  pillText: {
+    color: "white",
+    fontSize: 14,
   },
 });

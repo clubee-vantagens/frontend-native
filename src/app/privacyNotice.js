@@ -22,7 +22,7 @@ export default function TermsAndConditionsScreen({ handleHideNotice }) {
       </CustomText>
       <ScrollView style={{ marginHorizontal: 20 }}>
         <CustomText variant="bold" style={styles.text}>
-          Esta Política de Privacidade descreve como o Clubbe - Clube de
+          Esta Política de Privacidade descreve como o Clubee - Clube de
           Vantagens, coleta, usa, armazena, compartilha e protege as informações
           pessoais dos usuários, em conformidade com a Lei Geral de Proteção de
           Dados (LGPD) - Lei nº 13.709/2018 e demais legislações aplicáveis. O
@@ -45,7 +45,7 @@ export default function TermsAndConditionsScreen({ handleHideNotice }) {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
-          <CustomText variant="bold">3-Compartilhamento de dados: </CustomText>
+          <CustomText variant="bold">3- Compartilhamento de dados: </CustomText>
           Com parceiros comerciais do Clubbe, exclusivamente para a oferta de
           produtos e serviços dentro do aplicativo, desde que respeitadas as
           disposições da LGPD. Com prestadores de serviços que auxiliem no
@@ -88,7 +88,7 @@ export default function TermsAndConditionsScreen({ handleHideNotice }) {
           regularmente as atualizações.
         </CustomText>
         <Text>{"\n"}</Text>
-        <CustomText style={styles.text}>
+        <CustomText style={styles.text} variant="bold">
           8- Ao utilizar o aplicativo Clubbe, o usuário concorda com esta
           política de privacidade. Em caso de dúvidas ou preocupações, entre em
           contato conosco através do e-mail: clubeefidelidade@gmail.com.8- Ao

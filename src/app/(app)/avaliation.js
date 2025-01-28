@@ -10,6 +10,8 @@ import { CaretLeft, Star, Heart, ClockClockwise } from "phosphor-react-native";
 import CustomText from "../../components/CustomText";
 import { MyAvaliations } from "../../components/UserData/avaliations";
 import theme from "../../themes/themes";
+import { router } from "expo-router";
+import { statusBarHeight } from "../../constants/constants";
 
 export default function Avaliation() {
   // Função para renderizar estrelas com base na avaliação
@@ -71,7 +73,7 @@ export default function Avaliation() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable>
+        <Pressable onPress={() => router.navigate("/")}>
           <CaretLeft size={24} />
         </Pressable>
       </View>
@@ -97,7 +99,7 @@ export default function Avaliation() {
         )}
 
         {/* Recentes */}
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6}}>
           <ClockClockwise size={20} />
           <CustomText fontSize={20} variant="bold" style={styles.sectionTitle}>
             Recentes
@@ -119,17 +121,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.bgWhite,
-    padding: 16,
-    paddingTop: 50,
+    alignItems: "center",
+    marginTop: statusBarHeight
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
+    alignSelf: 'flex-start'
   },
   headerTitle: {
     marginLeft: 16,
     marginVertical: 16,
+    alignSelf: 'flex-start'
   },
   sectionTitle: {
     marginTop: 20,
