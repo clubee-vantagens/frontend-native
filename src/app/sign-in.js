@@ -19,7 +19,7 @@ import CustomPasswordInput from "../components/CustomPasswordInput";
 import { useForm } from "react-hook-form";
 import CustomText from "../components/CustomText";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
 import { scale, verticalScale, moderateScale, moderateVerticalScale } from 'react-native-size-matters';
 
 export default function Index() {
@@ -98,7 +98,7 @@ export default function Index() {
             control={control}
             name="email"
             placeholder="Informe seu e-mail"
-            autoCapitalize={false}
+            autoCapitalize='none'
             rules={{
               required: "Campo Obrigatório",
               maxLength: {

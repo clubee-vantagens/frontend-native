@@ -12,7 +12,6 @@ import { MyAvaliations } from "../../components/UserData/avaliations";
 import theme from "../../themes/themes";
 
 export default function Avaliation() {
-  // Função para renderizar estrelas com base na avaliação
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -39,11 +38,9 @@ export default function Avaliation() {
     return stars;
   };
 
-  // Separando favoritos e recentes
   const favorites = MyAvaliations.filter((item) => item.isFavorite);
   const recent = MyAvaliations.filter((item) => !item.isFavorite);
 
-  // Função para renderizar as avaliações
   const renderAvaliations = (list) =>
     list.map((item, index) => (
       <View key={index} style={styles.avaliationCard}>

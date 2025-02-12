@@ -10,6 +10,7 @@ import CustomText from "../components/CustomText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { CaretLeft } from "phosphor-react-native";
+import { statusBarHeight } from "../constants/constants";
 
 export default function TermsAndConditionsScreen({ handleHideTerms }) {
   return (
@@ -271,6 +272,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F7F7",
     padding: 30,
     paddingTop: 20,
+    marginTop: statusBarHeight
   },
   header: {
     flexDirection: "row",

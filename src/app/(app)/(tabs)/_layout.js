@@ -1,24 +1,41 @@
 import { Tabs } from "expo-router";
 import { useState } from "react";
-import {
-  House,
-  Article,
-  StarFour,
-  Storefront,
-  List,
-  Ticket,
-} from "phosphor-react-native";
-import CustomText from "../../../components/CustomText";
+import { House, Storefront, List, Ticket } from "phosphor-react-native";
 import { View, Modal, Pressable, Platform, SafeAreaView } from "react-native";
-import PointsIcon from "../../../components/icons/PointsIcon";
 import MenuIconPoints from "../../../components/icons/MenuIconPoints";
 import MenuProfile from "./Menu";
-import {moderateVerticalScale, scale, verticalScale} from 'react-native-size-matters'
+import { scale } from "react-native-size-matters";
 
 export default function TabLayout() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  return (
 
+  const tabBarOptions = {
+    screenOptions: {
+      tabBarStyle: {
+        backgroundColor: "#050505",
+        height: Platform.OS === "ios" ? 90 : 70,
+      },
+      tabBarItemStyle: {
+        paddingVertical: 8,
+      },
+      tabBarActiveTintColor: "#FFD700",
+      tabBarInactiveTintColor: "#fff",
+      headerShown: false,
+    },
+  };
+
+  const renderTabIcon = (Icon, focused, color) => (
+    <View style={styles.iconContainer}>
+      <Icon
+        size={scale(24)}
+        color={focused ? "#FFD700" : color}
+        weight={focused ? "bold" : "regular"}
+      />
+      {focused && <View style={styles.activeIndicator} />}
+    </View>
+  );
+
+  return (
     <>
       <Modal
         visible={isModalVisible}
@@ -28,153 +45,42 @@ export default function TabLayout() {
       >
         <MenuProfile setIsModalVisible={setIsModalVisible} />
       </Modal>
-      <Tabs
-        screenOptions={({ route }) => ({
-          tabBarInactiveTintColor: "#fff",
-          tabBarActiveTintColor: "#FFD700",
-          tabBarStyle: {
-            backgroundColor: "#050505",
-            borderTopWidth: 0,
-            height: Platform.OS === 'ios' ? verticalScale(80) : verticalScale(65),
-            padding: Platform.OS === 'ios' ? moderateVerticalScale(25) : moderateVerticalScale(5)
-          },
-          tabBarLabelStyle: {
-            fontSize: 12,
-            fontWeight: "bold",
-          },
-          tabBarLabel: ({ focused, color }) => (
-            <CustomText
-              style={{ color: focused ? "#FFD700" : "#fff", fontSize: 12 }}
-            >
-              {route.name}
-            </CustomText>
-          ),
-        })}
-      >
+
+      <Tabs {...tabBarOptions}>
         <Tabs.Screen
           name="index"
           options={{
             title: "Home",
-            tabBarLabel: "Home",
-            headerShown: false,
-            tabBarIcon: ({ color, size, focused }) => (
-              <SafeAreaView style={{ alignItems: "center" }}>
-                {focused ? (
-                  <House size={24} weight="fill" color="#FFD700" />
-                ) : (
-                  <House size={24} weight="thin" color={color} />
-                )}
-                {focused && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -29,
-                      height: 4,
-                      width: 48,
-                      borderBottomLeftRadius: 10,
-                      borderBottomRightRadius: 10,
-                      backgroundColor: "#FFD700",
-                    }}
-                  />
-                )}
-              </SafeAreaView>
-            ),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(House, focused, color),
           }}
         />
         <Tabs.Screen
           name="Resgates"
           options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size, focused }) => (
-              <SafeAreaView style={{ alignItems: "center" }}>
-                <Ticket size={24} color={focused ? "#FFD700" : color} />
-                {focused && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -29,
-                      height: 4,
-                      width: 48,
-                      borderBottomLeftRadius: 10,
-                      borderBottomRightRadius: 10,
-                      backgroundColor: "#FFD700",
-                    }}
-                  />
-                )}
-              </SafeAreaView>
-            ),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(Ticket, focused, color),
           }}
         />
         <Tabs.Screen
           name="Pontos"
           options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size, focused }) => (
-              <SafeAreaView style={{ alignItems: "center" }}>
-                <MenuIconPoints color="#fff" size={30} />
-                {focused && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -26,
-                      height: 4,
-                      width: 48,
-                      borderBottomLeftRadius: 10,
-                      borderBottomRightRadius: 10,
-                      backgroundColor: "#FFD700",
-                    }}
-                  />
-                )}
-              </SafeAreaView>
-            ),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(MenuIconPoints, focused, color),
           }}
         />
         <Tabs.Screen
           name="Lojas"
           options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size, focused }) => (
-              <SafeAreaView style={{ alignItems: "center" }}>
-                <Storefront size={24} color={focused ? "#FFD700" : color} />
-                {focused && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -29,
-                      height: 4,
-                      width: 48,
-                      borderBottomLeftRadius: 10,
-                      borderBottomRightRadius: 10,
-                      backgroundColor: "#FFD700",
-                    }}
-                  />
-                )}
-              </SafeAreaView>
-            ),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(Storefront, focused, color),
           }}
         />
         <Tabs.Screen
           name="Menu"
           options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size, focused }) => (
-              <SafeAreaView style={{ alignItems: "center" }}>
-                <List size={24} color={focused ? "#FFD700" : color} />
-                {focused && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -29,
-                      height: 4,
-                      width: 48,
-                      borderBottomLeftRadius: 10,
-                      borderBottomRightRadius: 10,
-                      backgroundColor: "#FFD700",
-                    }}
-                  />
-                )}
-              </SafeAreaView>
-            ),
+            tabBarIcon: ({ focused, color }) =>
+              renderTabIcon(List, focused, color),
             tabBarButton: (props) => (
               <Pressable {...props} onPress={() => setIsModalVisible(true)} />
             ),
@@ -184,3 +90,24 @@ export default function TabLayout() {
     </>
   );
 }
+
+const styles = {
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+  },
+  activeIndicator: {
+    position: "absolute",
+    top: -13,
+    height: 4,
+    width: 48,
+    borderRadius: 2,
+    backgroundColor: "#FFD700",
+  },
+  tabLabel: {
+    fontSize: scale(10),
+    marginTop: 4,
+  },
+};

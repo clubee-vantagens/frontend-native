@@ -7,6 +7,7 @@
     "icon": "./assets/images/novoLogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/novoLogo.png",
       "resizeMode": "contain",
@@ -26,7 +27,11 @@
       "output": "static",
       "favicon": "./assets/images/novoLogo.png"
     },
-    "plugins": ["expo-router", "expo-font", "expo-secure-store"],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store"
+    ],
     "experiments": {
       "typedRoutes": true
     }

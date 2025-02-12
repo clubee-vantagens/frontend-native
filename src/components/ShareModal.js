@@ -1,74 +1,98 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet, FlatList, Image, Modal } from 'react-native';
+import { View, Text, Pressable, StyleSheet, FlatList, Image, Modal, Share } from 'react-native';
 
-export default function ShareModal({ isVisible, onClose }) {
-  // Dummy data for contacts and apps
-  const contacts = [
-    { id: '1', name: 'Roberta', image: require('../../assets/images/perfil.jpg') },
-    { id: '2', name: 'Carlos', image: require('../../assets/images/perfil.jpg') },
-    { id: '3', name: 'Fábio', image: require('../../assets/images/perfil.jpg') },
-    { id: '4', name: 'Sandra', image: require('../../assets/images/perfil.jpg') },
-    { id: '5', name: 'Maria', image: require('../../assets/images/perfil.jpg') },
-  ];
+export default function ShareModal({ isVisible, onClose, contentToShare }) {
+  // Function to handle sharing
+  const handleShare = async (app) => {
+    try {
+      const shareOptions = {
+        message: contentToShare.message,
+        title: contentToShare.title,
+        // You can also include a URL if needed
+        url: contentToShare.url,
+      };
+
+      const result = await Share.share(shareOptions);
+      
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+          console.log('Shared with activity type:', result.activityType);
+        } else {
+          // shared
+          console.log('Shared successfully');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        console.log('Share dismissed');
+      }
+      onClose();
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   const apps = [
-    { id: '1', name: 'Telegram', icon: require('../../assets/images/icons/Icone pontos card categorias.svg') },
-    { id: '2', name: 'Gmail', icon: require('../../assets/images/icons/Icone pontos card categorias.svg') },
-    { id: '3', name: 'WhatsApp', icon: require('../../assets/images/icons/Icone pontos card categorias.svg') },
-    { id: '4', name: 'X', icon: require('../../assets/images/icons/Icone pontos card categorias.svg') },
-    { id: '5', name: 'Instagram', icon: require('../../assets/images/icons/Icone pontos card categorias.svg') },
+    { 
+      id: '1', 
+      name: 'Telegram', 
+      icon: require('../../assets/images/icons/Icone pontos card categorias.svg'),
+      action: () => handleShare('telegram')
+    },
+    // Add more apps with their respective actions
   ];
 
+  const renderAppItem = ({ item }) => (
+    <Pressable 
+      style={styles.app} 
+      onPress={item.action}
+    >
+      <Image source={item.icon} style={styles.appIcon} />
+      <Text style={styles.appName}>{item.name}</Text>
+    </Pressable>
+  );
+
   return (
-    <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.modal}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Compartilhar</Text>
-          <Pressable onPress={onClose}>
-            <Text style={styles.closeButton}>×</Text>
-          </Pressable>
+    <Modal
+      visible={isVisible}
+      transparent={true}
+      animationType="slide"
+      onRequestClose={onClose}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Share via</Text>
+            <Pressable onPress={onClose} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>×</Text>
+            </Pressable>
+          </View>
+
+          <FlatList
+            data={apps}
+            keyExtractor={(item) => item.id}
+            numColumns={4}
+            renderItem={renderAppItem}
+            contentContainerStyle={styles.appsList}
+          />
         </View>
-        {/* Contacts Row */}
-        <FlatList
-          data={contacts}
-          keyExtractor={(item) => item.id}
-          horizontal
-          contentContainerStyle={styles.contactsList}
-          renderItem={({ item }) => (
-            <View style={styles.contact}>
-              <Image source={item.image} style={styles.contactImage} />
-              <Text style={styles.contactName}>{item.name}</Text>
-            </View>
-          )}
-        />
-        {/* Apps Grid */}
-        <FlatList
-          data={apps}
-          keyExtractor={(item) => item.id}
-          numColumns={4}
-          contentContainerStyle={styles.appsList}
-          renderItem={({ item }) => (
-            <View style={styles.app}>
-              <Image source={item.icon} style={styles.appIcon} />
-              <Text style={styles.appName}>{item.name}</Text>
-            </View>
-          )}
-        />
       </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  modal: {
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
-    margin: 0,
   },
   container: {
     backgroundColor: '#fff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
+    maxHeight: '80%',
   },
   header: {
     flexDirection: 'row',
@@ -81,33 +105,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   closeButton: {
+    padding: 8,
+  },
+  closeButtonText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#999',
   },
-  contactsList: {
-    marginBottom: 20,
-  },
-  contact: {
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
-  contactImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginBottom: 5,
-  },
-  contactName: {
-    fontSize: 12,
-    textAlign: 'center',
-  },
   appsList: {
-    alignItems: 'center',
+    paddingVertical: 10,
   },
   app: {
+    flex: 1,
     alignItems: 'center',
-    margin: 10,
+    padding: 10,
+    maxWidth: '25%',
   },
   appIcon: {
     width: 50,
@@ -119,3 +131,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
