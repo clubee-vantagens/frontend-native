@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 
 const sendEmail = async (dataToSend) => {
   try {
-    const res = await axios.post(`${api_url}/password/forgot`, dataToSend);
+    const res = await axios.post(`${api_url}/passwords/forgot`, dataToSend);
     return res?.data;
   } catch (error) {
     throw new Error(error.message)
@@ -23,3 +23,4 @@ export const usePasswordRecovery = () => {
     })
   return {mutate, isError, error, isSuccess, isLoading, status}
 };
+// commit teste
