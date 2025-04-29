@@ -3,7 +3,7 @@ import axios from 'axios'
 import {api_url} from '../constants/constants'
 
 const mutateCompany = async (userData) => {
-        const res = await axios.post(`${api_url}/users/company/register`, userData)
+        const res = await axios.post(`${api_url}/users/companies/register`, userData)
         return res?.data
     
 }

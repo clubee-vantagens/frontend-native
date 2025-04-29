@@ -3,7 +3,7 @@ import axios from 'axios'
 import { api_url } from "../constants/constants";
 
 const fetchCompany = async () => {
-    const res = await axios.get(`${api_url}/users/company`)
+    const res = await axios.get(`${api_url}/users/companies`)
     return res?.data
 }
 

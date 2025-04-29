@@ -69,7 +69,7 @@ export function SessionProvider(props) {
 
   const signIn = async (email, password) => {
     try {
-      const response = await axios.post(`${api_url}/users/login`, {
+      const response = await axios.post(`${api_url}/auth/login`, {
         email,
         password,
       });

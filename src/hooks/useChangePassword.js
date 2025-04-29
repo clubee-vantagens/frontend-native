@@ -6,7 +6,7 @@ import { useSession } from "../context/ctx";
 const changePassword = async ({ newPassword, token }) => {
   try {
     console.log("Iniciando a mudança de senha com:", { newPassword, token });
-    const res = await axios.post(`${api_url}/password/reset`, {
+    const res = await axios.post(`${api_url}/passwords/forgot`, {
       token,
       newPassword,
     });

@@ -6,7 +6,7 @@ import axios from "axios";
 const deleteUser = async (session) => {
   try {
     // Perform the delete request
-    const res = await axios.delete(`${api_url}/users/client`, {
+    const res = await axios.delete(`${api_url}/users/clients`, {
       headers: {
         Authorization: `Bearer ${session}`,
       },
