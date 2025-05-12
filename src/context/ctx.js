@@ -54,7 +54,7 @@ export function SessionProvider(props) {
     try {
       console.log("token:", session);
       console.log("refresh:", refreshToken[1]);
-      const response = await axios.post(`${api_url}/users/newtoken`, {
+      const response = await axios.post(`${api_url}/auth/refresh`, {
         expiredAccessToken: session,
         refreshToken: refreshToken[1],
       });

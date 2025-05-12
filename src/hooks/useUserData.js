@@ -4,13 +4,13 @@ import { api_url } from "../constants/constants";
 
 const fetchUsers = async ({ queryKey }) => {
     const session = queryKey[1]; // Extract the session from the queryKey
-    const res = await axios.get(`${api_url}/users/clients`, {
+    const res = await axios.get(`${api_url}/users/clients/me`, {
         headers: {
             Authorization: `Bearer ${session}`,
         },
     });
-    // console.log(res?.data);
-    
+    console.log(res?.data);
+
     return res?.data;
 };
 

@@ -7,7 +7,7 @@ const editUser = async (userData, session) => {
   console.log(userData);
 
   try {
-    const res = await axios.put(`${api_url}/users/clients`, userData, {
+    const res = await axios.put(`${api_url}/users/clients/me`, userData, {
       headers: {
         Authorization: `Bearer ${session}`,
       },
