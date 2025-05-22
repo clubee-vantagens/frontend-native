@@ -77,17 +77,18 @@ export default function PasswordRecoveryScreen() {
 
       <View style={{ alignItems: "center", marginTop: moderateVerticalScale(250) }}>
         <CustomText variant="bold" style={styles.text}>
-          Redefina sua senha
+          Recuperar acesso
         </CustomText>
         <CustomText
           style={{
             textAlign: "center",
-            width: scale(300),
-            marginTop: moderateVerticalScale(50),
+            width: scale(288),
+            marginTop: moderateVerticalScale(35),
+            marginBottom: moderateVerticalScale(20)
           }}
           variant="semiBold"
         >
-          Informe seu e-mail de cadastro para receber o link com as instruções.
+          Informe seu e-mail de cadastro para receber o link com as instruções de recuperação.
         </CustomText>
         <CustomInput
           control={control}
@@ -105,15 +106,16 @@ export default function PasswordRecoveryScreen() {
         {errors.email && (
           <ErrorMessageComponent>{errors.email.message}</ErrorMessageComponent>
         )}
+        {isError && (
+                  <ErrorMessageComponent>Email nao cadastrado</ErrorMessageComponent>
+        )}
       </View>
-      <View style={{ alignItems: "center" }}>
-        <CustomButton onPress={handleSubmit(onSubmit)}>
+      <View style={styles.fixedFooter}>
+        <CustomButton style={styles.button} onPress={handleSubmit(onSubmit)}>
           Receber Link
         </CustomButton>
-        {isError && (
-          <ErrorMessageComponent>Email nao cadastrado</ErrorMessageComponent>
-        )}
-        <Link href="/" style={{ marginTop: 15, marginBottom: 15 }}>
+
+        <Link href="/" style={{ marginTop: 12 }}>
           <CustomText variant="bold">Voltar ao login</CustomText>
         </Link>
       </View>
@@ -185,5 +187,9 @@ const styles = StyleSheet.create({
   },
   ButtonConfirmation: {
     marginVertical: 24,
+  },
+  fixedFooter: {
+      alignItems: "center",
+      paddingBottom: 30,
   },
 });

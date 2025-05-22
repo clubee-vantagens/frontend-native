@@ -73,7 +73,7 @@ const OnboardingScreen = () => {
       title: "",
       subtitle: (
         <Pressable
-          style={styles.buttonBackground}
+          style={[styles.buttonBackground, {marginTop: -15}]}
           onPress={() => {
             markOnboardingComplete();
             router.navigate("signupUser");
@@ -86,14 +86,15 @@ const OnboardingScreen = () => {
       ),
       backgroundColor: "#fff",
       image: (
-        <View style={{ alignItems: "center" }}>
+        <View style={{ marginTop: -20, alignItems: "center" }}>
           <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
             <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
             <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
-          <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
-            Acumule vantagens exclusivas em suas compras.
+          <CustomText style={{ fontSize: 20, width: 330 }} variant="semiBold">
+            Vantagens exclusivas? Temos!
+            Acumule pontos e aproveite!
           </CustomText>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image source={require("../../assets/images/onboarding-1.webp")} />
@@ -111,7 +112,7 @@ const OnboardingScreen = () => {
       title: "",
       subtitle: (
         <Pressable
-          style={styles.buttonBackground}
+          style={[styles.buttonBackground, {marginTop: -50}]}
           onPress={() => {
             markOnboardingComplete();
             router.navigate("signupUser");
@@ -124,14 +125,14 @@ const OnboardingScreen = () => {
       ),
       backgroundColor: "#fff",
       image: (
-        <View style={{ alignItems: "center" }}>
+        <View style={{ marginTop: -15, alignItems: "center" }}>
           <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
             <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120  }}></View>
           </View>
-          <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
-            Apoie e impulsione o comercio na sua comunidade.
+          <CustomText style={{ fontSize: 20, width: 340 }} variant="semiBold">
+            Vamos ajudar o comércio da sua comunidade a crescer!
           </CustomText>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <AntDesign
@@ -155,7 +156,7 @@ const OnboardingScreen = () => {
       title: "",
       subtitle: (
         <Pressable
-          style={styles.buttonBackground}
+          style={[styles.buttonBackground, {marginTop: -25}]}
           onPress={() => {
             markOnboardingComplete();
             router.navigate("signupUser");
@@ -168,15 +169,14 @@ const OnboardingScreen = () => {
       ),
       backgroundColor: "#fff",
       image: (
-        <View style={{ alignItems: "center" }}>
+        <View style={{ marginTop: -5, alignItems: "center" }}>
           <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126  }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
-            Conheça novas lojas e produtos desenvolvidos por comerciantes
-            locais.
+            Vamos descobrir lojas e produtos pertinhos de você?
           </CustomText>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <AntDesign
