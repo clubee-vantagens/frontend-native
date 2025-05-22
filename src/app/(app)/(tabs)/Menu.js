@@ -21,7 +21,7 @@ import {
   ArrowUUpLeft,
   UserSwitch,
 } from "phosphor-react-native";
-import { useUserData } from "../../../hooks/useUserData";
+import { useUserData } from "../../../hooks/useUserService";
 import { useSession } from "../../../context/ctx";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "expo-router";

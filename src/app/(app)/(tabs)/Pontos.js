@@ -14,7 +14,7 @@ import {
 import CustomText from "../../../components/CustomText";
 import PointsIcon from "../../../components/icons/PointsIcon";
 import { statusBarHeight } from "../../../constants/constants";
-import { useUserData } from "../../../hooks/useUserData";
+import { useUserData } from "../../../hooks/useUserService";
 import { useSession } from "../../../context/ctx";
 import { scale } from "react-native-size-matters";
 import { Image } from "expo-image";

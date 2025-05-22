@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useStorageState } from "../hooks/useAsyncState";
-import axios from "axios";
-import { api_url, api_urlM } from "../constants/constants";
-import { jwtDecode } from "jwt-decode";
+  import { jwtDecode } from "jwt-decode";
+import apiService from "../services/apiService";
+
 
 // Define the shape of the context's value
 const AuthContext = React.createContext({
@@ -37,11 +37,8 @@ export function SessionProvider(props) {
       if (session && refreshToken) {
         const { exp } = jwtDecode(session);
         const expirationTime = exp * 1000;
-        console.log(expirationTime);
         const currentTime = new Date().getTime();
-        console.log(currentTime);
         if (expirationTime - currentTime < 5 * 60 * 1000) {
-          console.log(true);
           await refreshAccessToken();
         }
       }
@@ -52,12 +49,7 @@ export function SessionProvider(props) {
 
   const refreshAccessToken = async () => {
     try {
-      console.log("token:", session);
-      console.log("refresh:", refreshToken[1]);
-      const response = await axios.post(`${api_url}/auth/refresh`, {
-        expiredAccessToken: session,
-        refreshToken: refreshToken[1],
-      });
+      const response = await apiService.refreshToken(expiredAccessToken, refreshToken)
       setSession(response?.data?.newAccessToken);
       setRefreshToken(response?.data?.newRefreshToken);
       setError(null);
@@ -67,26 +59,17 @@ export function SessionProvider(props) {
     }
   };
 
-  const signIn = async (email, password) => {
+   const signIn = async (email, password) => {
     try {
-      const response = await axios.post(`${api_url}/auth/login`, {
-        email,
-        password,
-      });
-      console.log(response);
+      const response = await apiService.login(email, password);
       setSession(response?.data?.accessToken);
       setRefreshToken(response?.data?.refreshToken);
       setError(null);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
       if (error.response) {
-        if (error.response.status === 400) {
-          setError("Verifique suas credenciais!");
-        } else {
-          setError("Erro inesperado, tente novamente.");
-        }
+        setError(error.response)
       } else {
-        setError("Erro inesperado, tente novamente.");
+        setError("Erro inesperado, tente novamente.")
       }
     }
   };
