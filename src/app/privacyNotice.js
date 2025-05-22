@@ -32,69 +32,45 @@ export default function TermsAndConditionsScreen({ handleHideNotice }) {
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
           {"\n"}
-          <CustomText variant="bold">1- Coleta de dados:</CustomText> O Clubbe
-          coleta apenas os dados necessários para o funcionamento do aplicativo,
-          tais como nome, e-mail, número de telefone, CPF e data de nascimento.
+          <CustomText variant="bold">1- Coleta de dados:
+          </CustomText>O Clubee coleta apenas os dados necessários para o funcionamento do aplicativo, tais como nome, e-mail, número de telefone, CPF e data de nascimento.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
-          <CustomText variant="bold">2- Uso dos dados:</CustomText> Os dados
-          coletados são utilizados exclusivamente para a prestação dos serviços
-          oferecidos pelo Clubbe, como o acesso às vantagens disponíveis no
-          aplicativo.
+          <CustomText variant="bold">2- Uso dos dados: </CustomText>
+          Os dados coletados são utilizados exclusivamente para a prestação dos serviços oferecidos pelo Clubee, como o acesso às vantagens disponíveis no aplicativo.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
           <CustomText variant="bold">3- Compartilhamento de dados: </CustomText>
-          Com parceiros comerciais do Clubbe, exclusivamente para a oferta de
-          produtos e serviços dentro do aplicativo, desde que respeitadas as
-          disposições da LGPD. Com prestadores de serviços que auxiliem no
-          funcionamento e melhoria do aplicativo, como empresas de hospedagem de
-          dados, desenvolvedores de software e sistemas de pagamento. Quando
-          exigido por autoridades legais para cumprimento de obrigações legais
-          ou ordens judiciais.
+          Com parceiros comerciais do Clubee, exclusivamente para a oferta de produtos e serviços dentro do aplicativo, desde que respeitadas as disposições da LGPD. Com prestadores de serviços que auxiliem no funcionamento e melhoria do aplicativo, como empresas de hospedagem de dados, desenvolvedores de software e sistemas de pagamento. Quando exigido por autoridades legais para cumprimento de obrigações legais ou ordens judiciais.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
-          <CustomText variant="bold">4- Segurança dos dados:</CustomText> O
-          Clubbe adota medidas de segurança para proteger os dados dos usuários
-          contra acessos não autorizados, perda, uso indevido ou alteração.
+          <CustomText variant="bold">4- Segurança dos dados: </CustomText>
+          O Clubee adota medidas de segurança para proteger os dados dos usuários contra acessos não autorizados, perda, uso indevido ou alteração.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
           <CustomText variant="bold">
-            5- Retenção e Exclusão de Dados: 
-          </CustomText>{" "}
-          Os dados pessoais serão armazenados pelo tempo necessário para cumprir
-          as finalidades descritas nesta Política ou conforme exigido pela
-          legislação aplicável. Caso o usuário solicite a exclusão de seus
-          dados, o Clubbe eliminará as informações, salvo quando houver
-          obrigação legal de mantê-los  
+            5- Retenção e Exclusão de Dados:  
+          </CustomText>
+          Os dados pessoais serão armazenados pelo tempo necessário para cumprir as finalidades descritas nesta Política ou conforme exigido pela legislação aplicável. Caso o usuário solicite a exclusão de seus dados, o Clubee eliminará as informações, salvo quando houver obrigação legal de mantê-los.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText>
-          <CustomText variant="bold">6- Direitos do usuário:</CustomText> Os
-          usuários do Clubbe têm o direito de acessar, corrigir, atualizar ou
-          excluir seus dados pessoais a qualquer momento, bem como de solicitar
-          a exclusão de sua conta.
+          <CustomText variant="bold">6- Direitos do usuário: </CustomText>Os usuários do Clubee têm o direito de acessar, corrigir, atualizar ou excluir seus dados pessoais a qualquer momento, bem como de solicitar a exclusão de sua conta.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
         <CustomText variant="bold">
             7- Alterações na Política de Privacidade:
-          </CustomText>{" "}
-          O Clubbe reserva-se o direito de fazer alterações nesta política a
-          qualquer momento, sendo de responsabilidade do usuário verificar
-          regularmente as atualizações.
+          </CustomText>
+          O Clubee reserva-se o direito de fazer alterações nesta política a qualquer momento, sendo de responsabilidade do usuário verificar regularmente as atualizações.
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text} variant="bold">
-          8- Ao utilizar o aplicativo Clubbe, o usuário concorda com esta
-          política de privacidade. Em caso de dúvidas ou preocupações, entre em
-          contato conosco através do e-mail: clubeefidelidade@gmail.com.8- Ao
-          utilizar o aplicativo Clubbe, o usuário concorda com esta política de
-          privacidade. Em caso de dúvidas ou preocupações, entre em contato
-          conosco através do e-mail: clubeefidelidade@gmail.com.
+          8-Ao utilizar o aplicativo Clubee, o usuário concorda com esta política de privacidade. Em caso de dúvidas ou preocupações, entre em contato conosco através do e-mail: clubeefidelidade@gmail.com.
         </CustomText>
 
         <Text>{"\n"}</Text>
@@ -107,10 +83,7 @@ export default function TermsAndConditionsScreen({ handleHideNotice }) {
         </CustomText>
         <Text>{"\n"}</Text>
         <CustomText style={styles.text}>
-          Com essa política de privacidade, o Clubbe reforça seu compromisso em
-          respeitar a privacidade de seus usuários e proteger seus dados
-          pessoais, garantindo a conformidade com a Lei Geral de Proteção de
-          Dados (LGPD).
+          Com essa política de privacidade, o Clubee reforça seu compromisso em respeitar a privacidade de seus usuários e proteger seus dados pessoais, garantindo a conformidade com a Lei Geral de Proteção de Dados (LGPD).
         </CustomText>
       </ScrollView>
     </SafeAreaView>

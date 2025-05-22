@@ -84,9 +84,10 @@ export default function Index() {
                 style={styles.icon}
               />
               <ErrorMessageComponent style={styles.errorMessage}>
-                Ooops! {error} Podemos ajudar a{" "}
+                Oops! Senha ou E-mail incorretos.{" "}
+                Gostaria de{" "}
                 <Link href={"passwordRecovery"} style={styles.link}>
-                  recuperar seu acesso?{" "}
+                  recuperar seu acesso?
                 </Link>
               </ErrorMessageComponent>
             </View>
@@ -245,15 +246,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     maxWidth: "90%",
   },
-  containerError: {
+    containerError: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: moderateScale(359),
-    height: moderateVerticalScale(88),
+    width: moderateScale(320),
+    height: moderateVerticalScale(80),
     borderRadius: 10,
     backgroundColor: "rgba(251, 80, 80, 0.25)",
     padding: 10,
+    marginTop: 50,
+    marginBottom: -30
   },
   contentError: {
     flexDirection: "row",
