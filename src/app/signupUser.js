@@ -11,7 +11,7 @@ import {
 import { Link, router } from "expo-router";
 import { CaretLeft } from "phosphor-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { useMutateUsers } from "../hooks/useMutateUsers";
+import { useRegisterUser } from "../hooks/useUserService";
 import { maskCpf, validateCpf } from "../utils/utils";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
@@ -37,7 +37,7 @@ export default function UserSignUpScreen() {
   const [cpfError, setCpfError] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
   const date = new Date();
-  const { mutate, isError, error, isSuccess, status } = useMutateUsers();
+  const { mutate, isError, error, isSuccess, status } = useRegisterUser();
   const { signIn } = useSession();
   const {
     control,

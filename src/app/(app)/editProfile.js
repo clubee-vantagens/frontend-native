@@ -18,7 +18,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useEffect, useState } from "react";
 import DropdownComponent from "../../components/DropdownComponent";
-import { useEditUser } from "../../hooks/useEditUser";
+import { useEditUser } from "../../hooks/useUserService";
 import {
   maskDate,
   convertToISOString,
@@ -30,8 +30,8 @@ import {
 import axios from "axios";
 import { useSession } from "../../context/ctx";
 import ConfirmationModal from "../../components/ConfirmationModal";
-import { useDeleteUser } from "../../hooks/useDeleteUser";
-import { useUserData } from "../../hooks/useUserData";
+import { useDeleteUser } from "../../hooks/useUserService";
+import { useUserData } from "../../hooks/useUserService";
 import { scale, verticalScale } from "react-native-size-matters";
 import Constants from "expo-constants";
 import { router } from "expo-router";

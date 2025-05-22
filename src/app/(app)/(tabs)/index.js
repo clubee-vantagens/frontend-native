@@ -23,7 +23,7 @@ import { User } from "../../../components/UserData/UserData";
 import { MenuList } from "../../../components/MenuData/MenuList";
 import CustomText from "../../../components/CustomText";
 import { Hightlight } from "../../../components/Carousels/HightLight";
-import { useUserData } from "../../../hooks/useUserData";
+import { useUserData } from "../../../hooks/useUserService";
 import { notifications } from "../../../components/UserData/Notifications";
 import NotificationsModal from "../notifications";
 import LoadingScreen from "../../../components/LoadingScreen";

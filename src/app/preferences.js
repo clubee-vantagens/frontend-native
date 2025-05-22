@@ -13,7 +13,7 @@ import CustomButtonTwo from "../components/CustomButtonTwo";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { router } from "expo-router";
 import { useSession } from "../context/ctx";
-import { useEditUser } from "../hooks/useEditUser";
+import { useEditUser } from "../hooks/useUserService";
 import Constants from "expo-constants";
 import { scale } from "react-native-size-matters";
 
