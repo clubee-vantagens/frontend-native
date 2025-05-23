@@ -100,8 +100,8 @@ export default function UserSignUpScreen() {
       cpf: data.cpf,
       termsOfUse: data.termsOfUse,
       phoneNumber: "(11)98176-5432",
-      preferences: ["Alimentação", "Papelaria"],
-      cep: "69072050",
+      preferences: ["Alimentação", "Papelaria", "Livraria"],
+      cep: "79085087",
       birthDate: "15/05/1990",
       photo: "https://example.com/photo.jpg",
       addressNumber: 150,
@@ -110,7 +110,7 @@ export default function UserSignUpScreen() {
 
     mutate(userData, {
       onSuccess: (userData) => {  
-        console.log(data);
+        console.log(userData);
         console.log("User registered successfully:", userData);
         signIn(userData.email, userData.password);
       },

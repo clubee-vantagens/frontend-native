@@ -18,8 +18,9 @@ class apiService {
     }
 
     // Clients
+    // Finalizado
     userRegister(userData) {
-        return this.axios.post(`${apiConfig.clientsEndpoint}/register`, {userData})
+        return this.axios.post(`${apiConfig.clientsEndpoint}/register`, userData)
     }
 
     userGetData(session) {
