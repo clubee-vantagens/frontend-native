@@ -91,6 +91,7 @@ export default function UserSignUpScreen() {
   }, [cpfValue]);
 
   const handleRegister = (data) => {
+    console.log(data)
     const userData = {
       name: data.name,
       socialName: data.socialName,
@@ -98,13 +99,19 @@ export default function UserSignUpScreen() {
       password: data.password,
       cpf: data.cpf,
       termsOfUse: data.termsOfUse,
-      dateTermsOfUse: date.toISOString(),
-      preferences: "",
+      phoneNumber: "(11)98176-5432",
+      preferences: ["Alimentação", "Papelaria"],
+      cep: "69072050",
+      birthDate: "15/05/1990",
+      photo: "https://example.com/photo.jpg",
+      addressNumber: 150,
+      complement: "Apto 42"
     };
 
     mutate(userData, {
-      onSuccess: (data) => {
-        console.log("User registered successfully:", data);
+      onSuccess: (userData) => {  
+        console.log(data);
+        console.log("User registered successfully:", userData);
         signIn(userData.email, userData.password);
       },
       onError: (error) => {

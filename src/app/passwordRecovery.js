@@ -76,7 +76,7 @@ export default function PasswordRecoveryScreen() {
       )}
 
       <View style={{ alignItems: "center", marginTop: moderateVerticalScale(250) }}>
-        <CustomText variant="bold" style={styles.text}>
+          <CustomText variant="bold" style={styles.text}>
           Recuperar acesso
         </CustomText>
         <CustomText
