@@ -23,6 +23,7 @@ export function useUserData(session, isPolling) {
 
 // Register User
 const registerUser = async (userData) => {
+  console.log(userData)
   const response = await apiService.userRegister(userData);
   return response.data;
 };
