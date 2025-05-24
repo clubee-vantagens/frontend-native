@@ -23,7 +23,7 @@ const OnBoardingScreen = () => {
         } else {
           // User has seen Onboarding
           setHasSeenOnboarding(true);
-          router.navigate("sign-in");
+          router.navigate("SignIn");
         }
       } catch (error) {
         console.error(error);
@@ -89,7 +89,7 @@ const OnBoardingScreen = () => {
         <View style={{ marginTop: -20, alignItems: "center" }}>
           <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
             <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
+            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
             <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
           </View>
           <CustomText style={{ fontSize: 20, width: 330 }} variant="semiBold">
@@ -202,11 +202,11 @@ const OnBoardingScreen = () => {
       ref={onboardingRef}
       onDone={() => {
         markOnboardingComplete();
-        router.navigate("sign-in");
+        router.navigate("SignIn");
       }}
       onSkip={() => {
         markOnboardingComplete();
-        router.navigate("sign-in");
+        router.navigate("SignIn");
       }}
       skipLabel={"Pular"}
       showNext={false}
