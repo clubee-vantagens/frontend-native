@@ -1,4 +1,4 @@
-import imagem from "../../../assets/images/perfil.jpg";
+import imagem from "../../assets/images/perfil.jpg";
 
 export const User = [
   {

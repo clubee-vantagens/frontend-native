@@ -10,7 +10,7 @@ import {
 import { hightlightData } from "./HightlightData";
 import CustomText from "../CustomText";
 import { StarFour } from "phosphor-react-native";
-import points from "../../../assets/images/points.png";
+import points from "../../assets/images/points.png";
 import PointsStores from "../icons/PointsStores";
 import {scale, verticalScale, moderateScale, moderateVerticalScale} from 'react-native-size-matters'
 export const Hightlight = () => {

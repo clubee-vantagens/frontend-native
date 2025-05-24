@@ -97,7 +97,7 @@ const OnBoardingScreen = () => {
             Acumule pontos e aproveite!
           </CustomText>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image source={require("../../../../../assets/images/onboarding-1.webp")} />
+            <Image source={require("../../../../assets/images/onboarding-1.webp")} />
             <AntDesign
               name="right"
               size={24}
@@ -141,7 +141,7 @@ const OnBoardingScreen = () => {
               color="black"
               onPress={() => onboardingRef.current.goToPage(0, true)}
             />
-            <Image source={require("../../../../../assets/images/onboarding-2.webp")} />
+            <Image source={require("../../../../assets/images/onboarding-2.webp")} />
             <AntDesign
               name="right"
               size={24}
@@ -185,7 +185,7 @@ const OnBoardingScreen = () => {
               color="black"
               onPress={() => onboardingRef.current.goToPage(1, true)}
             />
-            <Image source={require("../../../../../assets/images/onboarding-3.webp")} />
+            <Image source={require("../../../../assets/images/onboarding-3.webp")} />
           </View>
         </View>
       ),  

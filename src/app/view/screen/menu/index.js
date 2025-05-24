@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Link, router, useNavigation } from "expo-router";
-import { useSession } from "../../../context/ctx";
+import { useSession } from "../../../../context/ctx";
 import {
   Bell,
   Eye,
@@ -19,17 +19,17 @@ import {
   StarFour,
   MagnifyingGlass,
 } from "phosphor-react-native";
-import { User } from "../../../components/UserData/UserData";
-import { MenuList } from "../../../components/MenuData/MenuList";
-import CustomText from "../../../components/CustomText";
-import { Hightlight } from "../../../components/Carousels/HightLight";
-import { useUserData } from "../../../hooks/useUserService";
-import { notifications } from "../../../components/UserData/Notifications";
-import NotificationsModal from "../notifications";
-import LoadingScreen from "../../../components/LoadingScreen";
-import PointsIcon from "../../../components/icons/PointsIcon";
+import { User } from "../../../../components/UserData/UserData";
+import { MenuList } from "../../../../components/MenuData/MenuList";
+import CustomText from "../../../../components/CustomText";
+import { Hightlight } from "../../../../components/Carousels/HightLight";
+import { useUserData } from "../../../../hooks/useUserService";
+import { notifications } from "../../../../components/UserData/Notifications";
+import NotificationsModal from "../../../(app)/notifications";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import PointsIcon from "../../../../components/icons/PointsIcon";
 import Constants from 'expo-constants'
-import CatagoryBubble from "../../../components/CategoriesBubble";
+import CatagoryBubble from "../../../../components/CategoriesBubble";
 import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
 import { scale } from "react-native-size-matters";
 

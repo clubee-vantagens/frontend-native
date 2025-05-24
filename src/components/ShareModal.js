@@ -36,7 +36,7 @@ export default function ShareModal({ isVisible, onClose, contentToShare }) {
     { 
       id: '1', 
       name: 'Telegram', 
-      icon: require('../../assets/images/icons/Icone pontos card categorias.svg'),
+      icon: require('../assets/images/icons/Icone pontos card categorias.svg'),
       action: () => handleShare('telegram')
     },
     // Add more apps with their respective actions

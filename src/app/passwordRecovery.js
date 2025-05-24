@@ -53,7 +53,7 @@ export default function PasswordRecoveryScreen() {
             </CustomText>
             <View style={styles.containerImage}>
               <Image
-                source={require("../../assets/images/imgSendEmail.png")}
+                source={require("../assets/images/imgSendEmail.png")}
                 style={styles.ImagemSend}
               />
             </View>
