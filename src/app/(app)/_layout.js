@@ -13,7 +13,7 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Nodeuser process that the pages are rendered in.
-    return <Redirect href="/OnBoardingScreen" />;
+    return <Redirect href="/onboardingScreen" />;
   }
 
   return (
