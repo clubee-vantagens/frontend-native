@@ -13,7 +13,7 @@ import { CaretLeft } from "phosphor-react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useRegisterUser } from "../../../../hooks/useUserService";
 import { maskCpf, validateCpf } from "../../../../utils/utils";
-import CustomInput from "../../../../components/CustomInput";
+import CustomInput from "../../../../components/CustomInputOld";
 import CustomButton from "../../../../components/CustomButton";
 import CustomPasswordInput from "../../../../components/CustomPasswordInput";
 import Constants from "expo-constants";

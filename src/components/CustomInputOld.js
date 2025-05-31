@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
-export default function CustomInput({ control, name, placeholder, type, rules, editable, autoCapitalize }) {
+export default function CustomInputpaia({ control, name, placeholder, type, rules, editable, autoCapitalize }) {
   return (
     <Controller
       control={control}

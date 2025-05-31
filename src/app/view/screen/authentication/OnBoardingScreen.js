@@ -11,6 +11,7 @@ const OnBoardingScreen = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const flatListRef = useRef();
 
+  // Utiliza um array pages para definir titulo e imagem de cada "página"
   const pages = [
     {
       title: "Vantagens exclusivas? Temos!\nAcumule pontos e aproveite!",
@@ -26,15 +27,18 @@ const OnBoardingScreen = () => {
     },
   ];
 
+  // Metodo responsável por setar o step e pintar as barras
   const handleScroll = (event) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
     setCurrentStep(index);
   };
 
+  // Metodo responsável para ir para tela de Login
   const handlePular = () => {
     router.replace('/SignIn')
   };
 
+  // Metodo responsável para ir para tela de cadastro
   const handleCadastrar = () => {
     router.replace('/SignUp')
   }

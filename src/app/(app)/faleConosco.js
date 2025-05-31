@@ -20,7 +20,7 @@ import {
   scale,
   moderateVerticalScale,
 } from "react-native-size-matters";
-import CustomInput from "../../components/CustomInput";
+import CustomInput from "../../components/CustomInputOld";
 import DropdownComponent from "../../components/DropdownComponent";
 
 const FaleConosco = () => {

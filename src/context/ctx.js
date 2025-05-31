@@ -66,8 +66,8 @@ export function SessionProvider(props) {
       setRefreshToken(response?.data?.refreshToken);
       setError(null);
     } catch (err) {
-      if (error.response) {
-        setError(error.response)
+      if (err.response) {
+        setError(err.response)
       } else {
         setError("Erro inesperado, tente novamente.")
       }

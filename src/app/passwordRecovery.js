@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import CustomText from "../components/CustomText";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/CustomInputOld";
 import CustomButton from "../components/CustomButton";
 import { useForm } from "react-hook-form";
 import { Link, router } from "expo-router";

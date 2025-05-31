@@ -14,7 +14,7 @@ import CustomText from "../../components/CustomText";
 import { CaretLeft, Camera } from "phosphor-react-native";
 import { Image } from "expo-image";
 import { useForm, Controller } from "react-hook-form";
-import CustomInput from "../../components/CustomInput";
+import CustomInput from "../../components/CustomInputOld";
 import CustomButton from "../../components/CustomButton";
 import { useEffect, useState } from "react";
 import DropdownComponent from "../../components/DropdownComponent";
