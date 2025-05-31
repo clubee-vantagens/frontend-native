@@ -44,6 +44,11 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState('');
 
 
+  useEffect(() => {
+    if (!session) {
+      router.replace("/OnBoardingScreen");  // ou push, dependendo do comportamento desejado
+    }
+  }, [session]);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -1,15 +1,23 @@
 import { View, StyleSheet, FlatList, Dimensions, Image, Pressable } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ProgressBar from "../../../../components/OnBoardingScreen-comps/ProgressBar";
 import CustomText from "../../../../components/CustomText";
 import { scale, verticalScale } from "react-native-size-matters";
 import { router } from 'expo-router';
+import { useSession } from "../../../../context/ctx";
 
 const { width } = Dimensions.get('window');
 
 const OnBoardingScreen = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const flatListRef = useRef();
+  const { session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.replace("/menu");
+    }
+  }, [session]);
 
   // Utiliza um array pages para definir titulo e imagem de cada "página"
   const pages = [

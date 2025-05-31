@@ -95,3 +95,5 @@ export function SessionProvider(props) {
     </AuthContext.Provider>
   );
 }
+
+export { AuthContext };
