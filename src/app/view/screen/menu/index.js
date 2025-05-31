@@ -46,7 +46,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!session) {
-      router.replace("/OnBoardingScreen");  // ou push, dependendo do comportamento desejado
+      router.replace("/onboardingScreen");  // ou push, dependendo do comportamento desejado
     }
   }, [session]);
 

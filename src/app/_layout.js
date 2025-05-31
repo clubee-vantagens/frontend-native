@@ -29,7 +29,7 @@ export default function RootLayout() {
     if (!fontsLoaded) return;
 
     if (!session) {
-      router.replace("/OnBoardingScreen");
+      router.replace("/onboardingScreen");
     } else {
       router.replace("/menu");
     }
