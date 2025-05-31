@@ -1,280 +1,134 @@
-import React, { useEffect, useState, useCallback } from "react";
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  ActivityIndicator,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-  Image
-} from "react-native";
-import Constants from "expo-constants";
-import { Link, router } from "expo-router";
-import { useSession } from "../../../../context/ctx";
-import ErrorMessageComponent from "../../../../components/ErrorMessageComponent";
-import CustomInput from "../../../../components/CustomInput";
-import CustomPasswordInput from "../../../../components/CustomPasswordInput";
-import { useForm } from "react-hook-form";
-import CustomText from "../../../../components/CustomText";
-import Fontisto from "@expo/vector-icons/Fontisto";
-import { useFocusEffect } from "expo-router";
-import { scale, verticalScale, moderateScale, moderateVerticalScale } from 'react-native-size-matters';
+import React from 'react';
+import { View, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Image, ScrollView } from 'react-native';
+import { Link } from "expo-router";
+import { scale, verticalScale } from "react-native-size-matters";
+import { useForm, Controller } from 'react-hook-form';
+import CustomText from '../../../../components/CustomText';
 
-export default function Index() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [emailValue, setEmailValue] = useState("");
+const SignIn = () => {
+
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({ defaultValues: { email: "", password: "" } });
-  const { signIn, session, error, setError } = useSession();
+    formState: { errors }
+  } = useForm();
 
-  useEffect(() => {
-    if (session) {
-      router.replace("/"); // Redirect to a protected route once session is set
-    }
-  }, [session]);
-
-  useFocusEffect(
-    useCallback(() => {
-      setError(null);
-    }, [])
-  );
-
-  const handleLogin = async (data) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      await signIn(data.email, data.password);
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setError("Verifique suas credenciais");
-      } else {
-        setError("Ocorreu um erro inesperado. Por favor, tente novamente.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = data => {
+    console.log('Form válido:', data);
+    // aqui você pode chamar sua API, navegar etc.
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.containerImage}>
-          <Image
-            source={require('../../../../assets/images/novoLogo.png')}
-            style={styles.image}
-          />
+        <View>
+          <Image style={styles.containerImage} source={require('../../../../assets/images/novoLogo.png')} />
         </View>
 
-        {error && (
-          <View style={styles.containerError}>
-            <View style={styles.contentError}>
-              <Fontisto
-                name="close"
-                size={24}
-                color="#A92525"
-                style={styles.icon}
-              />
-              <ErrorMessageComponent style={styles.errorMessage}>
-                Oops! Senha ou E-mail incorretos.{" "}
-                Gostaria de{" "}
-                <Link href={"passwordRecovery"} style={styles.link}>
-                  recuperar seu acesso?
-                </Link>
-              </ErrorMessageComponent>
-            </View>
-          </View>
-        )}
-
-        <View style={styles.containerInput}>
-          <CustomInput
-            control={control}
+        <View style={styles.containerLoginInput}>
+          <TextInput
             name="email"
             placeholder="Informe seu e-mail"
-            autoCapitalize='none'
-            rules={{
-              required: "Campo Obrigatório",
-              maxLength: {
-                value: 50,
-                message: "Atenção! E-mail não pode ultrapassar 50 caracteres",
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "O e-mail inserido é inválido",
-              },
-            }}
-            onChangeText={(text) => {
-              if (text.length <= 50) {
-                setValue("email", text);
-                setEmailValue(text);
-              } else {
-                Alert.alert("Atenção", "O máximo é 50 caracteres");
-              }
-            }}
-            value={emailValue}
+            keyboardType="email-address"
+            style={styles.input}
+            autoCapitalize="none"
           />
-
-          {errors.email && (
-            <ErrorMessageComponent>
-              {errors.email.message}
-            </ErrorMessageComponent>
-          )}
-
-          <CustomPasswordInput
-            control={control}
+          <TextInput
             name="password"
             placeholder="Senha"
-            secureTextEntry={true}
-            type="password"
-            rules={{
-              required: true,
-            }}
+            secureTextEntry
+            style={styles.input}
           />
-          {errors.password && (
-            <ErrorMessageComponent>
-              {errors.password.message || "Campo Obrigatório"}
-            </ErrorMessageComponent>
-          )}
+
+          <CustomText style={styles.forgotPassword}>Esqueceu a senha?</CustomText>
         </View>
 
-        <View style={styles.lembrarSenha}>
-          <Link href="/passwordRecovery">
-            <CustomText style={styles.lembrarSenhaText}>
-              Esqueceu a senha?
-            </CustomText>
-          </Link>
-        </View>
-
-        <Pressable style={styles.btnEntrar} onPress={handleSubmit(handleLogin)}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <CustomText style={styles.textEntrar}>Entrar</CustomText>
-          )}
+        <Pressable onPress={() => { console.log("oi") }} style={styles.entrarButton}>
+          <CustomText style={styles.entrarText}>Entrar</CustomText>
         </Pressable>
 
-        <View style={styles.containerFooter}>
-          <CustomText style={{ fontSize: 16, color: "#000" }}>
-            Não tem cadastro?{" "}
-            <Link href="/signup">
-              <CustomText variant="bold">
-                Se cadastre agora!
-              </CustomText>
-            </Link>
+        <View>
+          <CustomText style={styles.cadastroText}>
+            Não tem Cadastro? <Link href="/signup"><CustomText style={styles.cadastroInsideText}>Cadastre-se agora!</CustomText></Link>
           </CustomText>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexGrow:1,
-    marginTop: Constants.statusBarHeight,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F7F7F7",
+    backgroundColor: 'rgba(247, 247, 247, 1)',
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
   containerImage: {
-    width: scale(350),
-    alignItems: "center",
-  },
-  image: {
-    height: scale(100),
-    marginTop: verticalScale(50),
+    width: scale(230),
+    height: verticalScale(325),
+    marginTop: 10,
     resizeMode: "contain",
   },
-  containerInput: {
-    marginTop: 53,
+
+  containerLoginInput: {
+    marginTop: -45
   },
   input: {
-    width: scale(300),
-    height: moderateVerticalScale(50),
+    width: scale(280),
+    backgroundColor: '#fff',
+    padding: 15,
     borderRadius: 10,
-    padding: 10,
-    margin: 10,
+    marginVertical: 10,
+    fontSize: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     elevation: 5,
-    backgroundColor: "#fff",
   },
-  lembrarSenha: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingHorizontal: 26,
-    marginTop: 19,
-    marginBottom: 41,
+  forgotPassword: {
+    marginTop: 15,
+    textAlign: 'right',
+    textDecorationLine: 'underline',
+    color: "rgba(117, 117, 117, 1)",
   },
-  lembrarSenhaText: {
-    fontSize: 14,
-    textDecorationLine: "underline",
-    color: "#757575",
-    fontWeight: "semibold",
-  },
-  btnEntrar: {
-    width: scale(180),
-    height: moderateVerticalScale(46),
+  entrarButton: {
+    marginTop: 40,
+    borderWidth: 1,
     borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#150F02",
+    backgroundColor: "rgba(21, 15, 2, 1)",
+    width: verticalScale(120),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     elevation: 5,
   },
-  textEntrar: {
-    fontWeight: "bold",
+  entrarText: {
     fontSize: 18,
-    color: "#fff",
+    color: "rgba(247, 245, 245, 1)",
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingVertical: 6
   },
-  containerFooter: {
-    marginTop: moderateVerticalScale(80),
-    width: scale(350),
-    alignItems: 'center',
-    justifyContent: 'center'
+  cadastroText: {
+    marginTop: 100,
+    fontSize: 17
   },
-  errorText: {
-    color: "blue",
-    fontSize: scale(10),
-    marginLeft: 10,
-    maxWidth: "90%",
-  },
-    containerError: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: moderateScale(320),
-    height: moderateVerticalScale(80),
-    borderRadius: 10,
-    backgroundColor: "rgba(251, 80, 80, 0.25)",
-    padding: 10,
-    marginTop: 50,
-    marginBottom: -30
-  },
-  contentError: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    fontSize: 14,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  errorMessage: {
-    flex: 1,
-    fontSize: 14,
-  },
-  link: {
-    fontWeight: "bold",
-    color: "#A92525",
-    textDecorationLine: "underline",
-  },
+  cadastroInsideText: {
+    fontWeight: 'bold'
+  }
 });
+
+export default SignIn;

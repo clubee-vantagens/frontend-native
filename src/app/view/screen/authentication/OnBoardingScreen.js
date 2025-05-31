@@ -1,259 +1,135 @@
-import {  Image, View, StyleSheet, Pressable, Button } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import Onboarding from "react-native-onboarding-swiper";
+import { View, StyleSheet, FlatList, Dimensions, Image, Pressable } from "react-native";
+import React, { useState, useRef } from "react";
+import ProgressBar from "../../../../components/OnBoardingScreen-comps/ProgressBar";
 import CustomText from "../../../../components/CustomText";
-import { router } from "expo-router";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingScreen from "../../../../components/LoadingScreen";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import Constants from 'expo-constants'
+import { scale, verticalScale } from "react-native-size-matters";
+import { router } from 'expo-router';
+
+const { width } = Dimensions.get('window');
 
 const OnBoardingScreen = () => {
-  const onboardingRef = useRef(null);
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState(null);
-
-  useEffect(() => {
-    const checkOnboardingStatus = async () => {
-      try {
-        const value = await AsyncStorage.getItem("hasSeenOnboarding");
-        if (value === null) {
-          // User did not see onboarding
-          setHasSeenOnboarding(false);
-        } else {
-          // User has seen Onboarding
-          setHasSeenOnboarding(true);
-          router.navigate("SignIn");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    checkOnboardingStatus();
-  }, []);
-
-  // Set onboarding status when user completes it
-  const markOnboardingComplete = async () => {
-    try {
-      await AsyncStorage.setItem("hasSeenOnboarding", "true");
-      setHasSeenOnboarding(true);
-    } catch (e) {
-      console.error("Failed to save onboarding status", e);
-    }
-  };
-
-  const resetStorage = async () =>
-    await AsyncStorage.removeItem("hasSeenOnboarding");
-
-  resetStorage();
-
-  const dotComponent = () => {
-    return null
-  }
-
-  const Skip = ({ onPress, isLight, skipLabel, ...props }) => (
-    <Pressable
-      title={'Pular'}
-      containerViewStyle={{
-        marginVertical: 10,
-        width: 70,
-      }}
-      // textStyle={{ color: color(isLight) }}
-      style={{marginLeft: 50 }}
-      {...props}
-      onPress={onPress}
-    >
-      <CustomText variant="semiBold" style={{textDecorationLine: 'underline'}}>{skipLabel}</CustomText>
-      
-    </Pressable>
-  );
+  const [currentStep, setCurrentStep] = useState(0);
+  const flatListRef = useRef();
 
   const pages = [
     {
-      title: "",
-      subtitle: (
-        <Pressable
-          style={[styles.buttonBackground, {marginTop: -15}]}
-          onPress={() => {
-            markOnboardingComplete();
-            router.navigate("signupUser");
-          }}
-        >
-          <CustomText variant="semiBold" style={styles.button}>
-            Cadastre-se
-          </CustomText>
-        </Pressable>
-      ),
-      backgroundColor: "#fff",
-      image: (
-        <View style={{ marginTop: -20, alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-          </View>
-          <CustomText style={{ fontSize: 20, width: 330 }} variant="semiBold">
-            Vantagens exclusivas? Temos!
-            Acumule pontos e aproveite!
-          </CustomText>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image source={require("../../../../assets/images/onboarding-1.webp")} />
-            <AntDesign
-              name="right"
-              size={24}
-              color="black"
-              onPress={() => onboardingRef.current.goNext()}
-            />
-          </View>
-        </View>
-      ),
+      title: "Vantagens exclusivas? Temos!\nAcumule pontos e aproveite!",
+      image: require("../../../../assets/images/onboarding-1.webp"),
     },
     {
-      title: "",
-      subtitle: (
-        <Pressable
-          style={[styles.buttonBackground, {marginTop: -50}]}
-          onPress={() => {
-            markOnboardingComplete();
-            router.navigate("signupUser");
-          }}
-        >
-          <CustomText variant="semiBold" style={styles.button}>
-            Cadastre-se
-          </CustomText>
-        </Pressable>
-      ),
-      backgroundColor: "#fff",
-      image: (
-        <View style={{ marginTop: -15, alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-            <View style={{ backgroundColor: "#d3d3d3", height: verticalScale(8), width: moderateScale(100), borderRadius: 120 }}></View>
-          </View>
-          <CustomText style={{ fontSize: 20, width: 340 }} variant="semiBold">
-            Vamos ajudar o comércio da sua comunidade a crescer!
-          </CustomText>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <AntDesign
-              name="left"
-              size={24}
-              color="black"
-              onPress={() => onboardingRef.current.goToPage(0, true)}
-            />
-            <Image source={require("../../../../assets/images/onboarding-2.webp")} />
-            <AntDesign
-              name="right"
-              size={24}
-              color="black"
-              onPress={() => onboardingRef.current.goNext()}
-            />
-          </View>
-        </View>
-      ),
+      title: "Vamos ajudar o comércio da sua comunidade a crescer!",
+      image: require("../../../../assets/images/onboarding-2.webp"),
     },
     {
-      title: "",
-      subtitle: (
-        <Pressable
-          style={[styles.buttonBackground, {marginTop: -25}]}
-          onPress={() => {
-            markOnboardingComplete();
-            router.navigate("signupUser");
-          }}
-        >
-          <CustomText variant="semiBold" style={styles.button}>
-            Cadastre-se
-          </CustomText>
-        </Pressable>
-      ),
-      backgroundColor: "#fff",
-      image: (
-        <View style={{ marginTop: -5, alignItems: "center" }}>
-          <View style={{ backgroundColor: "#d3d3d3", width: scale(300), height: verticalScale(8), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, borderRadius: 120}}>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
-            <View style={{ backgroundColor: "#757575", height: verticalScale(8), width: moderateScale(100), borderRadius: 126 }}></View>
-          </View>
-          <CustomText style={{ fontSize: 20, width: 300 }} variant="semiBold">
-            Vamos descobrir lojas e produtos pertinhos de você?
-          </CustomText>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <AntDesign
-              name="left"
-              size={24}
-              color="black"
-              onPress={() => onboardingRef.current.goToPage(1, true)}
-            />
-            <Image source={require("../../../../assets/images/onboarding-3.webp")} />
-          </View>
-        </View>
-      ),  
+      title: "Vamos descobrir lojas e produtos pertinhos de você?",
+      image: require("../../../../assets/images/onboarding-3.webp"),
     },
   ];
 
-  // If the onboarding status is still loading, return null or a loading indicator
-  if (hasSeenOnboarding === null) {
-    return <LoadingScreen />; // You can replace this with a loading spinner if needed
+  const handleScroll = (event) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentStep(index);
+  };
+
+  const handlePular = () => {
+    router.replace('/SignIn')
+  };
+
+  const handleCadastrar = () => {
+    router.replace('/SignUp')
   }
 
+  // renderItem transforma cada "Tela do onboarding (3 no momento) em um item"
+  // Definido em pages seu titulo e imagem
+  // Renderizando o resto dos componentes e mostrando-os em FlatList
+  const renderItem = ({ item }) => (
+    <View style={styles.page}>
+      <CustomText style={styles.upperText}>{item.title}</CustomText>
+      <Image source={item.image} style={styles.image} />
+
+      <Pressable style={styles.signInButton} onPress={handleCadastrar}>
+        <CustomText style={styles.signInText}>Cadastre-se</CustomText>
+      </Pressable>
+    </View>
+  );
+
   return (
-    <Onboarding
-      ref={onboardingRef}
-      onDone={() => {
-        markOnboardingComplete();
-        router.navigate("SignIn");
-      }}
-      onSkip={() => {
-        markOnboardingComplete();
-        router.navigate("SignIn");
-      }}
-      skipLabel={"Pular"}
-      showNext={false}
-      pages={pages}
-      bottomBarColor="#fff"
-      DotComponent={dotComponent}
-      SkipButtonComponent={Skip}
-    />
+    <View style={styles.container}>
+      <View style={styles.progressBar}>
+        <ProgressBar step={currentStep + 1} />
+      </View>
+
+      <FlatList
+        data={pages}
+        renderItem={renderItem}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        ref={flatListRef}
+      />
+
+      <Pressable onPress={handlePular} style={styles.pularButton}>
+        <CustomText style={styles.pularText}>Pular</CustomText>
+      </Pressable>
+    </View>
   );
 };
+
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "blue",
+    backgroundColor: 'rgba(247, 247, 247, 1)',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
-  headerTop: {
-    color: "#232323",
-    fontSize: 28,
-    marginBottom: verticalScale(20),
+  progressBar: {
+    marginTop: 70,
+    marginBottom: -70
   },
-  imageContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  page: {
+    width: width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   image: {
     width: scale(300),
-    height: verticalScale(300),
-    contentFit: "contain",
-    marginBottom: verticalScale(30),
+    height: verticalScale(325),
+    resizeMode: "contain",
+    marginTop: verticalScale(30),
+    marginBottom: verticalScale(10),
   },
-  buttonBackground: {
-    borderWidth: 1,
-    borderColor: "#232323",
-    paddingVertical: verticalScale(10),
-    paddingHorizontal: scale(20),
-    borderRadius: 25,
+  upperText: {
+    fontSize: 20,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    marginTop: -50,
+  },
+  signInButton: {
     marginTop: 20,
+    borderWidth: 1,
+    borderColor: "rgba(21, 15, 2, 1)",
+    borderRadius: 30,
+    width: 315,
+    paddingVertical: 10,
   },
-  button: {
-    color: "#232323",
+  signInText: {
     fontSize: 18,
-    textAlign: "center",
-    width: 300,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  pularButton: {
+    position: 'absolute',
+    bottom: 50,
+    left: 40,
+  },
+  pularText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textDecorationLine: "underline",
   },
 });
 
