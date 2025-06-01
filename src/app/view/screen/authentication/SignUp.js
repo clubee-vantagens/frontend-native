@@ -10,7 +10,7 @@ export default function Signup() {
   return (
     <SafeAreaView style={styles.areaView}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-        <Link href="/SignIn">
+        <Link href="/signin">
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Link>
       </View>

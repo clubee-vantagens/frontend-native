@@ -325,7 +325,7 @@ export default function UserSignUpScreen() {
 
         <CustomText style={{ fontSize: 20, color: "#757575" }}>
           Já tem uma conta?{" "}
-          <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/SignIn">
+          <Link style={{ fontWeight: "bold", color: "#150F02" }} href="/signin">
             Acessar!
           </Link>
         </CustomText>

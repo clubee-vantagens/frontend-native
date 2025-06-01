@@ -43,12 +43,12 @@ const OnBoardingScreen = () => {
 
   // Metodo responsável para ir para tela de Login
   const handlePular = () => {
-    router.replace('/SignIn')
+    router.replace('/signin')
   };
 
   // Metodo responsável para ir para tela de cadastro
   const handleCadastrar = () => {
-    router.replace('/SignUp')
+    router.replace('/signup')
   }
 
   // renderItem transforma cada "Tela do onboarding (3 no momento) em um item"
