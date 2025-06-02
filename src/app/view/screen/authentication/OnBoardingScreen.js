@@ -65,7 +65,6 @@ const OnBoardingScreen = () => {
     setShowArrows(true);  
   };
 
-
   // renderItem transforma cada "Tela do onboarding (3 no momento) em um item"
   // Definido em pages seu titulo e imagem
   // Renderizando o resto dos componentes e mostrando-os em FlatList
