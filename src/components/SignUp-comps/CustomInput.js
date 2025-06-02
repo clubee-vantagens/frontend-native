@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet, Text, View, Pressable } from "react-native";
 import { Controller } from "react-hook-form";
+import { maskCpf } from '../../utils/utils';
 import { Eye, EyeClosed } from 'phosphor-react-native';
 
 export default function CustomInput({ name, control, placeholder, keyboardType, autoCapitalize, rules, errors, secureTextEntry }) {
@@ -16,8 +17,16 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
         name={name}
         control={control}
         rules={rules || undefined}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
+        render={({ field: { onChange, onBlur, value } }) => {
+          // Garantindo que o valor não inicie null
+          let maskedValue = value || "";
+
+          // Se o campo for 'cpf', aplica a máscara
+          if (name === 'cpf') {
+            maskedValue = maskCpf(maskedValue);
+          }
+          return (
+            <>
             <TextInput
               placeholder={placeholder}
               keyboardType={keyboardType}
@@ -25,9 +34,17 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
               autoCapitalize={autoCapitalize}
               secureTextEntry={secureTextEntry ? isPasswordHidden : false}
               onBlur={onBlur}
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                let newValue = text;
+
+                  // Se o campo for 'cpf', aplica a máscara
+                  if (name === 'cpf') {
+                    newValue = maskCpf(text);
+                  }
+
+                  onChange(newValue);
+              }}
               value={value}
-              placeholderTextColor="#838383"
             />
 
             {secureTextEntry && (
@@ -40,7 +57,8 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
               </Pressable>
             )}
           </>
-        )}
+          );
+        }}
       />
       {errors?.[name] && <Text style={styles.errorText}>{errors[name].message}</Text>}
     </View>
@@ -67,10 +85,11 @@ const styles = StyleSheet.create({
     paddingRight: 40,  // espaço pro ícone
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginLeft: 5,
     marginTop: -8,
-    marginBottom: 8,
+    marginBottom: 3,
+    fontSize: 13
   },
   icon: {
     position: 'absolute',

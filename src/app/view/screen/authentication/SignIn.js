@@ -90,19 +90,19 @@ const SignIn = () => {
           />
 
           <CustomInput
-          name="password"
-          placeholder="Senha"
-          control={control}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          rules={{
-            required: "Campo Obrigatório",
-            pattern: {
-              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-              message: "A senha deve conter: letra maiúscula, minúscula, número e caractere especial",
-            },
-          }}
-          errors={errors}
+            name="password"
+            placeholder="Senha"
+            control={control}
+            autoCapitalize="none"
+            secureTextEntry={true}
+            rules={{
+              required: "Campo Obrigatório",
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message: "A senha deve conter: letra maiúscula, minúscula, número e caractere especial",
+              },
+            }}
+            errors={errors}
           />
 
           <CustomText style={styles.forgotPassword}><Link href="/passwordRecovery">Esqueceu a senha?</Link></CustomText>
