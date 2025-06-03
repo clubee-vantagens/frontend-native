@@ -43,7 +43,10 @@ export function useRegisterUser() {
 
 // Edit User
 const editUser = async ({ userData, session }) => {
+  console.log(userData)
   const response = await apiService.userEditData(userData, session);
+  console.log('oie')
+  console.log(response)
   return response.data;
 };
 

@@ -16,7 +16,7 @@ import ModalSignUpConfirmation from '../../../../components/SignUp-comps/ModalSi
 const signupUser = () => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm();
   const [isChecked, setChecked] = useState(false);
-  const { error, setError } = useSession();
+  const { signIn, error, setError } = useSession();
 
   const [isModalVisible, setIsModalVisible] = useState(false); // Estado do Modal
   const [modalMessage, setModalMessage] = useState(""); // Mensagem do Modal
@@ -48,10 +48,43 @@ const signupUser = () => {
       onSuccess: (response) => {
         // Define a mensagem do modal
         setModalMessage("Cadastro realizado com sucesso!");
-        setIsModalVisible(true);
+        
+        signIn(userData.email, userData.password)
+          .then(() => {
+            setIsModalVisible(true);
+          })
+          .catch((loginError) => {
+            setError(loginError);
+            setModalMessage("Erro ao realizar login após cadastro.");
+            setIsModalVisible(true);
+          });
       },
       onError: (error) => {
-        setError(error)
+        const errorMessage = error.response?.data.message;
+
+        // Regex para validar email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // Regex para validar CPF (no formato 123.456.789-00 ou 12345678900)
+        const cpfRegex = /^\d{11}$/;
+
+        // Verifica se o erro é um email ou CPF
+        if (emailRegex.test(errorMessage)) {
+          setError({
+            type: 'email',
+            message: `Usuário já cadastrado com o e-mail: ${errorMessage}`
+          });
+        } else if (cpfRegex.test(errorMessage)) {
+          setError({
+            type: 'cpf',
+            message: `O CPF ${errorMessage} já está cadastrado. Verifique os dados ou entre em contato.`
+          });
+        } else {
+          setError({
+            type: 'generic',
+            message: errorMessage || "Ocorreu um erro inesperado. Tente novamente."
+          });
+        }
       },
     });
   };
@@ -257,24 +290,6 @@ const signupUser = () => {
             <View>
               <Pressable onPress={handleSubmit(submitCadastrar)} style={styles.signUpButton}>
                 <CustomText style={styles.signUpText}>Cadastrar-se</CustomText>
-              </Pressable>
-
-              <Pressable
-                onPress={() => {
-                  const mockData = {
-                    name: "Usuário Teste",
-                    socialName: "Teste",
-                    email: "eejok@exassaample.com",
-                    password: "Senha123!",
-                    confirmPassword: "Senha123!",
-                    cpf: "69144085052",
-                    termsOfUse: true
-                  };
-                  submitCadastrar(mockData);
-                }}
-                style={[styles.signUpButton, { backgroundColor: "#cccccc" }]}
-              >
-                <CustomText style={[styles.signUpText, { color: "#000" }]}>Mock de Cadastro</CustomText>
               </Pressable>
             </View>
             

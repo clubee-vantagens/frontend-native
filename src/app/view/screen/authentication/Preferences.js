@@ -3,6 +3,9 @@ import CustomText from "../../../../components/CustomText";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import ModalSignUpConfirmation from "../../../../components/SignUp-comps/ModalSignUpConfirmation";
+import { useSession } from "../../../../context/ctx";
+import { useEditUser } from "../../../../hooks/useUserService";
+import useBackExitPrompt from '../../../../hooks/useBackExitPrompt';
 
 const options = [
   "Alimentação",
@@ -20,17 +23,39 @@ const options = [
 ];
 
 const Preferences = () => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(true); // Estado do Modal
-  const [modalMessage, setModalMessage] = useState("Preferências cadastradas!"); // Mensagem do Modal
+  useBackExitPrompt("Tem certeza que deseja sair?");
 
-  const handlePress = (option) => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const { session,  } = useSession();
+  const { mutate } = useEditUser();
+
+  // Garante que o botão só será clickavel se tiver ao menos 1 opção selecionada
+  const isButtonEnabled = selectedOptions.length > 0;
+
+  const handlePressPreferencias = (option) => {
     if (selectedOptions.includes(option)) {
       setSelectedOptions(selectedOptions.filter((item) => item !== option));
     } else {
       if (selectedOptions.length < 3) {
         setSelectedOptions([...selectedOptions, option]);
       }
+    }
+  };
+
+  const handlePreferences = () => {
+    try {
+      const dataToPost = {
+        preferences: selectedOptions.join(","),
+      };
+      mutate({ userData: dataToPost, session });
+
+      setModalMessage("Preferências cadastradas!");
+      setIsModalVisible(true);
+    } catch (error) {
+      setModalMessage("Erro ao cadastrar preferências.");
+      setIsModalVisible(true);
     }
   };
 
@@ -63,7 +88,7 @@ const Preferences = () => {
               styles.optionButton,
               selectedOptions.includes(option) && styles.selectedButton,
             ]}
-            onPress={() => handlePress(option)}
+            onPress={() => handlePressPreferencias(option)}
           >
             <CustomText
               style={[
@@ -78,10 +103,14 @@ const Preferences = () => {
       </View>
 
       <View style={styles.buttonView}>
-        <Pressable style={styles.continuarButton}>
+        <Pressable 
+          style={[styles.continuarButton, !isButtonEnabled && styles.disabledContinuarButton]}
+          onPress={isButtonEnabled ? handlePreferences : null}
+          disabled={!isButtonEnabled}
+          >
           <CustomText style={styles.continuarText}>Continuar</CustomText>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => router.navigate("/")}>
           <CustomText
             variant="semiBold"
             style={{ fontSize: 20, marginTop: 20 }}
@@ -142,6 +171,10 @@ const styles = StyleSheet.create({
     marginTop: 35,
     paddingVertical: 9,
     zIndex: 10,
+  },
+  disabledContinuarButton: {
+    backgroundColor: "rgba(21, 15, 2, 0.2)",
+    borderColor: "rgba(21, 15, 2, 0.2)"
   },
   continuarText: {
     fontSize: 20,

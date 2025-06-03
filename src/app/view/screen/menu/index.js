@@ -32,11 +32,14 @@ import Constants from 'expo-constants'
 import CatagoryBubble from "../../../../components/CategoriesBubble";
 import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
 import { scale } from "react-native-size-matters";
+import useBackExitPrompt from '../../../../hooks/useBackExitPrompt';
 
 
 
 
 export default function Home() {
+  useBackExitPrompt("Tem certeza que deseja sair do aplicativo?");
+
   const [modalVisible, setModalVisible] = useState(false);
   const [viewPoints, setViewPoints] = useState(true);
   const { signOut, refreshAccessToken, session } = useSession();
