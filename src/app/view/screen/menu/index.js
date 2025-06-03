@@ -49,7 +49,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!session) {
-      router.replace("/onboardingScreen");  // ou push, dependendo do comportamento desejado
+      router.replace("/onboardingScreen");
     }
   }, [session]);
 

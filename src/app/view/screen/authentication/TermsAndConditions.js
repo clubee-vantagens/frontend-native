@@ -1,18 +1,17 @@
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, View, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Link } from "expo-router";
 import CustomText from "../../../../components/CustomText";
 
-const TermsAndConditions = () => {
+const TermsAndConditions = ({ onClose }) => {
   return (
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
         >
           <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-            <Link href="/signupUser">
+            <Pressable onPress={onClose}>
               <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
-            </Link>
+            </Pressable>
           </View>
           <View>
             <CustomText style={styles.header}>Termos e Condições</CustomText>

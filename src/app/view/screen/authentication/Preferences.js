@@ -19,7 +19,7 @@ const options = [
   "Livraria",
   "Perfumaria",
   "Vestuário e calçados",
-  "Informática e eletrónicos",
+  "Informática e eletrônicos",
 ];
 
 const Preferences = () => {

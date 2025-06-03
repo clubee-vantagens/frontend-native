@@ -12,14 +12,16 @@ import CustomInput from '../../../../components/SignUp-comps/CustomInput';
 import { useRegisterUser } from '../../../../hooks/useUserService';
 import { useSession } from "../../../../context/ctx";
 import ModalSignUpConfirmation from '../../../../components/SignUp-comps/ModalSignUpConfirmation';
+import ModalTermsAndConditions from '../../../../components/SignUp-comps/ModalTermsAndConditions';
 
 const signupUser = () => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm();
   const [isChecked, setChecked] = useState(false);
   const { signIn, error, setError } = useSession();
 
-  const [isModalVisible, setIsModalVisible] = useState(false); // Estado do Modal
-  const [modalMessage, setModalMessage] = useState(""); // Mensagem do Modal
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isTermsModalVisible, setIsTermsModalVisible] = useState(false);
 
   const registerMutation = useRegisterUser();
 
@@ -263,7 +265,7 @@ const signupUser = () => {
                     >
                       Concordo com os
                     </CustomText>
-                    <Pressable onPress={() => router.push("/termsAndConditions")}>
+                    <Pressable onPress={() => setIsTermsModalVisible(true)}>
                       <CustomText
                         style={{
                           marginTop: 3,
@@ -300,11 +302,16 @@ const signupUser = () => {
           </View>
 
           <ModalSignUpConfirmation
-            visible={isModalVisible} // Controle de visibilidade
+            visible={isModalVisible}
             onPress={() => {
               router.navigate("preferences");
             }} // Fecha o modal
-            message={modalMessage} // Mensagem dinâmica
+            message={modalMessage}
+          />
+
+          <ModalTermsAndConditions 
+            isVisible={isTermsModalVisible} 
+            onClose={() => setIsTermsModalVisible(false)} 
           />
         </ScrollView>
     </KeyboardAvoidingView>
