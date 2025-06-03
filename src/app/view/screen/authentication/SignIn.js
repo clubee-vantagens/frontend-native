@@ -27,7 +27,7 @@ const SignIn = () => {
   // Redirecionamento pro menu
   useEffect(() => {
     if (session) {
-      router.replace("/menu");
+      router.replace("/");
     }
   }, [session]);
 

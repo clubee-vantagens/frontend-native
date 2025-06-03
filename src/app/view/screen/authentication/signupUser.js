@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { StyleSheet, View, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { scale, moderateVerticalScale } from "react-native-size-matters";
@@ -20,8 +20,6 @@ const signupUser = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false); // Estado do Modal
   const [modalMessage, setModalMessage] = useState(""); // Mensagem do Modal
-
-  const toggleTermsVisibility = (isVisible) => setIsTermsVisible(isVisible);
 
   const registerMutation = useRegisterUser();
 
@@ -53,7 +51,6 @@ const signupUser = () => {
         setIsModalVisible(true);
       },
       onError: (error) => {
-        console.log(error)
         setError(error)
       },
     });
@@ -233,7 +230,7 @@ const signupUser = () => {
                     >
                       Concordo com os
                     </CustomText>
-                    <Pressable onPress={toggleTermsVisibility}>
+                    <Pressable onPress={() => router.push("/termsAndConditions")}>
                       <CustomText
                         style={{
                           marginTop: 3,
@@ -261,6 +258,24 @@ const signupUser = () => {
               <Pressable onPress={handleSubmit(submitCadastrar)} style={styles.signUpButton}>
                 <CustomText style={styles.signUpText}>Cadastrar-se</CustomText>
               </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  const mockData = {
+                    name: "Usuário Teste",
+                    socialName: "Teste",
+                    email: "eejok@exassaample.com",
+                    password: "Senha123!",
+                    confirmPassword: "Senha123!",
+                    cpf: "69144085052",
+                    termsOfUse: true
+                  };
+                  submitCadastrar(mockData);
+                }}
+                style={[styles.signUpButton, { backgroundColor: "#cccccc" }]}
+              >
+                <CustomText style={[styles.signUpText, { color: "#000" }]}>Mock de Cadastro</CustomText>
+              </Pressable>
             </View>
             
             <CustomText style={styles.signUpLinkText}>
@@ -271,7 +286,9 @@ const signupUser = () => {
 
           <ModalSignUpConfirmation
             visible={isModalVisible} // Controle de visibilidade
-            onClose={() => setIsModalVisible(false)} // Fecha o modal
+            onPress={() => {
+              router.navigate("preferences");
+            }} // Fecha o modal
             message={modalMessage} // Mensagem dinâmica
           />
         </ScrollView>

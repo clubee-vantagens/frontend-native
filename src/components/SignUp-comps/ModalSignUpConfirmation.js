@@ -1,19 +1,18 @@
 import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
-const ModalSignUpConfirmation = ({ visible, onClose, title, message }) => {
+const ModalSignUpConfirmation = ({ visible, onPress, title, message }) => {
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalMessage}>{message}</Text>
 
-          <Pressable style={styles.closeButton} onPress={onClose}>
+          <Pressable style={styles.closeButton} onPress={onPress}>
             <Text style={styles.closeButtonText}>Continuar</Text>
           </Pressable>
         </View>
