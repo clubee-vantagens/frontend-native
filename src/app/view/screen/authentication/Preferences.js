@@ -32,15 +32,13 @@ const Preferences = () => {
   const { mutate } = useEditUser();
 
   // Garante que o botão só será clickavel se tiver ao menos 1 opção selecionada
-  const isButtonEnabled = selectedOptions.length > 0;
+  const isButtonEnabled = selectedOptions.length >= 3;
 
   const handlePressPreferencias = (option) => {
     if (selectedOptions.includes(option)) {
       setSelectedOptions(selectedOptions.filter((item) => item !== option));
     } else {
-      if (selectedOptions.length < 3) {
         setSelectedOptions([...selectedOptions, option]);
-      }
     }
   };
 
