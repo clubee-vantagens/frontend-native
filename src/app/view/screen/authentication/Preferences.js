@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, View, Pressable } from "react-native";
+import { StyleSheet, SafeAreaView, View, Pressable, Dimensions } from "react-native";
 import CustomText from "../../../../components/CustomText";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -6,6 +6,8 @@ import ModalSignUpConfirmation from "../../../../components/SignUp-comps/ModalSi
 import { useSession } from "../../../../context/ctx";
 import { useEditUser } from "../../../../hooks/useUserService";
 import useBackExitPrompt from '../../../../hooks/useBackExitPrompt';
+
+const screenHeight = Dimensions.get('window').height;
 
 const options = [
   "Alimentação",
@@ -157,7 +159,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   buttonView: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: screenHeight > 850 ? 10 : 0,
   },
   continuarButton: {
     alignSelf: "center",
@@ -195,7 +198,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignItems: "center",
     justifyContent: "center",
-    margin: 5,  // espaçamento entre os botões
+    margin: 5,
+
+    // Sombra para iOS
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+
+    // Sombra para Android
+    elevation: 5,
   },
   optionText: {
     color: "rgba(21, 15, 2, 1)",
@@ -204,6 +219,17 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     backgroundColor: "rgba(252, 213, 98, 1)",
+    // Sombra para iOS
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+
+    // Sombra para Android
+    elevation: 5,
   },
   selectedText: {
     fontWeight: "bold",
