@@ -1,26 +1,5 @@
-import {
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  Text,
-  View,
-  Switch,
-  Modal,
-  Dimensions,
-  Animated,
-} from "react-native";
-import {
-  X,
-  Heart,
-  Bell,
-  Star,
-  Gear,
-  Shield,
-  Headset,
-  ArrowUUpLeft,
-  UserSwitch,
-} from "phosphor-react-native";
+import {Pressable,SafeAreaView,StyleSheet,Image,Text,View,Switch,Modal,Dimensions,Animated,} from "react-native";
+import {X,Heart,Bell,Star,Gear,Shield,Headset,ArrowUUpLeft,UserSwitch,} from "phosphor-react-native";
 import { useUserData } from "../../../../hooks/useUserService";
 import { useSession } from "../../../../context/ctx";
 import { useState, useRef, useEffect } from "react";

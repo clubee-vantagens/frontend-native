@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  SafeAreaView,
-  Image,
-  TextInput,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import React, { useState, useEffect } from "react";import {View,Text,StyleSheet,Pressable,
+SafeAreaView,Image,TextInput,ActivityIndicator,ScrollView,} from "react-native";
+
 import { Link, router, useNavigation } from "expo-router";
 import { useSession } from "../../../../context/ctx";
-import {
-  Bell,
-  Eye,
-  EyeClosed,
-  StarFour,
-  MagnifyingGlass,
-} from "phosphor-react-native";
+import {Bell,Eye,EyeClosed,StarFour,MagnifyingGlass,} from "phosphor-react-native";
 import { User } from "../../../../components/UserData/UserData";
 import { MenuList } from "../../../../components/MenuData/MenuList";
 import CustomText from "../../../../components/CustomText";
@@ -34,7 +19,7 @@ import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
 import { scale } from "react-native-size-matters";
 import useBackExitPrompt from '../../../../hooks/useBackExitPrompt';
 
-
+import TotalNotificationBadge from "../../../../components/NotificacaoBadge/TotalNotification"; // comp. de notificações - Diego Vieira
 
 
 export default function Home() {
@@ -61,14 +46,7 @@ export default function Home() {
     return () => clearInterval(interval); // Clean up interval on unmount
 }, [refetch]);
 
-  // Pegar o total de notificações
-
-  const getTotalNotifications = () => {
-    return notifications.reduce((total, notif) => total + notif.qntdNotif, 0);
-  };
-
-  const totalNotifications = getTotalNotifications();
-
+  // Notificações
   // console.log(user);
 
   if (!user) {
@@ -105,13 +83,7 @@ export default function Home() {
                 onPress={() => setModalVisible(true)}
               >
                 <Bell size={25} color="#fff" />
-                {totalNotifications > 0 && (
-                  <View style={styles.notificationBadge}>
-                    <CustomText style={styles.notificationText}>
-                      {totalNotifications}
-                    </CustomText>
-                  </View>
-                )}
+                <TotalNotificationBadge />
               </Pressable>
             </View>
 
