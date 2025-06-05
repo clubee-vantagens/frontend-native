@@ -73,6 +73,15 @@ const OnBoardingScreen = () => {
       <CustomText style={styles.upperText}>{item.title}</CustomText>
       <Image source={item.image} style={styles.image} />
 
+      
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.progressBar}>
+        <ProgressBar step={currentStep + 1} />
+      </View>
        {/* Setas de navegação */}
        {showArrows && (
           <View style={styles.arrowsContainer}>
@@ -99,14 +108,6 @@ const OnBoardingScreen = () => {
             )}
           </View>
         )}
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.progressBar}>
-        <ProgressBar step={currentStep + 1} />
-      </View>
 
       <FlatList
         data={pages}

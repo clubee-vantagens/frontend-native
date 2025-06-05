@@ -38,7 +38,11 @@ export function SessionProvider(props) {
         const { exp } = jwtDecode(session);
         const expirationTime = exp * 1000;
         const currentTime = new Date().getTime();
+        console.log(expirationTime)
+        console.log("Vamos lá ver se vai deslogar")
+        console.log(currentTime)
         if (expirationTime - currentTime < 5 * 60 * 1000) {
+          console.log("É pra chamar essa função")
           await refreshAccessToken();
         }
       }
@@ -48,8 +52,15 @@ export function SessionProvider(props) {
   }, [session, refreshToken]);
 
   const refreshAccessToken = async () => {
+    console.log('refreshTokenAcess')
+    console.log(session)
+    console.log(refreshToken)
+    console.log('refreshTokenAcess')
     try {
-      const response = await apiService.refreshToken(expiredAccessToken, refreshToken)
+      const response = await apiService.refreshToken(session, refreshToken)
+      console.log('response')
+      console.log(response)
+      console.log(response.data)
       setSession(response?.data?.newAccessToken);
       setRefreshToken(response?.data?.newRefreshToken);
       setError(null);
@@ -62,6 +73,7 @@ export function SessionProvider(props) {
    const signIn = async (email, password) => {
     try {
       const response = await apiService.login(email, password);
+      console.log(response.data)
       setSession(response?.data?.accessToken);
       setRefreshToken(response?.data?.refreshToken);
       setError(null);
