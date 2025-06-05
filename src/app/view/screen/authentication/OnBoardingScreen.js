@@ -83,31 +83,43 @@ const OnBoardingScreen = () => {
         <ProgressBar step={currentStep + 1} />
       </View>
 
+      <FlatList
+        data={pages}
+        renderItem={renderItem}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        ref={flatListRef}
+        onScrollBeginDrag={handleScrollBegin}  // Detecta quando começa a rolar
+        onScrollEndDrag={handleScrollEnd}      // Detecta quando termina de rolar
+      />
 
 
-{/* Setas de navegação */}
-{showArrows && (
+        {/* Setas de navegação */}
+        {showArrows && (
           <View style={styles.arrowsContainer}>
             {/* Seta Esquerda */}
             {currentStep > 0 && (
-              <AntDesign
-                name="left"
-                size={24}
-                color="black"
-                onPress={() => flatListRef.current.scrollToIndex({ index: currentStep - 1 })}
-                style={styles.arrowLeft}
-              />
+             <Pressable
+               onPress={() => flatListRef.current.scrollToIndex({ index: currentStep - 1 })}
+               testID="left-arrow"
+               style={styles.arrowLeft}
+              >
+                <AntDesign name="left" size={24} color="black" />
+              </Pressable>
             )}
 
             {/* Seta Direita */}
             {currentStep < pages.length - 1 && (
-              <AntDesign
-                name="right"
-                size={24}
-                color="black"
+              <Pressable
                 onPress={() => flatListRef.current.scrollToIndex({ index: currentStep + 1 })}
+                testID="right-arrow"
                 style={styles.arrowRight}
-              />
+              >
+                <AntDesign name="right" size={24} color="black" />
+              </Pressable>
             )}
           </View>
         )}
@@ -163,12 +175,12 @@ const styles = StyleSheet.create({
   },
   arrowLeft: {
     position: 'absolute',
-    left: 5,
+    left: 7,
     transform: [{ translateY: -12 }],
   },
   arrowRight: {
     position: 'absolute',
-    right: 5,
+    right: 7,
     transform: [{ translateY: -12 }],
   },
   signInButton: {
