@@ -73,7 +73,7 @@ const OnBoardingScreen = () => {
       <CustomText style={styles.upperText}>{item.title}</CustomText>
       <Image source={item.image} style={styles.image} />
 
-      
+       
     </View>
   );
 
@@ -82,8 +82,11 @@ const OnBoardingScreen = () => {
       <View style={styles.progressBar}>
         <ProgressBar step={currentStep + 1} />
       </View>
-       {/* Setas de navegação */}
-       {showArrows && (
+
+
+
+{/* Setas de navegação */}
+{showArrows && (
           <View style={styles.arrowsContainer}>
             {/* Seta Esquerda */}
             {currentStep > 0 && (
@@ -108,20 +111,6 @@ const OnBoardingScreen = () => {
             )}
           </View>
         )}
-
-      <FlatList
-        data={pages}
-        renderItem={renderItem}
-        keyExtractor={(_, index) => index.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-        ref={flatListRef}
-        onScrollBeginDrag={handleScrollBegin}  // Detecta quando começa a rolar
-        onScrollEndDrag={handleScrollEnd}      // Detecta quando termina de rolar
-      />
-
       <Pressable style={styles.signInButton} onPress={handleCadastrar}>
         <CustomText style={styles.signInText}>Cadastre-se</CustomText>
       </Pressable>
