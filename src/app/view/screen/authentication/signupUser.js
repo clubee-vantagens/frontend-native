@@ -19,6 +19,7 @@ const signupUser = () => {
   const [isChecked, setChecked] = useState(false);
   const { signIn, error, setError } = useSession();
 
+  // variaveis de visualização de modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isTermsModalVisible, setIsTermsModalVisible] = useState(false);
@@ -51,6 +52,7 @@ const signupUser = () => {
         // Define a mensagem do modal
         setModalMessage("Cadastro realizado com sucesso!");
         
+        // Realiza login após cadastro para levar a tela de preferencias
         signIn(userData.email, userData.password)
           .then(() => {
             setIsModalVisible(true);
@@ -111,6 +113,7 @@ const signupUser = () => {
               <CustomText variant="semiBold" style={{ fontSize: scale(30) }}>Sou Cliente</CustomText>
           </View>
 
+          {/* Janela de erro com mensagens personalizadas dependendo do retorno da API */}
           {error && (
             <View style={styles.containerError}>
               <View style={styles.contentError}>

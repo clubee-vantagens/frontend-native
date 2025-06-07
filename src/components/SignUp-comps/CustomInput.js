@@ -11,6 +11,7 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
     setIsPasswordHidden(!isPasswordHidden);
   };
 
+  // Custom input para texto em geral
   return (
     <View style={styles.container}>
       <Controller
@@ -47,6 +48,7 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
               value={value}
             />
 
+            {/* Se for uma senha, ele mostrará o icone de olho e revelará a senha */}
             {secureTextEntry && (
               <Pressable style={styles.icon} onPress={togglePasswordVisibility}>
                 {isPasswordHidden ? (

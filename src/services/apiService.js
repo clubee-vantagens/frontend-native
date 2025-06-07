@@ -13,12 +13,8 @@ class apiService {
         return this.axios.post(`${apiConfig.authEndpoint}/login`, { email, password });
     }
 
-    refreshToken(session, refreshToken) {
-        console.log("refreshTokenEndpoint")
-        console.log(session)
-        console.log(refreshToken)
-        console.log("refreshTokenEndpoint")
-        return this.axios.post(`${apiConfig.authEndpoint}/refresh`, { session, refreshToken });
+    refreshToken(refreshToken) {
+        return this.axios.post(`${apiConfig.authEndpoint}/refresh`, { refreshToken });
     }
 
     // Clients

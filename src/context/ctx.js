@@ -32,18 +32,20 @@ export function SessionProvider(props) {
   const [refreshToken, setRefreshToken] = useStorageState("refreshToken");
   const [error, setError] = useState(null);
 
+  // Isso deve ser deletado após implementação do token refresh, está aqui apenas para evitar deslogar do aplicativo em fase de desenvolvimento
+  const [credentials, setCredentials] = useStorageState("credentials");
+
   useEffect(() => {
     const checkTokenExpiration = async () => {
       if (session && refreshToken) {
         const { exp } = jwtDecode(session);
         const expirationTime = exp * 1000;
         const currentTime = new Date().getTime();
-        console.log(expirationTime)
-        console.log("Vamos lá ver se vai deslogar")
-        console.log(currentTime)
-        if (expirationTime - currentTime < 5 * 60 * 1000) {
-          console.log("É pra chamar essa função")
-          await refreshAccessToken();
+        if (expirationTime - currentTime < 14 * 60 * 1000) {
+          // Isso deve ser deletado após implementação do token refresh, está aqui apenas para evitar deslogar do aplicativo em fase de desenvolvimento
+          await evitarDeslogamento();
+          
+          //await refreshAccessToken();
         }
       }
     };
@@ -52,17 +54,11 @@ export function SessionProvider(props) {
   }, [session, refreshToken]);
 
   const refreshAccessToken = async () => {
-    console.log('refreshTokenAcess')
-    console.log(session)
-    console.log(refreshToken)
-    console.log('refreshTokenAcess')
+    const token = Array.isArray(refreshToken) ? refreshToken[1] : refreshToken;
     try {
-      const response = await apiService.refreshToken(session, refreshToken)
-      console.log('response')
-      console.log(response)
-      console.log(response.data)
-      setSession(response?.data?.newAccessToken);
-      setRefreshToken(response?.data?.newRefreshToken);
+      const response = await apiService.refreshToken(token);
+      setSession(response?.data?.accessToken);
+      setRefreshToken(response?.data?.refreshToken);
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -73,9 +69,12 @@ export function SessionProvider(props) {
    const signIn = async (email, password) => {
     try {
       const response = await apiService.login(email, password);
-      console.log(response.data)
       setSession(response?.data?.accessToken);
       setRefreshToken(response?.data?.refreshToken);
+
+      // Isso deve ser deletado após implementação do token refresh, está aqui apenas para evitar deslogar do aplicativo em fase de desenvolvimento
+      setCredentials({ email, password });
+
       setError(null);
     } catch (err) {
       if (err.response) {
@@ -89,6 +88,31 @@ export function SessionProvider(props) {
   const signOut = () => {
     setSession(null);
     setRefreshToken(null);
+
+    // Isso deve ser deletado após implementação do token refresh, está aqui apenas para evitar deslogar do aplicativo em fase de desenvolvimento
+    setCredentials(null);
+  };
+
+  // Isso deve ser deletado após implementação do token refresh, está aqui apenas para evitar deslogar do aplicativo em fase de desenvolvimento
+  const evitarDeslogamento = async () => {
+    if (credentials?.email && credentials?.password) {
+      try {
+        const loginResponse = await apiService.login(
+          credentials.email,
+          credentials.password
+        );
+        setSession(loginResponse?.data?.accessToken);
+        setRefreshToken(loginResponse?.data?.refreshToken);
+        setError(null);
+        return true;
+      } catch (loginError) {
+        setError("Não foi possível renovar o token nem fazer login.");
+        return false;
+      }
+    } else {
+      setError("Refresh token inválido e sem credenciais para tentar login.");
+      return false;
+    }
   };
 
   return (

@@ -80,6 +80,7 @@ const Preferences = () => {
         </CustomText>
       </View>
 
+      {/* Define os botões baseado nas opções definidas em 'options' */}
       <View style={styles.optionsContainer}>
         {options.map((option, index) => (
           <Pressable
