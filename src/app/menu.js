@@ -1,1 +1,1 @@
-export { default } from './view/screen/menu/index';
+export { default } from './view/screen/menu/index.js';

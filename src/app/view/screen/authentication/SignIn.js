@@ -27,9 +27,10 @@ const SignIn = () => {
   // Redirecionamento pro menu
   useEffect(() => {
     if (session) {
-      router.replace("/");
+      router.replace("/menu");
     }
   }, [session]);
+
 
   // Metodo responsável por mandar os dados de login pro endpoint
   const handleLogin = async data => {

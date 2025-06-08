@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";import {View,Text,StyleSheet,Pressable,
-SafeAreaView,Image,TextInput,ActivityIndicator,ScrollView,} from "react-native";
+import React, { useState, useEffect } from "react";
+import {View,Text,StyleSheet,Pressable,SafeAreaView,Image,TextInput,ActivityIndicator,ScrollView,} from "react-native";
 
 import { Link, router, useNavigation } from "expo-router";
 import { useSession } from "../../../../context/ctx";
@@ -147,13 +147,10 @@ export default function Home() {
               <Text>Busca</Text>
             </View>
           )}
-          
+
 
           <View>
-            <CustomText style={styles.sectionNew}>
-              Novidades no clubee
-            </CustomText>
-
+            <CustomText style={styles.sectionNew}>Novidades no clubee</CustomText>
             <Hightlight />
           </View>
 
@@ -162,7 +159,7 @@ export default function Home() {
             <Hightlight />
           </View>
 
-          <CustomText style={styles.sectionNew}> Feito para você</CustomText>
+          <CustomText style={styles.sectionNew}>Feito para você</CustomText>
           <Hightlight />
         </ScrollView>
       </SafeAreaView>
