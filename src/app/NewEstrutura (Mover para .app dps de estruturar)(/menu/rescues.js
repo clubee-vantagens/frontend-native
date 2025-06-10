@@ -8,9 +8,9 @@ import {
   View,
 } from "react-native";
 import { CaretLeft, ClockClockwise, Heart } from "phosphor-react-native";
-import CustomText from "../../components/CustomText";
-import { MyRescues } from "../../components/UserData/rescuesData";
-import theme from "../../themes/themes";
+import CustomText from "../../../components/CustomText";
+import { MyRescues } from "../../../components/UserData/rescuesData";
+import theme from "../../../themes/themes";
 import { router } from "expo-router";
 
 export default function Avaliation() {

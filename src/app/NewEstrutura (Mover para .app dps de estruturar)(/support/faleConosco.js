@@ -12,16 +12,16 @@ import Constants from "expo-constants";
 import { CaretLeft } from "phosphor-react-native";
 import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
-import CustomText from "../../components/CustomText";
-import CustomButtonTwo from "../../components/CustomButtonTwo";
+import CustomText from "../../../components/CustomText";
+import CustomButtonTwo from "../../../components/CustomButtonTwo";
 import {
   moderateScale,
   verticalScale,
   scale,
   moderateVerticalScale,
 } from "react-native-size-matters";
-import CustomInput from "../../components/CustomInputOld";
-import DropdownComponent from "../../components/DropdownComponent";
+import CustomInput from "../../../components/CustomInputOld";
+import DropdownComponent from "../../../components/DropdownComponent";
 
 const FaleConosco = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

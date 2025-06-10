@@ -6,19 +6,15 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import CustomText from "../../components/CustomText";
+import CustomText from "../../../components/CustomText";
 import { useRouter } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
-import TermsAndConditionsScreen from "../termsAndConditions";
 import Constants from "expo-constants";
 import { scale, verticalScale } from "react-native-size-matters";
 
 
 export default function HelpCenter(second) {
-  const [isTermsVisible, setIsTermsVisible] = useState(false);
-  const handleShowTerms = () => setIsTermsVisible(true);
-  const handleHideTerms = () => setIsTermsVisible(false);
   const router = useRouter();
   return (
     <View style={styles.container}>
@@ -59,7 +55,7 @@ export default function HelpCenter(second) {
       >
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <TermsAndConditionsScreen handleHideTerms={handleHideTerms} />
+           
           </ScrollView>
           {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
             <MaterialIcons name="close" size={30} color="black" />

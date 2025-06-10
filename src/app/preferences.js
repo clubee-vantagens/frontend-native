@@ -1,1 +1,1 @@
-export { default } from './view/screen/authentication/Preferences';
+export { default } from "./NewEstrutura (Mover para .app dps de estruturar)(/authentication/Preferences";

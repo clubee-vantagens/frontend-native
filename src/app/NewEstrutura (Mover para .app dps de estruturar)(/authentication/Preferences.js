@@ -1,11 +1,11 @@
 import { StyleSheet, SafeAreaView, View, Pressable, Dimensions } from "react-native";
-import CustomText from "../../../../components/CustomText";
+import CustomText from "../../../components/CustomText";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import ModalSignUpConfirmation from "../../../../components/SignUp-comps/ModalSignUpConfirmation";
-import { useSession } from "../../../../context/ctx";
-import { useEditUser } from "../../../../hooks/useUserService";
-import useBackExitPrompt from '../../../../hooks/useBackExitPrompt';
+import ModalSignUpConfirmation from "../../../components/SignUp-comps/ModalSignUpConfirmation";
+import { useSession } from "../../../context/ctx";
+import { useEditUser } from "../../../hooks/useUserService";
+import useBackExitPrompt from '../../../hooks/useBackExitPrompt';
 
 const screenHeight = Dimensions.get('window').height;
 

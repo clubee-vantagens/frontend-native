@@ -1,6 +1,6 @@
 import { router, Link } from "expo-router";
 import { Pressable, StyleSheet, View, Image } from "react-native";
-import CustomText from "../../../../components/CustomText";
+import CustomText from "../../../components/CustomText";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,7 +16,7 @@ export default function Signup() {
       </View>
       <View style={styles.container}>
         <Image
-          source={require('../../../../assets/images/novoLogo.png')}
+          source={require('../../../assets/images/novoLogo.png')}
           style={styles.image}
         />
         <Pressable

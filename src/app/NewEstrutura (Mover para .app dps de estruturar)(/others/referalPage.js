@@ -8,17 +8,16 @@ import {
   Share,
   Platform,
 } from "react-native";
-import { statusBarHeight } from "../../constants/constants";
+import { statusBarHeight } from "../../../constants/constants";
 import { CaretLeft, Copy, StarFour, Users } from "phosphor-react-native";
-import CustomText from "../../components/CustomText";
+import CustomText from "../../../components/CustomText";
 import { scale } from "react-native-size-matters";
-import CustomButton from "../../components/CustomButton";
-import ShareModal from "../../components/ShareModal";
+import CustomButton from "../../../components/CustomButton";
+import ShareModal from "../../../components/ShareModal";
 import { useState } from "react";
 import { router } from "expo-router";
-import TermsAndConditionsScreen from "../termsAndConditions";
 import * as Clipboard from "expo-clipboard";
-import theme from "../../themes/themes";
+import theme from "../../../themes/themes";
 import { Animated } from "react-native";
 
 export default function ReferalPage(second) {
@@ -35,7 +34,7 @@ export default function ReferalPage(second) {
   };
 
   if (isTermsActive) {
-    return <TermsAndConditionsScreen handleHideTerms={toggleTerms} />;
+    console.log('oi');
   }
   const copyToClipboard = async () => {
     try {
@@ -112,7 +111,7 @@ export default function ReferalPage(second) {
         </CustomText>
         <View style={{ alignItems: "center", marginBottom: 15 }}>
           <Image
-            source={require("../../assets/images/referal-image.png")}
+            source={require("../../../assets/images/referal-image.png")}
             style={styles.image}
           />
           <CustomText

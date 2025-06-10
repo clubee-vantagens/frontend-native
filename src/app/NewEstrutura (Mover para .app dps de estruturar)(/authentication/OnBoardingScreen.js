@@ -1,10 +1,10 @@
 import { View, StyleSheet, FlatList, Dimensions, Image, Pressable } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
-import ProgressBar from "../../../../components/OnBoardingScreen-comps/ProgressBar";
-import CustomText from "../../../../components/CustomText";
+import ProgressBar from "../../../components/OnBoardingScreen-comps/ProgressBar";
+import CustomText from "../../../components/CustomText";
 import { scale, verticalScale } from "react-native-size-matters";
 import { router } from 'expo-router';
-import { useSession } from "../../../../context/ctx";
+import { useSession } from "../../../context/ctx";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const { width } = Dimensions.get('window');
@@ -27,15 +27,15 @@ const OnBoardingScreen = () => {
   const pages = [
     {
       title: "Vantagens exclusivas? Temos!\nAcumule pontos e aproveite!",
-      image: require("../../../../assets/images/onboarding-1.webp"),
+      image: require("../../../assets/images/onboarding-1.webp"),
     },
     {
       title: "Vamos ajudar o comércio da sua comunidade a crescer!",
-      image: require("../../../../assets/images/onboarding-2.webp"),
+      image: require("../../../assets/images/onboarding-2.webp"),
     },
     {
       title: "Vamos descobrir lojas e produtos pertinhos de você?",
-      image: require("../../../../assets/images/onboarding-3.webp"),
+      image: require("../../../assets/images/onboarding-3.webp"),
     },
   ];
 

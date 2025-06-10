@@ -1,3 +1,5 @@
+/*
+
 import { Tabs } from "expo-router";
 import { useState } from "react";
 import { House, Storefront, List, Ticket } from "phosphor-react-native";
@@ -111,3 +113,4 @@ const styles = {
     marginTop: 4,
   },
 };
+*/

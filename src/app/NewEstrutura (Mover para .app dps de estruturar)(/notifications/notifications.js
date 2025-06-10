@@ -11,9 +11,9 @@ import {
   Animated,
 } from "react-native";
 import { X, CaretRight } from "phosphor-react-native";
-import NoNotification from "../../assets/images/noNotification.png";
-import CustomText from "../../components/CustomText";
-import { notifications } from "../../components/UserData/Notifications";
+import NoNotification from "../../../assets/images/noNotification.png";
+import CustomText from "../../../components/CustomText";
+import { notifications } from "../../../components/UserData/Notifications";
 import Constants from "expo-constants";
 import {
   moderateScale,
@@ -21,7 +21,7 @@ import {
   scale,
   verticalScale,
 } from "react-native-size-matters";
-import DragHandleComponent from "../../components/DragHandleComponent";
+import DragHandleComponent from "../../../components/DragHandleComponent";
 
 const NotificationsModal = ({ visible, onClose }) => {
   // const [translateY] = useState(new Animated.Value(0));

@@ -4,15 +4,15 @@ import { StyleSheet, View, Pressable, KeyboardAvoidingView, Platform, ScrollView
 import { MaterialIcons } from "@expo/vector-icons";
 import { scale, moderateVerticalScale } from "react-native-size-matters";
 import { useForm, Controller } from 'react-hook-form';
-import { validateCpf } from "../../../../utils/utils";
+import { validateCpf } from "../../../utils/utils";
 import { Fontisto } from '@expo/vector-icons';
 import Checkbox from "expo-checkbox";
-import CustomText from '../../../../components/CustomText';
-import CustomInput from '../../../../components/SignUp-comps/CustomInput';
-import { useRegisterUser } from '../../../../hooks/useUserService';
-import { useSession } from "../../../../context/ctx";
-import ModalSignUpConfirmation from '../../../../components/SignUp-comps/ModalSignUpConfirmation';
-import ModalTermsAndConditions from '../../../../components/SignUp-comps/ModalTermsAndConditions';
+import CustomText from '../../../components/CustomText';
+import CustomInput from '../../../components/SignUp-comps/CustomInput';
+import { useRegisterUser } from '../../../hooks/useUserService';
+import { useSession } from "../../../context/ctx";
+import ModalSignUpConfirmation from '../../../components/SignUp-comps/ModalSignUpConfirmation';
+import ModalTermsAndConditions from '../../../components/SignUp-comps/ModalTermsAndConditions';
 
 const signupUser = () => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm();

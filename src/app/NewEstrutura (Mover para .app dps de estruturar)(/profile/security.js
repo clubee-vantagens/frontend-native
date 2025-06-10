@@ -6,13 +6,13 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import CustomText from "../../components/CustomText";
+import CustomText from "../../../components/CustomText";
 import { router } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
 import Constants from "expo-constants";
-import theme from "../../themes/themes";
-import PrivacyNotice from "../privacyNotice";
+import theme from "../../../themes/themes";
+import PrivacyNotice from "../../privacyNotice"
 
 export default function Security() {
   const [isNoticeVisible, setIsNoticeVisible] = useState(false);

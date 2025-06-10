@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useSession } from "../../../../context/ctx";
-import { statusBarHeight } from "../../../../constants/constants";
+import { useSession } from "../../../context/ctx";
+import { statusBarHeight } from "../../../constants/constants";
 
 const Resgates = () => {
   const { signOut, session } = useSession();
