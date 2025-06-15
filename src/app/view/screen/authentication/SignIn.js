@@ -114,7 +114,12 @@ const SignIn = () => {
 
         <View>
           <CustomText style={styles.cadastroText}>
-            Não tem Cadastro? <Link href="/signup"><CustomText style={styles.cadastroInsideText}>Cadastre-se agora!</CustomText></Link>
+            Não tem Cadastro? 
+
+            <Link href={{ pathname: "/signup", params: { from: "signin" } }}>
+              <CustomText style={styles.cadastroInsideText}>Cadastre-se agora!</CustomText>
+            </Link>
+
           </CustomText>
         </View>
       </ScrollView>

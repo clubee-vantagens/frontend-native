@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 import { maskCpf } from '../../utils/utils';
 import { Eye, EyeClosed } from 'phosphor-react-native';
 
-export default function CustomInput({ name, control, placeholder, keyboardType, autoCapitalize, rules, errors, secureTextEntry }) {
+export default function CustomInput({ name, control, placeholder, keyboardType, autoCapitalize, rules, errors, secureTextEntry, apiErrorCpf }) {
   const [isPasswordHidden, setIsPasswordHidden] = useState(secureTextEntry);
 
   const togglePasswordVisibility = () => {
@@ -31,7 +31,10 @@ export default function CustomInput({ name, control, placeholder, keyboardType, 
             <TextInput
               placeholder={placeholder}
               keyboardType={keyboardType}
-              style={[styles.input, errors?.[name]]}
+              style={[
+                styles.input,
+                (errors?.[name] || apiErrorCpf) && styles.inputError // aplica borda vermelha se erro de validação ou erro da API
+              ]}
               autoCapitalize={autoCapitalize}
               secureTextEntry={secureTextEntry ? isPasswordHidden : false}
               onBlur={onBlur}
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '90%',
     alignSelf: 'center',
+    elevation: 4
   },
   input: {
     backgroundColor: '#fff',
@@ -98,4 +102,8 @@ const styles = StyleSheet.create({
     right: 15,
     top: 25,
   },
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },  
 });

@@ -1,4 +1,4 @@
-import { router, Link } from "expo-router";
+import { useLocalSearchParams, router, Link } from "expo-router";
 import { Pressable, StyleSheet, View, Image } from "react-native";
 import CustomText from "../../../../components/CustomText";
 import Constants from "expo-constants";
@@ -7,10 +7,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
 
 export default function Signup() {
+  const params = useLocalSearchParams();
+  const { from = "signin" } = useLocalSearchParams();
+
   return (
     <SafeAreaView style={styles.areaView}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-        <Link href="/signin">
+        <Link href={`/${from}`}>
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Link>
       </View>
@@ -21,13 +24,19 @@ export default function Signup() {
         />
         <Pressable
           style={styles.indexBtn}
-          onPress={() => router.navigate("/signupUser")}
+          onPress={() => router.navigate({
+            pathname: "/signupUser",
+            params: { from }
+          })}
         >
           <CustomText style={styles.btnText}>Sou cliente</CustomText>
         </Pressable>
         <Pressable
           style={styles.indexBtn}
-          onPress={() => router.navigate("/signupCompany")}
+          onPress={() => router.navigate({
+            pathname: "/signupCompany",
+            params: { from }
+          })}
         >
           <CustomText style={styles.btnText}>Sou empresa</CustomText>
         </Pressable>
