@@ -52,7 +52,8 @@ const OnBoardingScreen = () => {
 
   // Metodo responsável para ir para tela de cadastro
   const handleCadastrar = () => {
-    router.replace('/signup')
+    router.push({ pathname: "/signup", params: { from: "onboardingScreen" } });
+
   }
 
   // Quando começa a rolar, as setas somem
@@ -102,23 +103,35 @@ const OnBoardingScreen = () => {
           <View style={styles.arrowsContainer}>
             {/* Seta Esquerda */}
             {currentStep > 0 && (
-             <Pressable
-               onPress={() => flatListRef.current.scrollToIndex({ index: currentStep - 1 })}
-               testID="left-arrow"
-               style={styles.arrowLeft}
-              >
-                <AntDesign name="left" size={24} color="black" />
+              <Pressable
+                hitSlop={20}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="seta-esquerda"
+                testID="seta-esquerda"
+                onPress={() => flatListRef.current.scrollToIndex({ index: currentStep - 1 })}
+                style={styles.arrowLeft}
+                >
+                <View accessible={true} accessibilityLabel="seta-esquerda" style={{ padding: 10 }}>
+                  <AntDesign name="left" size={24} color="black" />
+                </View>
               </Pressable>
             )}
 
             {/* Seta Direita */}
             {currentStep < pages.length - 1 && (
               <Pressable
+                hitSlop={20}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="seta-direita"
+                testID="seta-direita"
                 onPress={() => flatListRef.current.scrollToIndex({ index: currentStep + 1 })}
-                testID="right-arrow"
                 style={styles.arrowRight}
               >
-                <AntDesign name="right" size={24} color="black" />
+                <View accessible={true} accessibilityLabel="seta-direita" style={{ padding: 10 }}>
+                  <AntDesign name="right" size={24} color="black" />
+                </View>
               </Pressable>
             )}
           </View>

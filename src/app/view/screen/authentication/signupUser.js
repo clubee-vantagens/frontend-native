@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Link, router } from "expo-router";
+import { useLocalSearchParams, Link, router } from "expo-router";
 import { StyleSheet, View, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { scale, moderateVerticalScale } from "react-native-size-matters";
@@ -18,6 +18,9 @@ const signupUser = () => {
   const { control, handleSubmit, formState: { errors }, getValues } = useForm();
   const [isChecked, setChecked] = useState(false);
   const { signIn, error, setError } = useSession();
+
+  // Leitura para encadeamento inteligente de rotas
+  const { from = "signin" } = useLocalSearchParams(); 
 
   // variaveis de visualização de modal
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -104,7 +107,7 @@ const signupUser = () => {
         keyboardShouldPersistTaps="handled"
         >
           <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-            <Link href="/signup">
+            <Link href={{ pathname: "/signup", params: { from } }}>
               <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
             </Link>
           </View>
@@ -219,6 +222,7 @@ const signupUser = () => {
                 },
               }}
               errors={errors}
+              apiErrorCpf={error?.type === 'cpf'}
             />
 
             <CustomInput
