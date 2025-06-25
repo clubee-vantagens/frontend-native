@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, View, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import CustomText from "../../../components/CustomText";
+import CustomText from "../../components/CustomText";
 
 const TermsAndConditions = ({ onClose }) => {
   return (

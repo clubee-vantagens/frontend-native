@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import {View,Text,StyleSheet,Pressable,SafeAreaView,Image,TextInput,ActivityIndicator,ScrollView,} from "react-native";
 
 import { Link, router, useNavigation } from "expo-router";
-import { useSession } from "../../../context/ctx";
+import { useSession } from "../../context/ctx";
 import {Bell,Eye,EyeClosed,StarFour,MagnifyingGlass,} from "phosphor-react-native";
-import { User } from "../../../components/UserData/UserData";
-import { MenuList } from "../../../components/MenuData/MenuList";
-import CustomText from "../../../components/CustomText";
-import { Hightlight } from "../../../components/Carousels/HightLight";
-import { useUserData } from "../../../hooks/useUserService"
-import { notifications } from "../../../components/UserData/Notifications";
+import { User } from "../../components/UserData/UserData";
+import { MenuList } from "../../components/MenuData/MenuList";
+import CustomText from "../../components/CustomText";
+import { Hightlight } from "../../components/Carousels/HightLight";
+import { useUserData } from "../../hooks/useUserService"
+import { notifications } from "../../components/UserData/Notifications";
 import NotificationsModal from "../notifications/notifications";
-import LoadingScreen from "../../../components/LoadingScreen";
-import PointsIcon from "../../../components/icons/PointsIcon";
+import LoadingScreen from "../../components/LoadingScreen";
+import PointsIcon from "../../components/icons/PointsIcon";
 import Constants from 'expo-constants'
-import CatagoryBubble from "../../../components/CategoriesBubble";
+import CatagoryBubble from "../../components/CategoriesBubble";
 import { Dog, Flower, BookOpenText, DotsThree } from "phosphor-react-native";
 import { scale } from "react-native-size-matters";
-import useBackExitPrompt from '../../../hooks/useBackExitPrompt';
+import useBackExitPrompt from '../../hooks/useBackExitPrompt';
 
-import TotalNotificationBadge from "../../../components/NotificacaoBadge/TotalNotification"; // comp. de notificações - Diego Vieira
+import TotalNotificationBadge from "../../components/NotificacaoBadge/TotalNotification"; // comp. de notificações - Diego Vieira
 
 
 export default function Home() {

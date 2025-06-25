@@ -8,16 +8,16 @@ import {
   Share,
   Platform,
 } from "react-native";
-import { statusBarHeight } from "../../../constants/constants";
+import { statusBarHeight } from "../../constants/constants";
 import { CaretLeft, Copy, StarFour, Users } from "phosphor-react-native";
-import CustomText from "../../../components/CustomText";
+import CustomText from "../../components/CustomText";
 import { scale } from "react-native-size-matters";
-import CustomButton from "../../../components/CustomButton";
-import ShareModal from "../../../components/ShareModal";
+import CustomButton from "../../components/CustomButton";
+import ShareModal from "../../components/ShareModal";
 import { useState } from "react";
 import { router } from "expo-router";
 import * as Clipboard from "expo-clipboard";
-import theme from "../../../themes/themes";
+import theme from "../../themes/themes";
 import { Animated } from "react-native";
 
 export default function ReferalPage(second) {

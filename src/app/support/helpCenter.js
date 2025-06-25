@@ -6,64 +6,60 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import CustomText from "../../../components/CustomText";
-import { router } from "expo-router";
+import CustomText from "../../components/CustomText";
+import { useRouter } from "expo-router";
 import { CaretRight, CaretLeft } from "phosphor-react-native";
 import { useState } from "react";
 import Constants from "expo-constants";
-import theme from "../../../themes/themes";
-import PrivacyNotice from "../../privacyNotice"
+import { scale, verticalScale } from "react-native-size-matters";
 
-export default function Security() {
-  const [isNoticeVisible, setIsNoticeVisible] = useState(false);
-  const handleShowNotice = () => setIsNoticeVisible(true);
-  const handleHideNotice = () => setIsNoticeVisible(false);
 
+export default function HelpCenter(second) {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Pressable
         onPress={() => {
+          console.log("pressed");
           router.navigate("/");
         }}
       >
         <CaretLeft size={30} color="black" />
       </Pressable>
-      <CustomText style={{ marginTop: 16 }} variant="bold" fontSize={24}>
-        Segurança
+      <CustomText style={{ marginTop: 20 }} variant="bold">
+        Central de Ajuda
       </CustomText>
-      <Pressable
-        style={styles.button}
-        onPress={() => router.navigate("confirmationEmail")}
-      >
-        <CustomText variant="bold">Confirmaçao de e-mail</CustomText>
+      <Pressable style={styles.button} onPress={() => router.navigate("/faq")}>
+        <CustomText variant="semiBold">FAQ</CustomText>
         <CaretRight size={20} />
       </Pressable>
-
+      <Pressable style={styles.button} onPress={handleShowTerms}>
+        <CustomText variant="semiBold">Termos de Uso</CustomText>
+        <CaretRight size={20} />
+      </Pressable>
       <Pressable
         style={styles.button}
         onPress={() => {
-          router.push("changePassword");
+          router.push("faleConosco");
         }}
       >
-        <CustomText variant="bold">Alterar senha</CustomText>
-        <CaretRight size={20} />
-      </Pressable>
-
-      <Pressable style={styles.button} onPress={handleShowNotice}>
-        <CustomText variant="bold">Aviso de privacidade</CustomText>
+        <CustomText variant="semiBold">Fale Conosco</CustomText>
         <CaretRight size={20} />
       </Pressable>
 
       <Modal
-        visible={isNoticeVisible}
+        visible={isTermsVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={handleHideNotice}
+        onRequestClose={handleHideTerms}
       >
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <PrivacyNotice handleHideNotice={handleHideNotice} />
+           
           </ScrollView>
+          {/* <Pressable onPress={handleHideTerms} style={styles.closeButton}>
+            <MaterialIcons name="close" size={30} color="black" />
+          </Pressable> */}
         </View>
       </Modal>
     </View>
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   button: {
-    backgroundColor: theme.colors.bgYellowLight,
+    backgroundColor: "#FFEAAD",
     width: 350,
     height: 71,
     borderRadius: 8,
@@ -95,3 +91,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+

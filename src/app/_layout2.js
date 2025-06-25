@@ -1,3 +1,4 @@
+/*
 import { Redirect } from "expo-router";
 import { useSession } from "../../context/ctx";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -28,3 +29,4 @@ export default function AppLayout() {
     </Stack>
   );
 }
+*/
