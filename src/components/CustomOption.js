@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
-export default function Select({ options, onChangeSelect }) {
+export default function Select({ options, onChangeSelect, label }) {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -15,9 +15,9 @@ export default function Select({ options, onChangeSelect }) {
         }}
         style={styles.picker}
       >
-        <Picker.Item label="Selecione o segmento" value={null} />
-        {options.map((opt) => (
-          <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
+        <Picker.Item label={label} value={null} />
+        {options.map((opt, index) => (
+          <Picker.Item key={index} label={opt.label} value={opt.value} />
         ))}
       </Picker>
     </View>
@@ -27,7 +27,7 @@ export default function Select({ options, onChangeSelect }) {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    width: 359,
+    width: 156,
     borderRadius: 7,
     margin: 10,
     backgroundColor: "#fff",
