@@ -111,7 +111,7 @@ export default function ReferalPage(second) {
         </CustomText>
         <View style={{ alignItems: "center", marginBottom: 15 }}>
           <Image
-            source={require("../../../assets/images/referal-image.png")}
+            source={require("../../assets/images/referal-image.png")}
             style={styles.image}
           />
           <CustomText

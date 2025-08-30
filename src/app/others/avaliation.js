@@ -7,11 +7,11 @@ import {
   View,
 } from "react-native";
 import { CaretLeft, Star, Heart, ClockClockwise } from "phosphor-react-native";
-import CustomText from "../../../components/CustomText";
-import { MyAvaliations } from "../../../components/UserData/avaliations";
-import theme from "../../../themes/themes";
+import CustomText from "../../components/CustomText";
+import { MyAvaliations } from "../../components/UserData/avaliations";
+import theme from "../../themes/themes";
 import { router } from "expo-router";
-import { statusBarHeight } from "../../../services/apiConfig";
+import { statusBarHeight } from "../../services/apiConfig";
 
 export default function Avaliation() {
   // Função para renderizar estrelas com base na avaliação

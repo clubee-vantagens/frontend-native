@@ -11,7 +11,7 @@ import {
   Animated,
 } from "react-native";
 import { X, CaretRight } from "phosphor-react-native";
-import NoNotification from "../../../assets/images/noNotification.png";
+import NoNotification from "../../assets/images/noNotification.png";
 import CustomText from "../../components/CustomText";
 import { notifications } from "../../components/UserData/Notifications";
 import Constants from "expo-constants";

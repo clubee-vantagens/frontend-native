@@ -1,13 +1,13 @@
 import {Pressable,SafeAreaView,StyleSheet,Image,Text,View,Switch,Modal,Dimensions,Animated,} from "react-native";
 import {X,Heart,Bell,Star,Gear,Shield,Headset,ArrowUUpLeft,UserSwitch,} from "phosphor-react-native";
-import { useUserData } from "../../../hooks/useUserService"
-import { useSession } from "../../../context/ctx";
+import { useUserData } from "../../hooks/useUserService";
+import { useSession } from "../../context/ctx";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "expo-router";
-import LoadingScreen from "../../../components/LoadingScreen";
-import CustomText from "../../../components/CustomText";
-import theme from "../../../themes/themes";
-import MenuIconPoints from "../../../components/icons/MenuIconPoints";
+import LoadingScreen from "../../components/LoadingScreen";
+import CustomText from "../../components/CustomText";
+import theme from "../../themes/themes";
+import MenuIconPoints from "../../components/icons/MenuIconPoints";
 import { scale, verticalScale } from "react-native-size-matters";
 
 

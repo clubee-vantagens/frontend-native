@@ -6,16 +6,16 @@ import {
   Text,
   View,
 } from "react-native";
-import CustomText from "../../../components/CustomText";
-import CustomInput from "../../../components/CustomInputOld";
-import CustomButton from "../../../components/CustomButton";
+import CustomText from "../../components/CustomText";
+import CustomInput from "../../components/CustomInputOld";
+import CustomButton from "../../components/CustomButton";
 import { useForm } from "react-hook-form";
 import { Link, router } from "expo-router";
-import { usePasswordRecovery } from "../../../hooks/usePasswordRecovery";
+import { usePasswordRecovery } from "../../hooks/usePasswordRecovery";
 import { useEffect, useState } from "react";
-import CustomButtonTwo from "../../../components/CustomButtonTwo";
-import LoadingScreen from "../../../components/LoadingScreen";
-import ErrorMessageComponent from "../../../components/ErrorMessageComponent";
+import CustomButtonTwo from "../../components/CustomButtonTwo";
+import LoadingScreen from "../../components/LoadingScreen";
+import ErrorMessageComponent from "../../components/ErrorMessageComponent";
 import {
   scale,
   verticalScale,
@@ -58,7 +58,7 @@ export default function PasswordRecoveryScreen() {
             </CustomText>
             <View style={styles.containerImage}>
               <Image
-                source={require("../../../assets/images/imgSendEmail.png")}
+                source={require("../../assets/images/imgSendEmail.png")}
                 style={styles.ImagemSend}
               />
             </View>

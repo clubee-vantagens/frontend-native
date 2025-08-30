@@ -1,7 +1,7 @@
 import { CaretLeft } from "phosphor-react-native";
 import { Pressable, StyleSheet, ScrollView, View } from "react-native";
 import { router } from "expo-router";
-import FAQAccordion from "../../../components/FaqAccordion";
+import FAQAccordion from "../../components/FaqAccordion";
 import Constants from 'expo-constants'
 
 export default function Faq() {

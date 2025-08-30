@@ -10,15 +10,15 @@ import {
   TextInput,
   View,
 } from "react-native";
-import CustomText from "../../../components/CustomText";
+import CustomText from "../../components/CustomText";
 import { CaretLeft, Camera } from "phosphor-react-native";
 import { Image } from "expo-image";
 import { useForm, Controller } from "react-hook-form";
-import CustomInput from "../../../components/CustomInputOld";
-import CustomButton from "../../../components/CustomButton";
+import CustomInput from "../../components/CustomInputOld";
+import CustomButton from "../../components/CustomButton";
 import { useEffect, useState } from "react";
-import DropdownComponent from "../../../components/DropdownComponent";
-import { useEditUser } from "../../../hooks/useUserService";
+import DropdownComponent from "../../components/DropdownComponent";
+import { useEditUser } from "../../hooks/useUserService";
 import {
   maskDate,
   convertToISOString,
@@ -26,17 +26,17 @@ import {
   convertToDDMMYYYY,
   maskCep,
   isValidDate,
-} from "../../../utils/utils";
+} from "../../utils/utils";
 import axios from "axios";
-import { useSession } from "../../../context/ctx";
-import ConfirmationModal from "../../../components/ConfirmationModal";
-import { useDeleteUser } from "../../../hooks/useUserService";
-import { useUserData } from "../../../hooks/useUserService";
+import { useSession } from "../../context/ctx";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import { useDeleteUser } from "../../hooks/useUserService";
+import { useUserData } from "../../hooks/useUserService";
 import { scale, verticalScale } from "react-native-size-matters";
 import Constants from "expo-constants";
 import { router } from "expo-router";
-import CameraModalComponent from "../../../components/CameraModalComponent";
-import ErrorMessageComponent from "../../../components/ErrorMessageComponent";
+import CameraModalComponent from "../../components/CameraModalComponent";
+import ErrorMessageComponent from "../../components/ErrorMessageComponent";
 
 export default function EditProfile(second) {
   const { session, signOut } = useSession();

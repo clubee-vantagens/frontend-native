@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import CustomText from "../../../components/CustomText";
-import { statusBarHeight } from "../../../services/apiConfig";
+import CustomText from "../../components/CustomText";
+import { statusBarHeight } from "../../services/apiConfig";
 import { CaretLeft, MagnifyingGlass } from "phosphor-react-native";
 import { moderateScale, scale, ScaledSheet, verticalScale } from "react-native-size-matters";
-import theme from "../../../themes/themes";
-import { MenuList } from "../../../components/MenuData/MenuList";
-import CatagoryBubble from "../../../components/CategoriesBubble";
+import theme from "../../themes/themes";
+import { MenuList } from "../../components/MenuData/MenuList";
+import CatagoryBubble from "../../components/CategoriesBubble";
 import {
   Dog,
   Flower,

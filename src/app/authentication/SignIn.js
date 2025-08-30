@@ -3,11 +3,11 @@ import { View, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Image, Scr
 import { Link, router, useFocusEffect } from "expo-router";
 import { scale, verticalScale, moderateVerticalScale } from "react-native-size-matters";
 import { useForm } from 'react-hook-form';
-import CustomText from '../../../components/CustomText';
-import CustomInput from '../../../components/SignUp-comps/CustomInput';
+import CustomText from '../../components/CustomText';
+import CustomInput from '../../components/SignUp-comps/CustomInput';
 import { Fontisto } from '@expo/vector-icons';
-import { useSession } from "../../../context/ctx";
-import useBackExitPrompt from '../../../hooks/useBackExitPrompt';
+import { useSession } from "../../context/ctx";
+import useBackExitPrompt from '../../hooks/useBackExitPrompt';
 
 
 const SignIn = () => {
@@ -22,7 +22,7 @@ const SignIn = () => {
     useCallback(() => {
       setError(null);
     }, [])
-  );
+  );cd
 
   // Redirecionamento pro menu
   useEffect(() => {
@@ -53,7 +53,7 @@ const SignIn = () => {
         keyboardShouldPersistTaps="handled"
       >
         <View>
-          <Image style={styles.containerImage} source={require('../../../assets/images/novoLogo.png')} />
+          <Image style={styles.containerImage} source={require('../../assets/images/novoLogo.png')} />
         </View>
 
         {error && (

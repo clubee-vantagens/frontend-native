@@ -10,14 +10,14 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "expo-router";
 import { CaretLeft } from "phosphor-react-native";
-import { useChangePassword } from "../../../hooks/useChangePassword";
-import CustomText from "../../../components/CustomText";
-import theme from "../../../themes/themes";
-import CustomPasswordInput from "../../../components/CustomPasswordInput";
-import CustomButtonTwo from "../../../components/CustomButtonTwo";
-import ConfirmationModal from "../../../components/ConfirmationModal";
-import { useSession } from "../../../context/ctx";
-import { statusBarHeight } from "../../../constants/constants";
+import { useChangePassword } from "../../hooks/useChangePassword";
+import CustomText from "../../components/CustomText";
+import theme from "../../themes/themes";
+import CustomPasswordInput from "../../components/CustomPasswordInput";
+import CustomButtonTwo from "../../components/CustomButtonTwo";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import { useSession } from "../../context/ctx";
+import { statusBarHeight } from "../../constants/constants";
 
 const ChangePassword = () => {
   const [isModalConfirm, setIsModalConfirm] = useState(false);

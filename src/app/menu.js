@@ -1,1 +1,1 @@
-export { default } from "./NewEstrutura (Mover para .app dps de estruturar)(/(tabs)/index.js";
+export { default } from "./(tabs)/index.js";

@@ -11,15 +11,15 @@ import {
   FadersHorizontal,
   QuestionMark,
 } from "phosphor-react-native";
-import CustomText from "../../../components/CustomText";
-import PointsIcon from "../../../components/icons/PointsIcon";
-import { statusBarHeight } from "../../../constants/constants";
-import { useUserData } from "../../../hooks/useUserService";
-import { useSession } from "../../../context/ctx";
+import CustomText from "../../components/CustomText";
+import PointsIcon from "../../components/icons/PointsIcon";
+import { statusBarHeight } from "../../constants/constants";
+import { useUserData } from "../../hooks/useUserService";
+import { useSession } from "../../context/ctx";
 import { scale } from "react-native-size-matters";
 import { Image } from "expo-image";
-import LastestActvitiesComponent from "../../../components/LastestActvitiesComponent";
-import CatagoryBubble from "../../../components/CategoriesBubble";
+import LastestActvitiesComponent from "../../components/LastestActvitiesComponent";
+import CatagoryBubble from "../../components/CategoriesBubble";
 
 const Pontos = () => {
   const activitiesMock = [

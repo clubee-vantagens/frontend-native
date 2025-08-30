@@ -1,11 +1,9 @@
-/*
-
 import { Tabs } from "expo-router";
 import { useState } from "react";
 import { House, Storefront, List, Ticket } from "phosphor-react-native";
 import { View, Modal, Pressable, Platform, SafeAreaView } from "react-native";
-import MenuIconPoints from "../../../../components/icons/MenuIconPoints";
-import MenuProfile from "./Menu";
+import MenuIconPoints from "../../components/icons/MenuIconPoints";
+import MenuProfile from "../MenuProfile";
 import { scale } from "react-native-size-matters";
 
 export default function TabLayout() {
@@ -113,4 +111,3 @@ const styles = {
     marginTop: 4,
   },
 };
-*/

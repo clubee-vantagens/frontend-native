@@ -1,1 +1,1 @@
-export { default } from "./NewEstrutura (Mover para .app dps de estruturar)(/authentication/signupUser";
+export { default } from "./authentication/signupUser";
