@@ -1,7 +1,7 @@
 // TermsModal.js
 import React from 'react';
 import { Modal, View, Pressable, StyleSheet } from 'react-native';
-import TermsAndConditions from '../../app/authentication/TermsAndConditions';
+import TermsAndConditions from '../../app/authentication/termsandconditions';
 import CustomText from '../CustomText';
 
 const ModalTermsAndConditions = ({ isVisible, onClose }) => {

@@ -61,13 +61,13 @@ useEffect(() => {
 
   // Metodo responsável para ir para tela de Login
   const handlePular = () => {
-    router.replace('/signin')
+    router.replace('/authentication/signin')
   };
 
-  // Metodo responsável para ir para tela de cadastro
-  const handleCadastrar = () => {
-    router.replace('/signup')
-  }
+      // Metodo responsável para ir para tela de cadastro
+      const handleCadastrar = () => {
+        router.replace('/authentication/signupuser')
+      }
 
   // Quando começa a rolar, as setas somem
   const handleScrollBegin = () => {

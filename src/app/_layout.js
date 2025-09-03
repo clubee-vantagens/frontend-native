@@ -29,7 +29,7 @@ export default function RootLayout() {
     if (session) {
       router.replace("/(tabs)/menu");
     } else {
-      router.replace("/authentication/OnBoardingScreen");
+      router.replace("/authentication/onboardingscreen");
     }
   }, [session, fontsLoaded, sessionIsLoading]);
 

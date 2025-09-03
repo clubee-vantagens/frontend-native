@@ -22,14 +22,14 @@ const SignIn = () => {
     useCallback(() => {
       setError(null);
     }, [])
-  );cd
+  );
 
-  // Redirecionamento pro menu
-  useEffect(() => {
-    if (session) {
-      router.replace("/menu");
-    }
-  }, [session]);
+ // Redirecionamento pro menu
+ // useEffect(() => {
+ //   if (session) {
+ //     router.replace("/menu");
+ //   }
+ //  }, [session]);
 
 
   // Metodo responsável por mandar os dados de login pro endpoint
@@ -106,7 +106,7 @@ const SignIn = () => {
             errors={errors}
           />
 
-          <CustomText style={styles.forgotPassword}><Link href="/passwordRecovery">Esqueceu a senha?</Link></CustomText>
+          <CustomText style={styles.forgotPassword}><Link href="/passwordrecovery">Esqueceu a senha?</Link></CustomText>
         </View>
 
         <Pressable onPress={handleSubmit(handleLogin)} style={styles.entrarButton}>
@@ -115,7 +115,7 @@ const SignIn = () => {
 
         <View>
           <CustomText style={styles.cadastroText}>
-            Não tem Cadastro? <Link href="/signup"><CustomText style={styles.cadastroInsideText}>Cadastre-se agora!</CustomText></Link>
+            Não tem Cadastro? <Link href="signup"><CustomText style={styles.cadastroInsideText}>Cadastre-se agora!</CustomText></Link>
           </CustomText>
         </View>
       </ScrollView>

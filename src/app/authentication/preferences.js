@@ -103,6 +103,7 @@ const Preferences = () => {
         ))}
       </View>
 
+            /* Botão de continuar após escolher três opções de preferências de lojas*/
       <View style={styles.buttonView}>
         <Pressable 
           style={[styles.continuarButton, !isButtonEnabled && styles.disabledContinuarButton]}
@@ -111,7 +112,7 @@ const Preferences = () => {
           >
           <CustomText style={styles.continuarText}>Continuar</CustomText>
         </Pressable>
-        <Pressable onPress={() => router.navigate("/")}>
+        <Pressable onPress={() => router.navigate("/(tabs)")}>
           <CustomText
             variant="semiBold"
             style={{ fontSize: 20, marginTop: 20 }}
@@ -124,7 +125,7 @@ const Preferences = () => {
       <ModalSignUpConfirmation
             visible={isModalVisible} // Controle de visibilidade
             onPress={() => {
-              router.navigate("/");
+              router.navigate("/(tabs)");
             }} // Fecha o modal
             message={modalMessage} // Mensagem dinâmica
           />

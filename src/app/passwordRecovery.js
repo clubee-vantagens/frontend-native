@@ -1,1 +1,1 @@
-export { default } from "./authentication/PasswordRecovery";
+export { default } from "./authentication/passwordrecovery";

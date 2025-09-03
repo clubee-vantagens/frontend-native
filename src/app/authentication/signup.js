@@ -10,7 +10,7 @@ export default function Signup() {
   return (
     <SafeAreaView style={styles.areaView}>
       <View style={{ alignSelf: "flex-start", marginLeft: 25 }}>
-        <Link href="/signin">
+        <Link href="/authentication/signin">
           <MaterialIcons name="arrow-back-ios-new" size={30} color="black" />
         </Link>
       </View>
@@ -19,12 +19,16 @@ export default function Signup() {
           source={require('../../assets/images/novoLogo.png')}
           style={styles.image}
         />
+
+        /* Botão para cadastro Cliente*/
         <Pressable
           style={styles.indexBtn}
-          onPress={() => router.navigate("/signupUser")}
+          onPress={() => router.navigate("/authentication/signupuser")}
         >
           <CustomText style={styles.btnText}>Sou cliente</CustomText>
         </Pressable>
+
+        /* Botão para cadastro Empresa*/
         <Pressable
           style={styles.indexBtn}
           onPress={() => router.navigate("/signupCompany")}
